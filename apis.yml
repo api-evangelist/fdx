@@ -1,5 +1,14 @@
 name: Financial Data Exchange (FDX)
-description: Financial Data Exchange (FDX) is a non-profit industry standards body operating in the US and Canada that produces the FDX API, a royalty-free REST standard for consumer-permissioned financial data sharing. The FDX API defines interoperable endpoints covering deposit accounts, loan accounts, investment accounts, insurance policies, tax data, payroll data, reward programs, and consent management, enabling data providers (financial institutions), data access platforms (aggregators), and data recipients (fintechs) to exchange consumer financial data without exposing user credentials. As of early 2026 over 130 million consumer accounts are connected via the FDX API across 200+ member organizations including Bank of America, Chase, Citi, Wells Fargo, Plaid, and MX. FDX API v6.5 is the current stable release.
+description: Financial Data Exchange (FDX) is a non-profit industry standards body
+  operating in the US and Canada that produces the FDX API, a royalty-free REST standard
+  for consumer-permissioned financial data sharing. The FDX API defines interoperable
+  endpoints covering deposit accounts, loan accounts, investment accounts, insurance
+  policies, tax data, payroll data, reward programs, and consent management, enabling
+  data providers (financial institutions), data access platforms (aggregators), and
+  data recipients (fintechs) to exchange consumer financial data without exposing
+  user credentials. As of early 2026 over 130 million consumer accounts are connected
+  via the FDX API across 200+ member organizations including Bank of America, Chase,
+  Citi, Wells Fargo, Plaid, and MX. FDX API v6.5 is the current stable release.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/fdx/refs/heads/main/apis.yml
 created: '2026-06-13'
@@ -8,155 +17,176 @@ specificationVersion: '0.19'
 aid: fdx
 type: Index
 tags:
-  - Financial Data
-  - Open Banking
-  - Open Finance
-  - Financial Data Exchange
-  - Consumer Permissioned
-  - Account Data
-  - Transactions
-  - Investments
-  - Insurance
-  - Tax Data
-  - Payroll
-  - REST
-  - OAuth2
-  - FAPI
-  - CFPB 1033
+- Financial Data
+- Open Banking
+- Open Finance
+- Financial Data Exchange
+- Consumer Permissioned
+- Account Data
+- Transactions
+- Investments
+- Insurance
+- Tax Data
+- Payroll
+- REST
+- OAuth2
+- FAPI
+- CFPB 1033
 apis:
-  - name: FDX Accounts API
-    description: RESTful endpoints for retrieving consumer deposit, loan, investment, and insurance account details including account numbers, balances, account holder identity, and account metadata. Supports the full FDX account data cluster across all account types recognized by the standard.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://financialdataexchange.org
-    baseURL: https://api.financialdataexchange.org
-    tags:
-      - Accounts
-      - Deposit Accounts
-      - Loan Accounts
-      - Account Balances
-      - Account Holder
-    properties:
-      - type: Documentation
-        url: https://financialdataexchange.org
-      - type: OpenAPI
-        url: https://github.com/plaid/core-exchange
-  - name: FDX Transactions API
-    description: RESTful endpoints for retrieving consumer transaction histories including pending and posted transactions, transaction categorization, merchant data, and transaction amounts across deposit, loan, and investment accounts within the permissioned scope.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://financialdataexchange.org
-    baseURL: https://api.financialdataexchange.org
-    tags:
-      - Transactions
-      - Transaction History
-      - Pending Transactions
-      - Merchant Data
-    properties:
-      - type: Documentation
-        url: https://financialdataexchange.org
-  - name: FDX Investment API
-    description: RESTful endpoints for retrieving investment account data including holdings, positions, investment transactions, cost basis, and portfolio composition. Covers brokerage, retirement, and managed investment accounts under the FDX investment data cluster.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://financialdataexchange.org
-    baseURL: https://api.financialdataexchange.org
-    tags:
-      - Investments
-      - Holdings
-      - Portfolio
-      - Brokerage
-      - Retirement
-    properties:
-      - type: Documentation
-        url: https://financialdataexchange.org
-  - name: FDX Insurance API
-    description: RESTful endpoints for retrieving insurance policy information including policy coverage details, premium schedules, claims history, and beneficiary data under the FDX insurance data cluster.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://financialdataexchange.org
-    baseURL: https://api.financialdataexchange.org
-    tags:
-      - Insurance
-      - Policy
-      - Coverage
-      - Claims
-    properties:
-      - type: Documentation
-        url: https://financialdataexchange.org
-  - name: FDX Tax API
-    description: RESTful endpoints for retrieving consumer tax data including tax document metadata and structured tax form data (1099s, W-2s, and related forms) as defined by the FDX US Tax Data specification and the CSDF Consensus Standard Data Format.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://financialdataexchange.org
-    baseURL: https://api.financialdataexchange.org
-    tags:
-      - Tax Data
-      - 1099
-      - W-2
-      - Tax Documents
-    properties:
-      - type: Documentation
-        url: https://financialdataexchange.org
-  - name: FDX Payroll API
-    description: RESTful endpoints introduced in FDX API v6.0 for retrieving permissioned payroll data including employment records, pay stubs, income verification, and direct deposit details, supporting lending and personal financial management use cases.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://financialdataexchange.org
-    baseURL: https://api.financialdataexchange.org
-    tags:
-      - Payroll
-      - Income Verification
-      - Employment
-      - Pay Stubs
-    properties:
-      - type: Documentation
-        url: https://financialdataexchange.org
-  - name: FDX Consent API
-    description: RESTful endpoints implementing the FDX Consent API Behavioral Specification for managing user permissions and consent events. Enables data recipients to initiate consent, query active consent grants, update scope, and handle consent revocation in compliance with CFPB Section 1033 requirements.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-    humanURL: https://financialdataexchange.org
-    baseURL: https://api.financialdataexchange.org
-    tags:
-      - Consent Management
-      - Authorization
-      - CFPB 1033
-      - Data Access
-      - Permissioning
-    properties:
-      - type: Documentation
-        url: https://financialdataexchange.org
-common:
-  - type: Website
-    url: https://financialdataexchange.org
+- name: FDX Accounts API
+  description: RESTful endpoints for retrieving consumer deposit, loan, investment,
+    and insurance account details including account numbers, balances, account holder
+    identity, and account metadata. Supports the full FDX account data cluster across
+    all account types recognized by the standard.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Accounts
+  - Deposit Accounts
+  - Loan Accounts
+  - Account Balances
+  - Account Holder
+  properties:
   - type: Documentation
     url: https://financialdataexchange.org
-  - type: DeveloperPortal
-    url: https://developer.financialdataexchange.org
-  - type: OnboardingPortal
-    url: https://onboarding.financialdataexchange.org
-  - type: Registry
-    url: https://registry.financialdataexchange.org
-  - type: Blog
-    url: https://financialdataexchange.org/fdx-feed/
-  - type: Membership
-    url: https://financialdataexchange.org/about-fdx/
-  - type: GitHubOrg
+  - type: OpenAPI
     url: https://github.com/plaid/core-exchange
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/financialdataexchange
-  - type: X
-    url: https://x.com/fdxapi
-  - type: YouTube
-    url: https://www.youtube.com/@financialdataexchange
-  - type: PrivacyPolicy
-    url: https://financialdataexchange.org/privacy-policy/
-  - type: TermsOfService
-    url: https://financialdataexchange.org/terms-of-use/
-  - type: LicenseAgreement
-    url: https://financialdataexchange.org/fdx-api-license-agreement/
-  - type: Authentication
+  - url: graphql/fdx-graphql.md
+    type: GraphQL
+- name: FDX Transactions API
+  description: RESTful endpoints for retrieving consumer transaction histories including
+    pending and posted transactions, transaction categorization, merchant data, and
+    transaction amounts across deposit, loan, and investment accounts within the permissioned
+    scope.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Transactions
+  - Transaction History
+  - Pending Transactions
+  - Merchant Data
+  properties:
+  - type: Documentation
     url: https://financialdataexchange.org
-  - type: Plans
-    url: plans/fdx-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/fdx-rate-limits.yml
-  - type: FinOps
-    url: finops/fdx-finops.yml
+- name: FDX Investment API
+  description: RESTful endpoints for retrieving investment account data including
+    holdings, positions, investment transactions, cost basis, and portfolio composition.
+    Covers brokerage, retirement, and managed investment accounts under the FDX investment
+    data cluster.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Investments
+  - Holdings
+  - Portfolio
+  - Brokerage
+  - Retirement
+  properties:
+  - type: Documentation
+    url: https://financialdataexchange.org
+- name: FDX Insurance API
+  description: RESTful endpoints for retrieving insurance policy information including
+    policy coverage details, premium schedules, claims history, and beneficiary data
+    under the FDX insurance data cluster.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Insurance
+  - Policy
+  - Coverage
+  - Claims
+  properties:
+  - type: Documentation
+    url: https://financialdataexchange.org
+- name: FDX Tax API
+  description: RESTful endpoints for retrieving consumer tax data including tax document
+    metadata and structured tax form data (1099s, W-2s, and related forms) as defined
+    by the FDX US Tax Data specification and the CSDF Consensus Standard Data Format.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Tax Data
+  - 1099
+  - W-2
+  - Tax Documents
+  properties:
+  - type: Documentation
+    url: https://financialdataexchange.org
+- name: FDX Payroll API
+  description: RESTful endpoints introduced in FDX API v6.0 for retrieving permissioned
+    payroll data including employment records, pay stubs, income verification, and
+    direct deposit details, supporting lending and personal financial management use
+    cases.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Payroll
+  - Income Verification
+  - Employment
+  - Pay Stubs
+  properties:
+  - type: Documentation
+    url: https://financialdataexchange.org
+- name: FDX Consent API
+  description: RESTful endpoints implementing the FDX Consent API Behavioral Specification
+    for managing user permissions and consent events. Enables data recipients to initiate
+    consent, query active consent grants, update scope, and handle consent revocation
+    in compliance with CFPB Section 1033 requirements.
+  image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Consent Management
+  - Authorization
+  - CFPB 1033
+  - Data Access
+  - Permissioning
+  properties:
+  - type: Documentation
+    url: https://financialdataexchange.org
+common:
+- type: Website
+  url: https://financialdataexchange.org
+- type: Documentation
+  url: https://financialdataexchange.org
+- type: DeveloperPortal
+  url: https://developer.financialdataexchange.org
+- type: OnboardingPortal
+  url: https://onboarding.financialdataexchange.org
+- type: Registry
+  url: https://registry.financialdataexchange.org
+- type: Blog
+  url: https://financialdataexchange.org/fdx-feed/
+- type: Membership
+  url: https://financialdataexchange.org/about-fdx/
+- type: GitHubOrg
+  url: https://github.com/plaid/core-exchange
+- type: LinkedIn
+  url: https://www.linkedin.com/company/financialdataexchange
+- type: X
+  url: https://x.com/fdxapi
+- type: YouTube
+  url: https://www.youtube.com/@financialdataexchange
+- type: PrivacyPolicy
+  url: https://financialdataexchange.org/privacy-policy/
+- type: TermsOfService
+  url: https://financialdataexchange.org/terms-of-use/
+- type: LicenseAgreement
+  url: https://financialdataexchange.org/fdx-api-license-agreement/
+- type: Authentication
+  url: https://financialdataexchange.org
+- type: Plans
+  url: plans/fdx-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/fdx-rate-limits.yml
+- type: FinOps
+  url: finops/fdx-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

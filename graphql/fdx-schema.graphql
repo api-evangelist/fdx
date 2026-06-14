@@ -1,0 +1,1011 @@
+"""
+FDX (Financial Data Exchange) GraphQL Schema
+Conceptual schema modeling the FDX API v6.5 open finance standard.
+Covers deposit, loan, investment, insurance, tax, payroll, consent, and OAuth2/FAPI domains.
+"""
+
+# ─── Scalars ────────────────────────────────────────────────────────────────
+
+scalar Date
+scalar DateTime
+scalar Decimal
+scalar URL
+scalar ISO4217CurrencyCode
+scalar CountryCode
+
+# ─── Enumerations ────────────────────────────────────────────────────────────
+
+enum AccountType {
+  DEPOSIT
+  LOAN
+  CREDIT
+  INVESTMENT
+  LOC
+  INSURANCE
+  ANNUITY
+  OTHER
+}
+
+enum AccountStatus {
+  OPEN
+  CLOSED
+  PENDING_OPEN
+  PENDING_CLOSE
+  RESTRICTED
+  DELINQUENT
+}
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+  DIVIDEND
+  FEE
+  INTEREST
+  PAYMENT
+  PURCHASE
+  REFUND
+  TRANSFER
+  WITHDRAWAL
+  OTHER
+}
+
+enum TransactionStatus {
+  PENDING
+  POSTED
+  MEMO
+  VOID
+  OTHER
+}
+
+enum SecurityType {
+  STOCK
+  MUTUAL_FUND
+  ETF
+  BOND
+  OPTION
+  FUTURE
+  CASH
+  OTHER
+}
+
+enum ConsentScope {
+  ACCOUNT_BASIC
+  ACCOUNT_DETAILED
+  TRANSACTIONS
+  INVESTMENTS
+  INSURANCE
+  TAX_DATA
+  PAYROLL
+  STATEMENTS
+  CUSTOMER_INFO
+  IDENTITY
+}
+
+enum ConsentStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+  PENDING
+}
+
+# ─── Financial Institution ────────────────────────────────────────────────────
+
+"""Top-level representation of a financial institution in the FDX network."""
+type FinancialInstitution {
+  fiId: ID!
+  details: FIDetails!
+  accounts(customerId: ID, first: Int, after: String): AccountConnection!
+  customers(first: Int, after: String): CustomerConnection!
+}
+
+"""Detailed metadata describing a financial institution."""
+type FIDetails {
+  fiId: ID!
+  name: String!
+  logo: URL
+  website: URL
+  phone: String
+  routingNumber: String
+  swiftCode: String
+  country: CountryCode!
+  fdxMemberId: String
+  fdxApiVersion: String!
+  registryEntry: Registration
+}
+
+# ─── Account Types ────────────────────────────────────────────────────────────
+
+"""Abstract interface shared by all account types."""
+interface Account {
+  accountId: ID!
+  displayName: String
+  accountType: AccountType!
+  accountStatus: AccountStatus!
+  currency: ISO4217CurrencyCode
+  balance: AccountBalance
+  details: AccountDetails!
+  fiAttributes: [FIAttribute!]
+}
+
+"""Shared account metadata returned across all account varieties."""
+type AccountDetails {
+  accountId: ID!
+  accountNumber: String
+  accountNickname: String
+  accountType: AccountType!
+  accountStatus: AccountStatus!
+  productName: String
+  currency: ISO4217CurrencyCode
+  openingDate: Date
+  closingDate: Date
+  lastActivityDate: Date
+  interestRate: Decimal
+  fiAttributes: [FIAttribute!]
+}
+
+"""A demand deposit or savings account."""
+type DepositAccount implements Account {
+  accountId: ID!
+  displayName: String
+  accountType: AccountType!
+  accountStatus: AccountStatus!
+  currency: ISO4217CurrencyCode
+  balance: AccountBalance
+  details: AccountDetails!
+  fiAttributes: [FIAttribute!]
+  currentBalance: Decimal
+  availableBalance: Decimal
+  annualPercentageYield: Decimal
+  interestYtd: Decimal
+  term: Int
+  maturityDate: Date
+  transactions(
+    startDate: Date
+    endDate: Date
+    transactionType: TransactionType
+    first: Int
+    after: String
+  ): TransactionConnection!
+  statements(first: Int, after: String): StatementConnection!
+}
+
+"""A consumer or commercial loan account."""
+type LoanAccount implements Account {
+  accountId: ID!
+  displayName: String
+  accountType: AccountType!
+  accountStatus: AccountStatus!
+  currency: ISO4217CurrencyCode
+  balance: AccountBalance
+  details: AccountDetails!
+  fiAttributes: [FIAttribute!]
+  principalBalance: Decimal
+  escrowBalance: Decimal
+  originalPrincipal: Decimal
+  originationDate: Date
+  loanTerm: Int
+  nextPaymentAmount: Decimal
+  nextPaymentDate: Date
+  lastPaymentAmount: Decimal
+  lastPaymentDate: Date
+  maturityDate: Date
+  interestRate: Decimal
+  interestYtd: Decimal
+  transactions(
+    startDate: Date
+    endDate: Date
+    first: Int
+    after: String
+  ): TransactionConnection!
+  paymentDetails: PaymentDetails
+}
+
+"""A revolving credit account such as a credit card."""
+type CreditAccount implements Account {
+  accountId: ID!
+  displayName: String
+  accountType: AccountType!
+  accountStatus: AccountStatus!
+  currency: ISO4217CurrencyCode
+  balance: AccountBalance
+  details: AccountDetails!
+  fiAttributes: [FIAttribute!]
+  currentBalance: Decimal
+  availableCredit: Decimal
+  creditLimit: Decimal
+  minimumPaymentDue: Decimal
+  paymentDueDate: Date
+  lastPaymentAmount: Decimal
+  lastPaymentDate: Date
+  interestRate: Decimal
+  cashAdvanceRate: Decimal
+  rewards: RewardDetails
+  transactions(
+    startDate: Date
+    endDate: Date
+    first: Int
+    after: String
+  ): TransactionConnection!
+  statements(first: Int, after: String): StatementConnection!
+}
+
+"""A brokerage, retirement, or managed investment account."""
+type InvestmentAccount implements Account {
+  accountId: ID!
+  displayName: String
+  accountType: AccountType!
+  accountStatus: AccountStatus!
+  currency: ISO4217CurrencyCode
+  balance: AccountBalance
+  details: AccountDetails!
+  fiAttributes: [FIAttribute!]
+  currentValue: Decimal
+  availableCash: Decimal
+  marginBalance: Decimal
+  shortBalance: Decimal
+  buyingPower: Decimal
+  holdings: [HoldingDetails!]!
+  positions: [InvestmentPosition!]!
+  transactions(
+    startDate: Date
+    endDate: Date
+    first: Int
+    after: String
+  ): InvestmentTransactionConnection!
+}
+
+"""A revolving line of credit account."""
+type LocAccount implements Account {
+  accountId: ID!
+  displayName: String
+  accountType: AccountType!
+  accountStatus: AccountStatus!
+  currency: ISO4217CurrencyCode
+  balance: AccountBalance
+  details: AccountDetails!
+  fiAttributes: [FIAttribute!]
+  creditLimit: Decimal
+  availableCredit: Decimal
+  currentBalance: Decimal
+  minPaymentDue: Decimal
+  paymentDueDate: Date
+  transactions(
+    startDate: Date
+    endDate: Date
+    first: Int
+    after: String
+  ): TransactionConnection!
+}
+
+"""An insurance policy account."""
+type InsuranceAccount implements Account {
+  accountId: ID!
+  displayName: String
+  accountType: AccountType!
+  accountStatus: AccountStatus!
+  currency: ISO4217CurrencyCode
+  balance: AccountBalance
+  details: AccountDetails!
+  fiAttributes: [FIAttribute!]
+  policyNumber: String
+  policyType: String
+  carrier: String
+  coverageAmount: Decimal
+  premiumAmount: Decimal
+  premiumFrequency: String
+  effectiveDate: Date
+  expirationDate: Date
+  beneficiaries: [String!]
+}
+
+"""A deferred annuity account."""
+type AnnuityAccount implements Account {
+  accountId: ID!
+  displayName: String
+  accountType: AccountType!
+  accountStatus: AccountStatus!
+  currency: ISO4217CurrencyCode
+  balance: AccountBalance
+  details: AccountDetails!
+  fiAttributes: [FIAttribute!]
+  contractNumber: String
+  annuityType: String
+  surrenderValue: Decimal
+  accumulatedValue: Decimal
+  issuer: String
+  issueDate: Date
+  maturityDate: Date
+}
+
+# ─── Balance ─────────────────────────────────────────────────────────────────
+
+"""Current balance snapshot for any account."""
+type Balance {
+  amount: Decimal!
+  currency: ISO4217CurrencyCode!
+  balanceType: String
+  asOfDate: BalanceDate
+}
+
+"""Full account balance record as returned by the FDX Balances endpoint."""
+type AccountBalance {
+  accountId: ID!
+  currentBalance: Decimal
+  availableBalance: Decimal
+  openingDayBalance: Decimal
+  currency: ISO4217CurrencyCode
+  balanceDate: BalanceDate!
+  fiAttributes: [FIAttribute!]
+}
+
+"""Timestamp and precision for a balance observation."""
+type BalanceDate {
+  date: Date!
+  dateTime: DateTime
+  precision: String
+}
+
+# ─── Transactions ─────────────────────────────────────────────────────────────
+
+"""A financial transaction on a deposit, credit, or loan account."""
+type Transaction {
+  transactionId: ID!
+  accountId: ID!
+  details: TransactionDetails!
+  postedDate: Date
+  transactionDate: Date
+  amount: Decimal!
+  currency: ISO4217CurrencyCode
+  transactionType: TransactionType!
+  transactionStatus: TransactionStatus!
+  description: String
+  memo: String
+  merchant: MerchantDetails
+  category: String
+  checkNumber: String
+  fiAttributes: [FIAttribute!]
+}
+
+"""Extended detail attributes for a transaction."""
+type TransactionDetails {
+  transactionId: ID!
+  referenceTransactionId: String
+  checkNumber: String
+  payee: String
+  payeeId: String
+  merchant: MerchantDetails
+  runningBalance: Decimal
+  links: [Link!]
+}
+
+"""Merchant-level detail attached to a transaction."""
+type MerchantDetails {
+  merchantName: String
+  merchantCategoryCode: String
+  merchantId: String
+  location: String
+}
+
+"""A payment detail record associated with a loan installment or bill pay."""
+type PaymentDetails {
+  paymentId: ID!
+  paymentDate: Date
+  paymentAmount: Decimal!
+  currency: ISO4217CurrencyCode
+  paymentType: String
+  paymentStatus: String
+  principalAmount: Decimal
+  interestAmount: Decimal
+  escrowAmount: Decimal
+  confirmationNumber: String
+}
+
+# ─── Transfers ────────────────────────────────────────────────────────────────
+
+"""A fund transfer between accounts."""
+type Transfer {
+  transferId: ID!
+  details: TransferDetails!
+  status: String!
+  createdAt: DateTime!
+}
+
+"""Structured detail for a transfer request or response."""
+type TransferDetails {
+  transferId: ID!
+  fromAccountId: ID!
+  toAccountId: ID!
+  amount: Decimal!
+  currency: ISO4217CurrencyCode
+  scheduledDate: Date
+  memo: String
+  confirmationNumber: String
+  fiAttributes: [FIAttribute!]
+}
+
+# ─── Rewards ──────────────────────────────────────────────────────────────────
+
+"""A reward program record attached to a credit account."""
+type Reward {
+  rewardId: ID!
+  accountId: ID!
+  details: RewardDetails!
+}
+
+"""Points, miles, or cash-back balance and program metadata."""
+type RewardDetails {
+  programName: String!
+  rewardBalance: Decimal!
+  rewardUnit: String
+  expirationDate: Date
+  pendingRewards: Decimal
+  rewardRate: Decimal
+  lastUpdated: DateTime
+}
+
+# ─── Investments ──────────────────────────────────────────────────────────────
+
+"""A summary investment record within a portfolio."""
+type Investment {
+  investmentId: ID!
+  accountId: ID!
+  security: Security!
+  quantity: Decimal!
+  purchasePrice: Decimal
+  purchaseDate: Date
+  currentValue: Decimal
+  gainLoss: Decimal
+}
+
+"""An investment-specific transaction (buy, sell, dividend, etc.)."""
+type InvestmentTransaction {
+  transactionId: ID!
+  accountId: ID!
+  transactionDate: Date!
+  settleDate: Date
+  transactionType: String!
+  security: Security
+  units: Decimal
+  unitPrice: Decimal
+  amount: Decimal!
+  fees: Decimal
+  taxes: Decimal
+  currency: ISO4217CurrencyCode
+  memo: String
+  fiAttributes: [FIAttribute!]
+}
+
+"""A current position (holding) within an investment account."""
+type InvestmentPosition {
+  positionId: ID!
+  accountId: ID!
+  security: Security!
+  units: Decimal!
+  unitPrice: Decimal!
+  marketValue: Decimal!
+  costBasis: Decimal
+  gainLoss: Decimal
+  gainLossPercent: Decimal
+  priceAsOf: Date
+  currency: ISO4217CurrencyCode
+  holdingType: String
+}
+
+"""A financial security (equity, bond, fund, etc.)."""
+type Security {
+  securityId: ID!
+  details: SecurityDetails!
+}
+
+"""Descriptive metadata for a security."""
+type SecurityDetails {
+  securityId: ID!
+  ticker: String
+  cusip: String
+  isin: String
+  securityName: String!
+  securityType: SecurityType!
+  exchange: String
+  currency: ISO4217CurrencyCode
+  issuer: String
+  maturityDate: Date
+  couponRate: Decimal
+  faceValue: Decimal
+}
+
+"""A holding summary for a security within an account."""
+type HoldingDetails {
+  holdingId: ID!
+  accountId: ID!
+  security: Security!
+  units: Decimal!
+  unitPrice: Decimal
+  marketValue: Decimal
+  costBasis: Decimal
+  holdingType: String
+  asOfDate: Date
+}
+
+# ─── Statements ───────────────────────────────────────────────────────────────
+
+"""A periodic account statement."""
+type Statement {
+  statementId: ID!
+  accountId: ID!
+  details: StatementDetails!
+  documentUrl: URL
+}
+
+"""Metadata describing a statement document."""
+type StatementDetails {
+  statementId: ID!
+  period: StatementPeriod!
+  openingBalance: Decimal
+  closingBalance: Decimal
+  depositTotal: Decimal
+  withdrawalTotal: Decimal
+  feeTotal: Decimal
+  interestTotal: Decimal
+  createdDate: Date
+  fiAttributes: [FIAttribute!]
+}
+
+"""The date range covered by a statement."""
+type StatementPeriod {
+  startDate: Date!
+  endDate: Date!
+}
+
+# ─── Customer & Identity ──────────────────────────────────────────────────────
+
+"""A consumer or business customer of a financial institution."""
+type Customer {
+  customerId: ID!
+  details: CustomerDetails!
+  identity: CustomerIdentity
+  accounts(first: Int, after: String): AccountConnection!
+  consents(status: ConsentStatus, first: Int, after: String): ConsentConnection!
+}
+
+"""Contact and demographic information about a customer."""
+type CustomerDetails {
+  customerId: ID!
+  name: String!
+  email: [String!]
+  phone: [String!]
+  addresses: [Address!]
+  dateOfBirth: Date
+  taxId: String
+  employerName: String
+  fiAttributes: [FIAttribute!]
+}
+
+"""Verified identity attributes for a customer (KYC/AML context)."""
+type CustomerIdentity {
+  customerId: ID!
+  identityId: ID!
+  verificationStatus: String
+  verifiedAt: DateTime
+  documents: [IdentityDetails!]
+  kyc: KYC
+}
+
+"""A physical or mailing address."""
+type Address {
+  line1: String!
+  line2: String
+  city: String!
+  state: String
+  postalCode: String
+  country: CountryCode
+  addressType: String
+}
+
+"""An identity document used for verification."""
+type IdentityDetails {
+  documentId: ID!
+  documentType: String!
+  documentNumber: String
+  issuingCountry: CountryCode
+  issuingAuthority: String
+  issueDate: Date
+  expiryDate: Date
+}
+
+"""Identity and identity verification result."""
+type Identity {
+  identityId: ID!
+  subject: String
+  claims: Claims
+  verifiedAt: DateTime
+}
+
+"""KYC (Know Your Customer) compliance record."""
+type KYC {
+  kycId: ID!
+  customerId: ID!
+  status: String!
+  riskLevel: String
+  performedAt: DateTime
+  expiresAt: DateTime
+  amlFlags: [String!]
+}
+
+# ─── Consent ─────────────────────────────────────────────────────────────────
+
+"""A consumer consent grant managed under the FDX Consent API."""
+type Consent {
+  consentId: ID!
+  customerId: ID!
+  details: ConsentDetails!
+  status: ConsentStatus!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+"""Full attributes of a consent record."""
+type ConsentDetails {
+  consentId: ID!
+  dataRecipientId: String!
+  dataRecipientName: String
+  scopes: [ConsentScope!]!
+  status: ConsentStatus!
+  grantedAt: DateTime
+  expiresAt: ConsentExpiry
+  revokedAt: DateTime
+  revocationReason: String
+  accounts: [ID!]
+  purposeCode: String
+  purposeDescription: String
+  fiAttributes: [FIAttribute!]
+}
+
+"""Expiry details for a consent grant."""
+type ConsentExpiry {
+  expiresAt: DateTime
+  durationDays: Int
+  basis: String
+}
+
+# ─── OAuth2 / FAPI / PAR ─────────────────────────────────────────────────────
+
+"""An OAuth2 token set as issued by the authorization server."""
+type Token {
+  tokenId: ID!
+  oauthToken: OAuthToken!
+  consentId: ID
+  customerId: ID
+  issuedAt: DateTime!
+  expiresAt: DateTime!
+}
+
+"""OAuth2 bearer token response fields."""
+type OAuthToken {
+  accessToken: String!
+  tokenType: String!
+  expiresIn: Int!
+  refreshToken: String
+  scope: String
+  idToken: String
+}
+
+"""A Pushed Authorization Request (PAR) response."""
+type PushedAuthorization {
+  requestUri: String!
+  expiresIn: Int!
+  parId: ID
+}
+
+"""PKCE code challenge / verifier pair used in authorization flows."""
+type PKCE {
+  codeChallenge: String!
+  codeChallengeMethod: String!
+  codeVerifier: String
+}
+
+"""OAuth2 server metadata and supported capabilities."""
+type OAuth2 {
+  issuer: URL!
+  authorizationEndpoint: URL!
+  tokenEndpoint: URL!
+  pushedAuthorizationEndpoint: URL
+  jwksUri: URL!
+  scopesSupported: [String!]!
+  responseTypesSupported: [String!]!
+  grantTypesSupported: [String!]!
+  codeChallengeMethodsSupported: [String!]
+}
+
+"""PAR (Pushed Authorization Request) reference."""
+type PAR {
+  requestUri: String!
+  expiresIn: Int!
+  clientId: String!
+  redirectUri: URL
+  scope: String
+  state: String
+}
+
+"""OpenID Connect claims payload."""
+type Claims {
+  sub: String!
+  name: String
+  email: String
+  emailVerified: Boolean
+  phoneNumber: String
+  phoneNumberVerified: Boolean
+  birthdate: String
+  address: Address
+  updatedAt: DateTime
+  customClaims: [KeyValuePair!]
+}
+
+# ─── Client Registration ──────────────────────────────────────────────────────
+
+"""OAuth2 dynamic client registration record."""
+type Registration {
+  clientId: ID!
+  details: ClientDetails!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+"""Detail attributes for a registered OAuth2 client (data recipient)."""
+type ClientDetails {
+  clientId: ID!
+  clientName: String!
+  clientUri: URL
+  logoUri: URL
+  redirectUris: [URL!]!
+  scope: String
+  grantTypes: [String!]!
+  responseTypes: [String!]
+  tokenEndpointAuthMethod: String
+  jwksUri: URL
+  softwareId: String
+  softwareVersion: String
+  fdxRegistryId: String
+  contacts: [String!]
+}
+
+"""A registered API key credential."""
+type APIKey {
+  keyId: ID!
+  clientId: ID!
+  keyPrefix: String!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  scopes: [String!]
+  status: String!
+}
+
+# ─── Pagination ───────────────────────────────────────────────────────────────
+
+"""Cursor-based pagination info per the Relay connection spec."""
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+  totalCount: Int
+}
+
+type AccountConnection {
+  edges: [AccountEdge!]!
+  pageInfo: PageInfo!
+}
+
+type AccountEdge {
+  cursor: String!
+  node: AccountDetails!
+}
+
+type TransactionConnection {
+  edges: [TransactionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type TransactionEdge {
+  cursor: String!
+  node: Transaction!
+}
+
+type InvestmentTransactionConnection {
+  edges: [InvestmentTransactionEdge!]!
+  pageInfo: PageInfo!
+}
+
+type InvestmentTransactionEdge {
+  cursor: String!
+  node: InvestmentTransaction!
+}
+
+type StatementConnection {
+  edges: [StatementEdge!]!
+  pageInfo: PageInfo!
+}
+
+type StatementEdge {
+  cursor: String!
+  node: Statement!
+}
+
+type CustomerConnection {
+  edges: [CustomerEdge!]!
+  pageInfo: PageInfo!
+}
+
+type CustomerEdge {
+  cursor: String!
+  node: Customer!
+}
+
+type ConsentConnection {
+  edges: [ConsentEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ConsentEdge {
+  cursor: String!
+  node: Consent!
+}
+
+# ─── Supporting Types ─────────────────────────────────────────────────────────
+
+"""An arbitrary financial-institution-defined name/value attribute."""
+type FIAttribute {
+  name: String!
+  value: String!
+}
+
+"""A generic key-value pair for extensibility."""
+type KeyValuePair {
+  key: String!
+  value: String!
+}
+
+"""A hypermedia link."""
+type Link {
+  rel: String!
+  href: URL!
+  method: String
+}
+
+# ─── Root Query ───────────────────────────────────────────────────────────────
+
+type Query {
+  """Retrieve a financial institution by ID."""
+  financialInstitution(fiId: ID!): FinancialInstitution
+
+  """Retrieve a list of all FI accounts accessible under the current consent."""
+  accounts(
+    accountType: AccountType
+    status: AccountStatus
+    first: Int
+    after: String
+  ): AccountConnection!
+
+  """Retrieve detail for a single account."""
+  account(accountId: ID!): AccountDetails
+
+  """Retrieve balance for a single account."""
+  accountBalance(accountId: ID!): AccountBalance
+
+  """Retrieve transactions for an account."""
+  transactions(
+    accountId: ID!
+    startDate: Date
+    endDate: Date
+    transactionType: TransactionType
+    status: TransactionStatus
+    first: Int
+    after: String
+  ): TransactionConnection!
+
+  """Retrieve a single transaction by ID."""
+  transaction(accountId: ID!, transactionId: ID!): Transaction
+
+  """Retrieve investment positions for an account."""
+  investmentPositions(accountId: ID!): [InvestmentPosition!]!
+
+  """Retrieve investment transactions for an account."""
+  investmentTransactions(
+    accountId: ID!
+    startDate: Date
+    endDate: Date
+    first: Int
+    after: String
+  ): InvestmentTransactionConnection!
+
+  """Retrieve statements for an account."""
+  statements(accountId: ID!, first: Int, after: String): StatementConnection!
+
+  """Retrieve a single statement."""
+  statement(accountId: ID!, statementId: ID!): Statement
+
+  """Retrieve customer details for the authenticated user."""
+  customer(customerId: ID!): Customer
+
+  """Retrieve all customers accessible under the current token."""
+  customers(first: Int, after: String): CustomerConnection!
+
+  """Retrieve a customer's verified identity."""
+  customerIdentity(customerId: ID!): CustomerIdentity
+
+  """Retrieve active consents for the authenticated customer."""
+  consents(
+    customerId: ID
+    status: ConsentStatus
+    first: Int
+    after: String
+  ): ConsentConnection!
+
+  """Retrieve a single consent record."""
+  consent(consentId: ID!): Consent
+
+  """Retrieve a security by ID."""
+  security(securityId: ID!): Security
+
+  """Retrieve reward details for a credit account."""
+  rewards(accountId: ID!): RewardDetails
+
+  """Retrieve OAuth2 server metadata."""
+  oauth2Metadata: OAuth2
+
+  """Retrieve a registered client record."""
+  registration(clientId: ID!): Registration
+
+  """Retrieve an API key record."""
+  apiKey(keyId: ID!): APIKey
+}
+
+# ─── Root Mutation ────────────────────────────────────────────────────────────
+
+type Mutation {
+  """Initiate a fund transfer between accounts."""
+  initiateTransfer(
+    fromAccountId: ID!
+    toAccountId: ID!
+    amount: Decimal!
+    currency: ISO4217CurrencyCode
+    scheduledDate: Date
+    memo: String
+  ): Transfer
+
+  """Grant a consent for specified scopes."""
+  grantConsent(
+    dataRecipientId: ID!
+    scopes: [ConsentScope!]!
+    accountIds: [ID!]
+    durationDays: Int
+    purposeCode: String
+  ): Consent
+
+  """Revoke a consent grant."""
+  revokeConsent(consentId: ID!, reason: String): Consent
+
+  """Update the scopes on an existing consent."""
+  updateConsentScopes(consentId: ID!, scopes: [ConsentScope!]!): Consent
+
+  """Register a new OAuth2 client (data recipient)."""
+  registerClient(
+    clientName: String!
+    redirectUris: [URL!]!
+    grantTypes: [String!]!
+    scope: String
+    jwksUri: URL
+    softwareId: String
+    contacts: [String!]
+  ): Registration
+
+  """Submit a Pushed Authorization Request (PAR)."""
+  pushedAuthorizationRequest(
+    clientId: ID!
+    redirectUri: URL!
+    scope: String!
+    state: String
+    codeChallenge: String
+    codeChallengeMethod: String
+    consentId: ID
+  ): PushedAuthorization
+}
