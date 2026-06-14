@@ -1,0 +1,73 @@
+name: FDX API Rate Limits
+description: The FDX API is a standard specification rather than a centrally hosted API service. Rate limits are defined and enforced by individual data provider implementations (financial institutions and aggregators). The FDX specification recommends implementers adopt limits aligned with consumer use patterns, regulatory guidance under CFPB Section 1033, and fair access principles. The guidance below reflects typical industry practice for FDX-compliant implementations.
+specificationVersion: '0.1'
+url: https://financialdataexchange.org
+notes: Because FDX is a standard and not a single hosted API, rate limits vary by implementation. Financial institutions implementing the FDX API as data providers set their own limits. The ranges below reflect common implementation patterns observed across FDX member deployments.
+rateLimits:
+  - name: Account Data Retrieval
+    description: Rate limit for GET requests to account detail and account list endpoints. Limits are typically per OAuth token (per consented data-sharing session) to prevent excessive polling.
+    scope: per-oauth-token
+    limit: 4
+    period: 1h
+    type: request
+    notes: CFPB Section 1033 guidance discourages excessive real-time polling; FDX recommends batch retrieval patterns with reasonable intervals.
+    endpoints:
+      - /fdx/v6/accounts
+      - /fdx/v6/accounts/{accountId}
+  - name: Transaction Data Retrieval
+    description: Rate limit for transaction history endpoint requests. Transactions are typically paginated; implementers often cap the number of requests per hour per token to enforce batch access patterns.
+    scope: per-oauth-token
+    limit: 4
+    period: 1h
+    type: request
+    endpoints:
+      - /fdx/v6/accounts/{accountId}/transactions
+  - name: Investment Data Retrieval
+    description: Rate limit for investment holdings and position endpoints. Investment data is typically less time-sensitive than transaction data; implementations may allow less frequent access.
+    scope: per-oauth-token
+    limit: 2
+    period: 1h
+    type: request
+    endpoints:
+      - /fdx/v6/accounts/{accountId}/investment-transactions
+  - name: Consent Management Endpoints
+    description: Rate limits for consent initiation, consent query, and consent revocation operations. Consent operations are typically lower frequency and may have stricter limits to prevent abuse.
+    scope: per-client-id
+    limit: 60
+    period: 1h
+    type: request
+    endpoints:
+      - /fdx/v6/consents
+      - /fdx/v6/consents/{consentId}
+  - name: Tax and Payroll Data Retrieval
+    description: Rate limit for tax document and payroll data endpoints. These data types are seasonally accessed and typically have lower rate limits due to data sensitivity.
+    scope: per-oauth-token
+    limit: 2
+    period: 1h
+    type: request
+    endpoints:
+      - /fdx/v6/tax-forms
+      - /fdx/v6/payroll
+  - name: API Discovery and Metadata
+    description: Rate limit for public discovery endpoints including capability registration and data provider metadata. These are read-only public endpoints with more permissive limits.
+    scope: per-ip
+    limit: 60
+    period: 1h
+    type: request
+    endpoints:
+      - /fdx/v6/discovery
+      - /fdx/v6/capabilities
+fairAccessPrinciples:
+  - name: Non-Discrimination
+    description: Under CFPB Section 1033 and FDX guidance, data providers must not impose rate limits or data access restrictions on FDX-compliant data recipients that are more restrictive than access provided to their own affiliated apps.
+  - name: Batch Access Preference
+    description: FDX discourages real-time polling in favor of batch data retrieval patterns. Consumers and data recipients should retrieve data on a schedule aligned with use case needs rather than continuous polling.
+  - name: Token Scoping
+    description: Rate limits should be scoped to the OAuth access token (representing a single consumer consent grant) rather than the client application, preventing a single data recipient app from consuming limits for all consumers.
+errorHandling:
+  - httpStatus: 429
+    description: Too Many Requests - rate limit exceeded. Implementations should return a Retry-After header indicating when the client may retry.
+  - httpStatus: 401
+    description: Unauthorized - OAuth access token expired or revoked. Clients must re-initiate the consent flow.
+  - httpStatus: 403
+    description: Forbidden - requested data scope not included in the consumer consent grant.

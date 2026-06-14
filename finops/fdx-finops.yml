@@ -1,0 +1,124 @@
+name: FDX API FinOps Framework
+description: FOCUS-aligned FinOps reference for organizations implementing or consuming the FDX API standard. FDX itself is a royalty-free standard; direct costs arise from membership fees, implementation engineering, certification, infrastructure for hosting FDX-compliant endpoints, and third-party aggregation platform fees. Data recipients integrating with FDX-compliant financial institutions may incur costs through aggregator platform subscriptions rather than direct FDX charges.
+specificationVersion: '1.0'
+url: https://financialdataexchange.org
+costDimensions:
+  - name: FDX Membership Fees
+    description: Annual membership fees paid to Financial Data Exchange to participate in standards development, access the full specification and developer tooling, and contribute to working groups. Fee level varies by organization type and membership tier.
+    billingModel: annual-subscription
+    currency: USD
+    costDrivers:
+      - name: Observer Access
+        rate: Free
+        notes: Specification read access only via onboarding portal; no membership fee
+      - name: Associate Membership
+        rate: Contact FDX
+        notes: Entry tier for smaller or advisory organizations
+      - name: Full Membership
+        rate: Contact FDX
+        notes: Primary tier for financial institutions, fintechs, aggregators, and data recipients
+      - name: Affiliate Membership
+        rate: Contact FDX
+        notes: Non-financial sector organizations including consumer advocates and academia
+  - name: Implementation Engineering
+    description: Engineering labor costs for building and maintaining FDX-compliant API endpoints (for data providers) or client integrations (for data recipients and aggregators). Implementation complexity scales with the number of FDX data clusters supported.
+    billingModel: time-and-materials
+    currency: USD
+    costDrivers:
+      - name: Data Provider Implementation
+        notes: Financial institutions building FDX-compliant data provider endpoints; Plaid Core Exchange reports 6-8 week implementation timeline for streamlined FDX subset
+      - name: Data Recipient Integration
+        notes: Fintechs and apps integrating FDX-compliant data access via aggregator SDKs or direct API calls
+      - name: Consent Management Infrastructure
+        notes: Building and maintaining consent capture, storage, and revocation flows per FDX Consent API Behavioral Specification
+  - name: Certification Costs
+    description: Costs associated with FDX implementer certification to demonstrate conformance with the FDX API specification and CFPB Section 1033 Consensus Standard Data Format (CSDF) requirements.
+    billingModel: per-certification-cycle
+    currency: USD
+    costDrivers:
+      - name: FDX Certification Testing
+        notes: Conformance testing against FDX certification use cases; required for organizations claiming FDX-compliant status
+      - name: CSDF v1 Compliance
+        notes: Demonstration of compliance with CFPB Personal Financial Data Rights rulemaking requirements via the CSDF Security Model and Profile
+  - name: Infrastructure and Hosting
+    description: Cloud or on-premises infrastructure costs for hosting FDX-compliant API endpoints, consent management systems, identity and access management (OAuth2/OIDC/FAPI), and audit logging systems.
+    billingModel: usage-based
+    currency: USD
+    costDrivers:
+      - name: API Hosting
+        notes: Compute and network costs for serving FDX API endpoints at scale; scales with number of consented accounts and request volume
+      - name: Identity Provider (IdP)
+        notes: OAuth2/OpenID Connect authorization server costs supporting FAPI 1.0 or FAPI 2.0 profiles as required by FDX security specification
+      - name: Audit and Consent Logging
+        notes: Storage and query costs for immutable consent event logs required for regulatory traceability
+  - name: Aggregator Platform Fees
+    description: For data recipients using third-party data access platforms (aggregators) to connect with FDX-compliant financial institutions rather than building direct integrations, platform subscription or per-call fees apply.
+    billingModel: subscription-or-per-call
+    currency: USD
+    costDrivers:
+      - name: Aggregator API Calls
+        notes: Per-call or monthly volume-based fees charged by aggregators such as Plaid, MX, or Finicity for proxying FDX data access
+      - name: Aggregator Platform Subscription
+        notes: Monthly or annual platform access fees for aggregator developer portals and enhanced data enrichment features
+optimizationStrategies:
+  - name: Start with Observer Access
+    description: Organizations evaluating FDX adoption can access the full specification at no cost through observer enrollment at onboarding.financialdataexchange.org before committing to paid membership.
+    impact: medium
+    effort: low
+    url: https://onboarding.financialdataexchange.org
+  - name: Use Plaid Core Exchange for Faster Implementation
+    description: Data providers targeting Plaid-connected data recipients can use Plaid Core Exchange, a streamlined FDX-compliant subset, to reduce implementation scope and achieve FDX connectivity in 6-8 weeks.
+    impact: high
+    effort: medium
+    url: https://github.com/plaid/core-exchange
+  - name: Implement Batch Data Access Patterns
+    description: Data recipients should implement batch retrieval patterns aligned with FDX guidance rather than continuous polling, reducing infrastructure costs for both data provider and recipient sides.
+    impact: medium
+    effort: low
+  - name: Adopt FAPI 2.0 Security Profile Early
+    description: Implement the FAPI 2.0 security profile (optional in current FDX versions but increasingly expected) to avoid future re-engineering costs as the standard evolves toward stricter security baselines.
+    impact: medium
+    effort: high
+  - name: Participate in FDX Working Groups
+    description: Full members who actively participate in FDX working groups can influence RFC outcomes to favor implementation patterns that reduce their own engineering costs and align standards with existing infrastructure.
+    impact: high
+    effort: high
+    url: https://financialdataexchange.org/about-fdx/
+costAllocation:
+  - dimension: MembershipTier
+    values:
+      - Observer
+      - Associate
+      - Full
+      - Affiliate
+  - dimension: DataCluster
+    values:
+      - Accounts
+      - Transactions
+      - Investments
+      - Insurance
+      - Tax
+      - Payroll
+      - Consent
+  - dimension: EcosystemRole
+    values:
+      - DataProvider
+      - DataAccessPlatform
+      - DataRecipient
+  - dimension: ImplementationPhase
+    values:
+      - Discovery
+      - Development
+      - Certification
+      - Production
+      - Maintenance
+monitoring:
+  - name: Consent Grant Volume
+    description: Track active consent grants per data cluster to understand usage scope and project support and infrastructure costs.
+    notes: Count of active OAuth tokens per data cluster serves as a proxy for active consumer data-sharing relationships
+  - name: API Request Volume by Cluster
+    description: Monitor request volume per FDX data cluster endpoint to attribute infrastructure costs and identify high-traffic data domains.
+  - name: Certification Status Tracking
+    description: Track FDX certification expiry dates and upcoming version transitions to plan re-certification budgets.
+  - name: Aggregator Invoice Reconciliation
+    description: For data recipients using aggregators, reconcile monthly aggregator invoices against application-level API call logs to validate billing accuracy.

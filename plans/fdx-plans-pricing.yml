@@ -1,0 +1,50 @@
+name: FDX Membership Plans and API Access
+description: FDX API specifications are available royalty-free under the FDX API License Agreement. Full specification access and developer tooling require FDX membership or observer enrollment through the onboarding portal. Membership is open to financial sector organizations; tiers are based on organizational type and size. Individual developers and researchers may access specifications at the observer level.
+specificationVersion: '0.1'
+url: https://financialdataexchange.org/about-fdx/
+plans:
+  - name: Observer Access
+    description: Free read-only access to FDX API specifications via the onboarding portal at onboarding.financialdataexchange.org. Observers can download the FDX API YAML specification and review data schemas but do not participate in working groups or standards development.
+    url: https://onboarding.financialdataexchange.org
+    price: Free
+    pricingModel: free
+    features:
+      - Access to FDX API YAML specification
+      - Download current and historical API versions
+      - Review of data schemas and endpoint definitions
+      - FDX API License Agreement required
+  - name: Associate Member
+    description: Entry-level paid membership for smaller organizations or those with limited direct involvement in FDX standards activities. Includes specification access, working group observer status, and regulatory update communications.
+    url: https://financialdataexchange.org/about-fdx/
+    price: Contact FDX
+    pricingModel: annual-membership
+    features:
+      - Full FDX API specification access
+      - Developer portal access
+      - Working group observer participation
+      - Regulatory and compliance updates
+      - FDX Global Summit discounted attendance
+  - name: Full Member
+    description: Standard membership for financial institutions, fintechs, aggregators, and other financial sector organizations. Includes voting rights on RFCs, working group and task force participation, and influence over standards direction.
+    url: https://financialdataexchange.org/about-fdx/
+    price: Contact FDX
+    pricingModel: annual-membership
+    features:
+      - Full FDX API specification access
+      - Developer portal and enhanced tooling access
+      - Voting rights on Request for Comments (RFCs)
+      - Working group and task force participation
+      - Implementation testing and certification resources
+      - Co-marketing opportunities
+      - FDX Global Summit participation
+  - name: Affiliate Member
+    description: Membership tier for non-financial sector organizations including consumer advocates, regulators, academia, and consultancies with an interest in open finance policy and standards.
+    url: https://financialdataexchange.org/about-fdx/
+    price: Contact FDX
+    pricingModel: annual-membership
+    features:
+      - FDX API specification access
+      - Policy and regulatory working group participation
+      - Access to FDX research and white papers
+      - Advisory input into consumer protection standards
+notes: FDX API specifications are royalty-free once accessed under the FDX API License Agreement. Implementation of the FDX API by data providers, data access platforms, and data recipients does not require ongoing royalty payments. Membership fees fund standards development, certification programs, and governance operations.
