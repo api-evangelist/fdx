@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LoanAccountType",
+  "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+  "type": "string",
+  "example": "HOMEEQUITYLOAN",
+  "enum": [
+    "AUTOLOAN",
+    "HOMEEQUITYLOAN",
+    "INSTALLMENT",
+    "LOAN",
+    "MILITARYLOAN",
+    "MORTGAGE",
+    "PERSONALLOAN",
+    "SMBLOAN",
+    "STUDENTLOAN"
+  ]
+}

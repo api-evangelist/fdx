@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Customer Name entity",
+  "description": "The name of an individual in their role as a customer. Plaid expects at least one populated name field.\nIf any field is missing (for example, no first name), then you respond with an empty string for that field\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/IndividualName"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "prefix": {
+          "description": "Prefix, e.g. Mr., Mrs., Dr.\n",
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InvestmentAccount",
+  "description": "Full details of an investment account. Plaid consumes all `InvestmentAccount` FDX fields for all types of investment accounts.\nIn the holdings array, Plaid consumes fields depending on their relevancy to the holding type. See the `holdings` array for more information.\nPlaid expects a decimal amount with two places (to represent fractional values of the base currency) for all monetary amounts. For example, `\"currentBalance\": 192.00`\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/InvestmentAccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "availableCashBalance": {
+          "type": "number",
+          "example": 3209.54,
+          "description": "Cash balance across all sub-accounts. Plaid expects that this includes sweep funds\n"
+        },
+        "balanceAsOf": {
+          "description": "Date and time of the balance\n\nISO 8601 date-time in format `YYYY-MM-DDThh:mm:ss.nnn[Z|[+|-]hh:mm]` according to\n[IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)\n",
+          "$ref": "#/components/schemas/Timestamp"
+        },
+        "currentValue": {
+          "type": "number",
+          "example": 34938.2,
+          "description": "Total current value of all investments\n"
+        },
+        "holdings": {
+          "type": "array",
+          "description": "Holdings in the investment account.\nPlaid maps the `holding` and the `investmentAccount` FDX models to its securities models, which hold universal information like the ticker symbol, and to its holdings models, which hold account-specific information like balances. For more information, see [Plaid investments](https://plaid.com/docs/investments/#securities-and-holdings)\n",
+          "items": {
+            "$ref": "#/components/schemas/Holding"
+          },
+          "example": [
+            {
+              "securityIds": [
+                {
+                  "id": "123456789",
+                  "idType": "CUSIP"
+                }
+              ],
+              "holdingName": "Apple Inc.",
+              "holdingType": "STOCK",
+              "holdingSubType": "CASH",
+              "symbol": "AAPL",
+              "purchasedPrice": 150.0,
+              "currentUnitPrice": 175.0,
+              "currentUnitPriceDate": "2023-10-01",
+              "units": 1,
+              "marketValue": 1750.0,
+              "cashAccount": true,
+              "currency": {
+                "currencyCode": "USD"
+              },
+              "fiAttributes": [
+                {
+                  "name": "isCashEquivalent",
+                  "value": "false"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "availableCashBalance",
+        "currentValue"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Statements entity",
+  "description": "A paginated array of account statements\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/PaginatedArray"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "statements": {
+          "type": "array",
+          "description": "An array of statements, each with its own HATEOAS link to retrieve the account statement\n",
+          "items": {
+            "$ref": "#/components/schemas/Statement"
+          }
+        }
+      },
+      "required": [
+        "statements"
+      ]
+    }
+  ]
+}

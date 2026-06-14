@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Identifier",
+  "description": "Value for a unique identifier\n",
+  "type": "string",
+  "maxLength": 256,
+  "example": "someLongTermUniqueIDString"
+}

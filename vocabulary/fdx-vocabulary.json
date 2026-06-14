@@ -1,0 +1,1385 @@
+{
+  "title": "FDX API Vocabulary",
+  "description": "Terms, enumerations, and property names defined in the FDX API v6.3.1 specification",
+  "version": "6.3.1",
+  "source": "https://github.com/plaid/core-exchange",
+  "terms": {
+    "page": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "PaginatedArray"
+      ]
+    },
+    "nextOffset": {
+      "type": "property",
+      "description": "Opaque cursor used by the provider to send the next set of records.\nDeprecated in favor of PageKeyQuery, will be removed with a future major release\n",
+      "dataType": "string",
+      "usedIn": [
+        "PageMetadata"
+      ]
+    },
+    "nextPageKey": {
+      "type": "property",
+      "description": "Opaque identifier. Does not need to be numeric or have any specific pattern.\nImplementation specific\n",
+      "dataType": "string",
+      "usedIn": [
+        "PageMetadata"
+      ]
+    },
+    "totalElements": {
+      "type": "property",
+      "description": "Total number of elements\n",
+      "dataType": "integer",
+      "usedIn": [
+        "PageMetadata"
+      ]
+    },
+    "Iso3166CountryCode": {
+      "type": "enum",
+      "description": "ISO 3166-1 alpha-2 codes as of April 5, 2023, from officially assigned Country Codes on [ISO Online Browsing Platform](https://www.iso.org/obp/ui/). Change log is at [ISO 3166 Maintenance Agency](https://www.iso.org/fr/committee/48750.html?t=3V3rukDb61p05Wd6ojyTRvE0S3Yg_fZgUjrLjHWcd9-mDmTKHOGjbX3nEJ3SqHar&view=documents#section-isodocuments-top)\n",
+      "values": [
+        "AD",
+        "AE",
+        "AF",
+        "AG",
+        "AI",
+        "AL",
+        "AM",
+        "AO",
+        "AQ",
+        "AR",
+        "AS",
+        "AT",
+        "AU",
+        "AW",
+        "AX",
+        "AZ",
+        "BA",
+        "BB",
+        "BD",
+        "BE",
+        "BF",
+        "BG",
+        "BH",
+        "BI",
+        "BJ",
+        "BL",
+        "BM",
+        "BN",
+        "BO",
+        "BQ",
+        "BR",
+        "BS",
+        "BT",
+        "BV",
+        "BW",
+        "BY",
+        "BZ",
+        "CA",
+        "CC",
+        "CD",
+        "CF",
+        "CG",
+        "CH",
+        "CI",
+        "CK",
+        "CL",
+        "CM",
+        "CN",
+        "CO",
+        "CR",
+        "CU",
+        "CV",
+        "CW",
+        "CX",
+        "CY",
+        "CZ",
+        "DE",
+        "DJ",
+        "DK",
+        "DM",
+        "DO",
+        "DZ",
+        "EC",
+        "EE",
+        "EG",
+        "EH",
+        "ER",
+        "ES",
+        "ET",
+        "FI",
+        "FJ",
+        "FK",
+        "FM",
+        "FO",
+        "FR",
+        "GA",
+        "GB",
+        "GD",
+        "GE",
+        "GF",
+        "GG",
+        "GH",
+        "GI",
+        "GL",
+        "GM",
+        "GN",
+        "GP",
+        "GQ",
+        "GR",
+        "GS",
+        "GT",
+        "GU",
+        "GW",
+        "GY",
+        "HK",
+        "HM",
+        "HN",
+        "HR",
+        "HT",
+        "HU",
+        "ID",
+        "IE",
+        "IL",
+        "IM",
+        "IN",
+        "IO",
+        "IQ",
+        "IR",
+        "IS",
+        "IT",
+        "JE",
+        "JM",
+        "JO",
+        "JP",
+        "KE",
+        "KG",
+        "KH",
+        "KI",
+        "KM",
+        "KN",
+        "KP",
+        "KR",
+        "KW",
+        "KY",
+        "KZ",
+        "LA",
+        "LB",
+        "LC",
+        "LI",
+        "LK",
+        "LR",
+        "LS",
+        "LT",
+        "LU",
+        "LV",
+        "LY",
+        "MA",
+        "MC",
+        "MD",
+        "ME",
+        "MF",
+        "MG",
+        "MH",
+        "MK",
+        "ML",
+        "MM",
+        "MN",
+        "MO",
+        "MP",
+        "MQ",
+        "MR",
+        "MS",
+        "MT",
+        "MU",
+        "MV",
+        "MW",
+        "MX",
+        "MY",
+        "MZ",
+        "NA",
+        "NC",
+        "NE",
+        "NF",
+        "NG",
+        "NI",
+        "NL",
+        "NO",
+        "NP",
+        "NR",
+        "NU",
+        "NZ",
+        "OM",
+        "PA",
+        "PE",
+        "PF",
+        "PG",
+        "PH",
+        "PK",
+        "PL",
+        "PM",
+        "PN",
+        "PR",
+        "PS",
+        "PT",
+        "PW",
+        "PY",
+        "QA",
+        "RE",
+        "RO",
+        "RS",
+        "RU",
+        "RW",
+        "SA",
+        "SB",
+        "SC",
+        "SD",
+        "SE",
+        "SG",
+        "SH",
+        "SI",
+        "SJ",
+        "SK",
+        "SL",
+        "SM",
+        "SN",
+        "SO",
+        "SR",
+        "SS",
+        "ST",
+        "SV",
+        "SX",
+        "SY",
+        "SZ",
+        "TC",
+        "TD",
+        "TF",
+        "TG",
+        "TH",
+        "TJ",
+        "TK",
+        "TL",
+        "TM",
+        "TN",
+        "TO",
+        "TR",
+        "TT",
+        "TV",
+        "TW",
+        "TZ",
+        "UA",
+        "UG",
+        "UM",
+        "US",
+        "UY",
+        "UZ",
+        "VA",
+        "VC",
+        "VE",
+        "VG",
+        "VI",
+        "VN",
+        "VU",
+        "WF",
+        "WS",
+        "YE",
+        "YT",
+        "ZA",
+        "ZM",
+        "ZW"
+      ]
+    },
+    "Iso4217Code": {
+      "type": "enum",
+      "description": "Currency, fund and precious metal codes effective from June 25, 2024 per\n[ISO 4217 Currency Code Maintenance](https://www.six-group.com/en/products-services/financial-information/data-standards.html).\nZWL (the Zimbabwean dollar) expires August 31, 2024 and is deprecated\nand replaced with ZWG (Zimbabwe Gold), effective on June 25, 2024.\n",
+      "values": [
+        "AED",
+        "AFN",
+        "ALL",
+        "AMD",
+        "ANG",
+        "AOA",
+        "ARS",
+        "AUD",
+        "AWG",
+        "AZN",
+        "BAM",
+        "BBD",
+        "BDT",
+        "BGN",
+        "BHD",
+        "BIF",
+        "BMD",
+        "BND",
+        "BOB",
+        "BOV",
+        "BRL",
+        "BSD",
+        "BTN",
+        "BWP",
+        "BYN",
+        "BZD",
+        "CAD",
+        "CDF",
+        "CHE",
+        "CHF",
+        "CHW",
+        "CLF",
+        "CLP",
+        "CNY",
+        "COP",
+        "COU",
+        "CRC",
+        "CUC",
+        "CUP",
+        "CVE",
+        "CZK",
+        "DJF",
+        "DKK",
+        "DOP",
+        "DZD",
+        "EGP",
+        "ERN",
+        "ETB",
+        "EUR",
+        "FJD",
+        "FKP",
+        "GBP",
+        "GEL",
+        "GHS",
+        "GIP",
+        "GMD",
+        "GNF",
+        "GTQ",
+        "GYD",
+        "HKD",
+        "HNL",
+        "HTG",
+        "HUF",
+        "IDR",
+        "ILS",
+        "INR",
+        "IQD",
+        "IRR",
+        "ISK",
+        "JMD",
+        "JOD",
+        "JPY",
+        "KES",
+        "KGS",
+        "KHR",
+        "KMF",
+        "KPW",
+        "KRW",
+        "KWD",
+        "KYD",
+        "KZT",
+        "LAK",
+        "LBP",
+        "LKR",
+        "LRD",
+        "LSL",
+        "LYD",
+        "MAD",
+        "MDL",
+        "MGA",
+        "MKD",
+        "MMK",
+        "MNT",
+        "MOP",
+        "MRU",
+        "MUR",
+        "MVR",
+        "MWK",
+        "MXN",
+        "MXV",
+        "MYR",
+        "MZN",
+        "NAD",
+        "NGN",
+        "NIO",
+        "NOK",
+        "NPR",
+        "NZD",
+        "OMR",
+        "PAB",
+        "PEN",
+        "PGK",
+        "PHP",
+        "PKR",
+        "PLN",
+        "PYG",
+        "QAR",
+        "RON",
+        "RSD",
+        "RUB",
+        "RWF",
+        "SAR",
+        "SBD",
+        "SCR",
+        "SDG",
+        "SEK",
+        "SGD",
+        "SHP",
+        "SLE",
+        "SLL",
+        "SOS",
+        "SRD",
+        "SSP",
+        "STN",
+        "SVC",
+        "SYP",
+        "SZL",
+        "THB",
+        "TJS",
+        "TMT",
+        "TND",
+        "TOP",
+        "TRY",
+        "TTD",
+        "TWD",
+        "TZS",
+        "UAH",
+        "UGX",
+        "USD",
+        "USN",
+        "UYI",
+        "UYU",
+        "UYW",
+        "UZS",
+        "VED",
+        "VES",
+        "VND",
+        "VUV",
+        "WST",
+        "XAF",
+        "XAG",
+        "XAU",
+        "XBA",
+        "XBB",
+        "XBC",
+        "XBD",
+        "XCD",
+        "XDR",
+        "XOF",
+        "XPD",
+        "XPF",
+        "XPT",
+        "XSU",
+        "XTS",
+        "XUA",
+        "XXX",
+        "YER",
+        "ZAR",
+        "ZMW",
+        "ZWG",
+        "ZWL"
+      ]
+    },
+    "currencyCode": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "Currency"
+      ]
+    },
+    "SecurityIdType": {
+      "type": "enum",
+      "description": "Plaid consumes solely CUSIP, ISIN, and SEDOL.\n\nThis field, along with `securityId` are **required** unless `symbol` is provided.\n\n**Note:** If `securityIdType` is provided, `securityId` is required.\n",
+      "values": [
+        "CINS",
+        "CMC",
+        "CME",
+        "CUSIP",
+        "ISIN",
+        "ITSA",
+        "NASDAQ",
+        "SEDOL",
+        "SICC",
+        "VALOR",
+        "WKN"
+      ]
+    },
+    "accountCategory": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "AccountDescriptor",
+        "Transaction"
+      ]
+    },
+    "accountId": {
+      "type": "property",
+      "description": "Long-term persistent identity of the account, though not an account number.\nThis identity must be unique within your organization.\n",
+      "dataType": "",
+      "usedIn": [
+        "AccountDescriptor",
+        "Statement"
+      ]
+    },
+    "accountNumberDisplay": {
+      "type": "property",
+      "description": "Account display number for the end user's handle at the owning financial\ninstitution.\nPlaid expects that the last 4 digits of this masked number correspond to the last 4 digits of the account number.\n",
+      "dataType": "string",
+      "usedIn": [
+        "AccountDescriptor"
+      ]
+    },
+    "productName": {
+      "type": "property",
+      "description": "Marketed product name for this account. Used in UIs to assist in account selection\n",
+      "dataType": "string",
+      "usedIn": [
+        "AccountDescriptor"
+      ]
+    },
+    "nickname": {
+      "type": "property",
+      "description": "Account nickname\n",
+      "dataType": "string",
+      "usedIn": [
+        "AccountDescriptor"
+      ]
+    },
+    "status": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "AccountDescriptor",
+        "Transaction",
+        "Statement"
+      ]
+    },
+    "currency": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "AccountDescriptor"
+      ]
+    },
+    "AccountStatus": {
+      "type": "enum",
+      "description": "Account status\n",
+      "values": [
+        "CLOSED",
+        "DELINQUENT",
+        "NEGATIVECURRENTBALANCE",
+        "OPEN",
+        "PAID",
+        "PENDINGCLOSE",
+        "PENDINGOPEN",
+        "RESTRICTED"
+      ]
+    },
+    "DepositAccountType": {
+      "type": "enum",
+      "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+      "values": [
+        "CHECKING",
+        "SAVINGS",
+        "CD",
+        "ESCROW",
+        "MONEYMARKET",
+        "HIGHINTERESTSAVINGSACCOUNT",
+        "FIRSTHOMESAVINGSACCOUNT",
+        "OTHERDEPOSIT"
+      ]
+    },
+    "DigitalWalletType": {
+      "type": "enum",
+      "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+      "values": [
+        "DIGITALWALLET"
+      ]
+    },
+    "LoanAccountType": {
+      "type": "enum",
+      "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+      "values": [
+        "AUTOLOAN",
+        "HOMEEQUITYLOAN",
+        "INSTALLMENT",
+        "LOAN",
+        "MILITARYLOAN",
+        "MORTGAGE",
+        "PERSONALLOAN",
+        "SMBLOAN",
+        "STUDENTLOAN"
+      ]
+    },
+    "LineOfCreditAccountType": {
+      "type": "enum",
+      "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+      "values": [
+        "LINEOFCREDIT",
+        "CHARGE",
+        "CREDITCARD",
+        "HOMELINEOFCREDIT"
+      ]
+    },
+    "InvestmentAccountType": {
+      "type": "enum",
+      "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+      "values": [
+        "401A",
+        "401K",
+        "403B",
+        "529",
+        "BROKERAGEPRODUCT",
+        "COVERDELL",
+        "DIGITALASSET",
+        "DEFINEDBENEFIT",
+        "DEFERREDPROFITSHARINGPLAN",
+        "ESOP",
+        "GUARDIAN",
+        "INDIVIDUALPENSIONPLAN",
+        "INSTITUTIONALTRUST",
+        "INVESTMENTACCOUNT",
+        "IRA",
+        "KEOGH",
+        "LIFEINCOMEFUND",
+        "LOCKEDINRETIREMENTACCOUNT",
+        "LOCKEDINRETIREMENTINCOMEFUND",
+        "LOCKEDINRETIREMENTSAVINGSPLAN",
+        "NONQUALIFIEDPLAN",
+        "OTHERINVESTMENT",
+        "ROLLOVER",
+        "ROTH",
+        "PRESCRIBEDREGISTEREDRETIREMENTINCOMEFUND",
+        "PREPAID",
+        "REGISTEREDPENSIONPLAN",
+        "REGISTEREDDISABILITYSAVINGSPLAN",
+        "REGISTEREDEDUCATIONSAVINGSPLAN",
+        "REGISTEREDRETIREMENTINCOMEFUND",
+        "REGISTEREDRETIREMENTSAVINGSPLAN",
+        "RESTRICTEDLIFEINCOMEFUND",
+        "RESTRICTEDLOCKEDINSAVINGSPLAN",
+        "SPECIFIEDPENSIONPLAN",
+        "SARSEP",
+        "TAXABLE",
+        "TAXFREESAVINGSACCOUNT",
+        "TDA",
+        "TRUST",
+        "TERM",
+        "UGMA",
+        "UTMA",
+        "VARIABLEANNUITY"
+      ]
+    },
+    "InsuranceAccountType": {
+      "type": "enum",
+      "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+      "values": [
+        "LONGTERMDISABILITY",
+        "SHORTTERMDISABILITY",
+        "UNIVERSALLIFE",
+        "WHOLELIFE"
+      ]
+    },
+    "AnnuityAccountType": {
+      "type": "enum",
+      "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+      "values": [
+        "ANNUITY",
+        "FIXEDANNUITY",
+        "VARIABLEANNUITY"
+      ]
+    },
+    "CommercialAccountType": {
+      "type": "enum",
+      "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+      "values": [
+        "COMMERCIALDEPOSIT",
+        "COMMERCIALINVESTMENT",
+        "COMMERCIALLOAN",
+        "COMMERCIALLINEOFCREDIT"
+      ]
+    },
+    "InterestRateType": {
+      "type": "enum",
+      "description": "Specifies whether an interest rate is fixed or variable. This information is helpful for personal financial planning and advising. For example, it affects the potential benefits of refinancing, and informs whether a mortgage payment is expected to change in the future\n",
+      "values": [
+        "FIXED",
+        "VARIABLE"
+      ]
+    },
+    "id": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "SecurityId"
+      ]
+    },
+    "idType": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "SecurityId"
+      ]
+    },
+    "HoldingType": {
+      "type": "enum",
+      "description": "Plaid maps the holding type to the Plaid [security type](https://plaid.com/docs/api/products/investments/#investments-transactions-get-response-securities-type).\nPlaid expects you to return `OTHER` and set the `holdingSubType` to indicate cash-type holdings (CASH, MONEYMARKET).\n",
+      "values": [
+        "ANNUITY",
+        "BOND",
+        "CD",
+        "DIGITALASSET",
+        "MUTUALFUND",
+        "OPTION",
+        "OTHER",
+        "STOCK"
+      ]
+    },
+    "HoldingSubType": {
+      "type": "enum",
+      "description": "The subtype of an investment holding. Plaid expects you to return `OTHER` and set the `holdingSubType` to indicate cash-type holdings (CASH, MONEYMARKET).\n",
+      "values": [
+        "CASH",
+        "MONEYMARKET"
+      ]
+    },
+    "name": {
+      "type": "property",
+      "description": "Name of the financial institution-specific attribute\n",
+      "dataType": "string",
+      "usedIn": [
+        "FiAttribute",
+        "CustomerWithName"
+      ]
+    },
+    "value": {
+      "type": "property",
+      "description": "Value of the financial institution-specific attribute\n",
+      "dataType": "string",
+      "usedIn": [
+        "FiAttribute"
+      ]
+    },
+    "holders": {
+      "type": "property",
+      "description": "Owners of the account.\nNote that while the [FDX specification](https://financialdataexchange.org) enables associating holders and their\ncontact information in the full `AccountHolder` schema, Plaid doesn't consume these associations.\nInstead, Plaid consumes limited information for each `AccountHolder` and doesn't associate contact information such as emails,\naddresses, or telephone numbers to account holders.\nFor more information about Plaid's data model for account contact information, see [Identity](https://plaid.com/docs/api/products/identity/)\n",
+      "dataType": "array",
+      "usedIn": [
+        "AccountContact"
+      ]
+    },
+    "emails": {
+      "type": "property",
+      "description": "Email addresses associated with the account\n",
+      "dataType": "array",
+      "usedIn": [
+        "AccountContact"
+      ]
+    },
+    "addresses": {
+      "type": "property",
+      "description": "Physical mail addresses associated with the account\n",
+      "dataType": "array",
+      "usedIn": [
+        "AccountContact"
+      ]
+    },
+    "telephones": {
+      "type": "property",
+      "description": "Telephone numbers associated with the account\n",
+      "dataType": "array",
+      "usedIn": [
+        "AccountContact"
+      ]
+    },
+    "first": {
+      "type": "property",
+      "description": "First name\n",
+      "dataType": "string",
+      "usedIn": [
+        "IndividualName"
+      ]
+    },
+    "middle": {
+      "type": "property",
+      "description": "Middle name\n",
+      "dataType": "string",
+      "usedIn": [
+        "IndividualName"
+      ]
+    },
+    "last": {
+      "type": "property",
+      "description": "Last name\n",
+      "dataType": "string",
+      "usedIn": [
+        "IndividualName"
+      ]
+    },
+    "suffix": {
+      "type": "property",
+      "description": "Generational or academic suffix, e.g. Jr., Sr., III\n",
+      "dataType": "string",
+      "usedIn": [
+        "IndividualName"
+      ]
+    },
+    "AccountHolderRelationship": {
+      "type": "enum",
+      "description": "Types of relationships between accounts and holders. Some definitions:\n* AUTHORIZED_SIGNER - An Authorized Signer is an individual who has been given permission\nby the account owner/holder to sign checks, make withdrawals, and conduct transactions\non behalf of an account holder for deposit account types, such as checking or savings,\nbut does not own the account. They may also have an ability to make changes to the account\n(e.g. can close the account)\n* AUTHORIZED_USER - An Authorized User is an individual added to a credit card account by\nthe primary account holder, who has been authorized to make purchases using the card,\nbut has no legal responsibility to repay the debt. The primary account holder remains\nlegally responsible for repaying the debt for all charges incurred, including those of\nthe Authorized User. Authorized User may not have access to the full account control\n(e.g. cannot close the account)\n",
+      "values": [
+        "AUTHORIZED_SIGNER",
+        "AUTHORIZED_USER",
+        "BUSINESS",
+        "FOR_BENEFIT_OF",
+        "FOR_BENEFIT_OF_PRIMARY",
+        "FOR_BENEFIT_OF_PRIMARY_JOINT_RESTRICTED",
+        "FOR_BENEFIT_OF_SECONDARY",
+        "FOR_BENEFIT_OF_SECONDARY_JOINT_RESTRICTED",
+        "FOR_BENEFIT_OF_SOLE_OWNER_RESTRICTED",
+        "POWER_OF_ATTORNEY",
+        "PRIMARY",
+        "PRIMARY_BORROWER",
+        "PRIMARY_JOINT",
+        "PRIMARY_JOINT_TENANTS",
+        "SECONDARY",
+        "SECONDARY_BORROWER",
+        "SECONDARY_JOINT",
+        "SECONDARY_JOINT_TENANTS",
+        "SOLE_OWNER",
+        "TRUSTEE",
+        "UNIFORM_TRANSFER_TO_MINOR"
+      ]
+    },
+    "DeliveryAddressType": {
+      "type": "enum",
+      "description": "The location type of an address\n",
+      "values": [
+        "BUSINESS",
+        "DELIVERY",
+        "HOME",
+        "MAILING"
+      ]
+    },
+    "line1": {
+      "type": "property",
+      "description": "Address line 1\n",
+      "dataType": "",
+      "usedIn": [
+        "Address"
+      ]
+    },
+    "line2": {
+      "type": "property",
+      "description": "Address line 2\n",
+      "dataType": "",
+      "usedIn": [
+        "Address"
+      ]
+    },
+    "line3": {
+      "type": "property",
+      "description": "Address line 3\n",
+      "dataType": "",
+      "usedIn": [
+        "Address"
+      ]
+    },
+    "city": {
+      "type": "property",
+      "description": "City\n",
+      "dataType": "",
+      "usedIn": [
+        "Address"
+      ]
+    },
+    "region": {
+      "type": "property",
+      "description": "State or province\n",
+      "dataType": "",
+      "usedIn": [
+        "Address"
+      ]
+    },
+    "postalCode": {
+      "type": "property",
+      "description": "Postal code\n",
+      "dataType": "string",
+      "usedIn": [
+        "Address"
+      ]
+    },
+    "country": {
+      "type": "property",
+      "description": "Country code\n",
+      "dataType": "",
+      "usedIn": [
+        "Address",
+        "TelephoneNumber"
+      ]
+    },
+    "type": {
+      "type": "property",
+      "description": "Purpose of the phone number: HOME, BUSINESS, PERSONAL, FAX, or BOTH.\nBOTH indicates number is used for both HOME and BUSINESS purposes.\n`CELL` value is deprecated in v6.3, replaced as a `network` value\n",
+      "dataType": "",
+      "usedIn": [
+        "TelephoneNumber",
+        "PaymentNetwork",
+        "AssetTransferNetwork"
+      ]
+    },
+    "number": {
+      "type": "property",
+      "description": "Telephone subscriber number defined by ITU-T recommendation E.164\n",
+      "dataType": "string",
+      "usedIn": [
+        "TelephoneNumber"
+      ]
+    },
+    "network": {
+      "type": "property",
+      "description": "The network technology used for this telephone.\nOne of CELLULAR, LANDLINE, PAGER, SATELLITE, or VOIP\n",
+      "dataType": "",
+      "usedIn": [
+        "TelephoneNumber"
+      ]
+    },
+    "primary": {
+      "type": "property",
+      "description": "Whether this is the primary and first telephone number to call\n",
+      "dataType": "boolean",
+      "usedIn": [
+        "TelephoneNumber"
+      ]
+    },
+    "TelephoneNumberPurpose": {
+      "type": "enum",
+      "description": "Purpose of the phone number: HOME, BUSINESS, PERSONAL, FAX, or BOTH.\nBOTH indicates number is used for both HOME and BUSINESS purposes.\n`CELL` value is deprecated in v6.3, replaced as a `network` value\n",
+      "values": [
+        "BOTH",
+        "BUSINESS",
+        "CELL",
+        "FAX",
+        "HOME",
+        "PERSONAL"
+      ]
+    },
+    "TelephoneNetwork": {
+      "type": "enum",
+      "description": "The network technology used for this telephone.\nOne of CELLULAR, LANDLINE, PAGER, SATELLITE, or VOIP\n",
+      "values": [
+        "CELLULAR",
+        "LANDLINE",
+        "PAGER",
+        "SATELLITE",
+        "VOIP"
+      ]
+    },
+    "bankId": {
+      "type": "property",
+      "description": "Bank identifier used by the payment network. Typically the 9-digit\nrouting transit number (RTN) associated with the account number at a US institution,\nor the 3-digit Institution (FID) and 5-digit Transit numbers for Canadian institutions,\nincluding leading zeroes\n",
+      "dataType": "string",
+      "usedIn": [
+        "PaymentNetwork"
+      ]
+    },
+    "identifier": {
+      "type": "property",
+      "description": "The number used to identify the account within the payment network.\n",
+      "dataType": "string",
+      "usedIn": [
+        "PaymentNetwork",
+        "AssetTransferNetwork"
+      ]
+    },
+    "transferIn": {
+      "type": "property",
+      "description": "Can transfer funds to the account using this information. Plaid expect that this value represents the account's current ability to be credited through a payment network.\nPlaid recommends dynamically updating this value, for example to represent if the account is locked or not.\n\n**Note:** Both `transferIn` and `transferOut` must be `true` in order for the account to support ACH\n",
+      "dataType": "boolean",
+      "usedIn": [
+        "PaymentNetwork"
+      ]
+    },
+    "transferOut": {
+      "type": "property",
+      "description": "Can transfer funds from the account using this information. Plaid expect that this value represents the account's current ability to be debited through a payment network.\nPlaid recommends dynamically updating this value, for example to represent if the account is locked or not.\n\n**Note:** Both `transferIn` and `transferOut` must be `true` in order for the account to support ACH\n",
+      "dataType": "boolean",
+      "usedIn": [
+        "PaymentNetwork"
+      ]
+    },
+    "PaymentNetworkType": {
+      "type": "enum",
+      "description": "Suggested values for Payment Network Type. `US&#95;` refers to the USA, and `CA&#95;` refers to Canada.\nPossible values:\n\n* CA&#95;ACSS: Automated Clearing House Settlement System\n* CA&#95;LVTS: Large-Value Transfer System\n* US&#95;ACH: Automated Clearing House, also called Fed ACH network (mostly small banks)\n* US&#95;CHIPS: Clearinghouse Interbank Payments System. Also called Clearing House ACH network (primarily big banks)\n* US&#95;FEDNOW: Federal Reserve Instant Payment System\n\n**NOTE**: `US&#95;FEDWIRE` and `US&#95;RTP` are not supported payment network types.\n",
+      "values": [
+        "CA_ACSS",
+        "CA_LVTS",
+        "US_ACH",
+        "US_CHIPS",
+        "US_FEDNOW",
+        "US_FEDWIRE",
+        "US_RTP"
+      ]
+    },
+    "transactionId": {
+      "type": "property",
+      "description": "Long term persistent identity of the transaction (unique to account). Plaid expects that `status: PENDING` and `status: POSTED` transactions have different IDs\n",
+      "dataType": "",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "referenceTransactionId": {
+      "type": "property",
+      "description": "For reverse postings, the identity of the transaction being\nreversed. For the correction transaction, the identity of the\nreversing post. For credit card posting transactions, the identity\nof the authorization transaction\n",
+      "dataType": "",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "postedTimestamp": {
+      "type": "property",
+      "description": "The date and time that the transaction was posted to the account.\nThis property is **required** by Plaid when `status=POSTED`. Plaid expects this property to be omitted when `status=PENDING`\nISO 8601 date-time in format `YYYY-MM-DDThh:mm:ss.nnn[Z|[+|-]hh:mm]` according to\n[IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)\n",
+      "dataType": "",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "transactionTimestamp": {
+      "type": "property",
+      "description": "The date and time that the transaction was added to the server backend systems\nISO 8601 date-time in format `YYYY-MM-DDThh:mm:ss.nnn[Z|[+|-]hh:mm]` according to\n[IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)\n",
+      "dataType": "",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "cardNumberDisplay": {
+      "type": "property",
+      "description": "The payment card number (e.g. debit, credit or digital), suitably masked,\nused to originate the transaction. May differ from primary account number as a\nsecondary or employee card or a one-time use number. This is an optional field\nand won't be returned for certain types of transactions such as cash or check deposits\n",
+      "dataType": "string",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "description": {
+      "type": "property",
+      "description": "Description of the transaction, such as information about a merchant's\nname or place of business in a manner that is user friendly and accessible to the customer\n",
+      "dataType": "string",
+      "usedIn": [
+        "Transaction",
+        "Statement"
+      ]
+    },
+    "debitCreditMemo": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "category": {
+      "type": "property",
+      "description": "Transaction category, preferably MCC or SIC. Plaid expects your organization to provide MCC, if available and applicable\n",
+      "dataType": "string",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "subCategory": {
+      "type": "property",
+      "description": "Transaction category detail specifying the standard of the transaction category.\nFor example, \"MCC\"\n",
+      "dataType": "string",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "amount": {
+      "type": "property",
+      "description": "The amount of money in the account currency. The amount is an absolute value. Plaid relies on the `DebitCreditMemo` enum to determine the direction (and sign) of the transaction\n",
+      "dataType": "number",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "foreignAmount": {
+      "type": "property",
+      "description": "The amount of money in the foreign currency. If this amount is specified, then Plaid expects that the `foreignCurrency` property is also set\n",
+      "dataType": "number",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "foreignCurrency": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "Transaction"
+      ]
+    },
+    "DebitCreditMemo": {
+      "type": "enum",
+      "description": "The posting type of a transaction. Because the transaction `amount` is an absolute value, this parameter is required to indicate the transaction direction and sign (+/-):\n- `DEBIT`: Money is leaving the account. The transaction amount will be exposed with a **positive** sign (+)\n- `CREDIT`: Money is entering the account. The transaction amount will be exposed with a **negative** sign (-)\n- `MEMO`: The transaction is pending and will be completed at the end of the day. (Plaid handles `MEMO` transaction the same as `DEBIT` transactions.)\n",
+      "values": [
+        "CREDIT",
+        "DEBIT",
+        "MEMO"
+      ]
+    },
+    "TransactionStatus": {
+      "type": "enum",
+      "description": "The status of a transaction. Plaid consumes solely the `PENDING` and `POSTED` enums,\nand treats `MEMO` and `AUTHORIZATION` as if they were `PENDING`. Plaid expects that pending and posted transactions\nhave different `transactionIds`.\n* `AUTHORIZATION`\n* `MEMO` - A pending transaction to be completed at the end of this day\n* `PENDING` - A pending transaction\n* `POSTED` - A posted transaction\n",
+      "values": [
+        "AUTHORIZATION",
+        "MEMO",
+        "PENDING",
+        "POSTED"
+      ]
+    },
+    "InvestmentTransactionType": {
+      "type": "enum",
+      "description": "The type of an investment transaction.\nPlaid maps these enums to Plaid [investment transaction types](https://plaid.com/docs/api/accounts/#investment-transaction-types-schema).\nPlaid doesn't map these enums to Plaid-specific transaction subtypes.\nPlaid maps these enums as follows:\n\n* ADJUSTMENT - fee\n* ATM - cash\n* CASH - cash\n* CHECK - cash\n* CLOSURE - Plaid suggests using SOLDTOCLOSE, PURCHASETOCLOSE, OPTIONEXERCISE or OPTIONEXPIRATION to indicate the specific type of closure, instead of using this enum.\n* CLOSUREOPT - Plaid suggests using SOLDTOCLOSE, PURCHASETOCLOSE, OPTIONEXERCISE or OPTIONEXPIRATION to indicate the specific type of closure, instead of using this enum.\n* CONTRIBUTION - buy (if transaction involves a security) or cash\n* DEP - cash\n* DEPOSIT - cash\n* DIRECTDEBIT - cash\n* DIRECTDEP - cash\n* DIV - cash\n* DIVIDEND - cash\n* DIVIDENDREINVEST - buy\n* EXPENSE - cash\n* FEE - fee\n* INCOME - cash\n* INTEREST - cash\n* INVEXPENSE - cash\n* JRNLFUND - transfer\n* JRNLSEC - transfer\n* MARGININTEREST - cash\n* OPTIONEXERCISE - transfer\n* OPTIONEXPIRATION - transfer\n* OTHER - cash - (unclassified)\n* PAYMENT - cash\n* POS - cash\n* PURCHASED - buy\n* PURCHASEDTOCOVER - buy\n* PURCHASETOCLOSE - buy\n* PURCHASETOOPEN - buy\n* REINVESTOFINCOME - buy\n* REPEATPMT - cash\n* RETURNOFCAPITAL - cash\n* SOLD - sell\n* SOLDTOCLOSE - sell\n* SOLDTOOPEN - sell\n* SPLIT - transfer\n* SRVCHG - fee\n* TRANSFER - transfer\n* XFER - transfer\n",
+      "values": [
+        "ADJUSTMENT",
+        "ATM",
+        "CASH",
+        "CHECK",
+        "CLOSURE",
+        "CLOSUREOPT",
+        "CONTRIBUTION",
+        "DEP",
+        "DEPOSIT",
+        "DIRECTDEBIT",
+        "DIRECTDEP",
+        "DIV",
+        "DIVIDEND",
+        "DIVIDENDREINVEST",
+        "EXPENSE",
+        "FEE",
+        "INCOME",
+        "INTEREST",
+        "INVEXPENSE",
+        "JRNLFUND",
+        "JRNLSEC",
+        "MARGININTEREST",
+        "OPTIONEXERCISE",
+        "OPTIONEXPIRATION",
+        "OTHER",
+        "PAYMENT",
+        "POS",
+        "PURCHASED",
+        "PURCHASEDTOCOVER",
+        "PURCHASETOCLOSE",
+        "PURCHASETOOPEN",
+        "REINVESTOFINCOME",
+        "REPEATPMT",
+        "RETURNOFCAPITAL",
+        "SOLD",
+        "SOLDTOCLOSE",
+        "SOLDTOOPEN",
+        "SPLIT",
+        "SRVCHG",
+        "TRANSFER",
+        "XFER"
+      ]
+    },
+    "SecurityType": {
+      "type": "enum",
+      "description": "The type of a security\n",
+      "values": [
+        "BOND",
+        "DEBT",
+        "MUTUALFUND",
+        "DIGITALASSET",
+        "OPTION",
+        "OTHER",
+        "STOCK",
+        "SWEEP"
+      ]
+    },
+    "UnitType": {
+      "type": "enum",
+      "description": "The units of an investment transaction\n",
+      "values": [
+        "CURRENCY",
+        "SHARES"
+      ]
+    },
+    "LoanTransactionType": {
+      "type": "enum",
+      "description": "The type of a loan transaction. Plaid passes through all loan transaction types\n\n- `ADJUSTMENT`: Adjustment or correction.\n- `FEE`: Fee charge. For example, a late payment fee.\n- `INTEREST`: Interest charge.\n- `PAYMENT`: Required payment that satisfies the minimum payment (e.g. principal + interest for mortgages).\n- `LUMP_SUM_PAYMENT`: A single payment of money, as opposed to a series of payments made over time.\n- `SKIP_PAYMENT`: Payment that satisfies deferral of a required payment.\n- `DOUBLE_UP_PAYMENT`: Additional payment beyond the required payment to reduce the principal.\n- `PAYOFF`: Payment that satisfies the terms of the mortgage loan and completely pays off the debt.\n",
+      "values": [
+        "ADJUSTMENT",
+        "FEE",
+        "INTEREST",
+        "PAYMENT",
+        "LUMP_SUM_PAYMENT",
+        "SKIP_PAYMENT",
+        "DOUBLE_UP_PAYMENT",
+        "PAYOFF"
+      ]
+    },
+    "LineOfCreditTransactionType": {
+      "type": "enum",
+      "description": "The type of a line of credit (LOC) transaction. Plaid passes through all LOC transaction types\n",
+      "values": [
+        "ADJUSTMENT",
+        "CHECK",
+        "FEE",
+        "INTEREST",
+        "PAYMENT",
+        "WITHDRAWAL",
+        "PURCHASE"
+      ]
+    },
+    "customerId": {
+      "type": "property",
+      "description": "Long-term persistent identity of the customer. This identity must be unique within your organization. Plaid consumes this customer ID if your organization uses OAuth2 instead of OIDC to secure the API. Plaid expects your organization to issue the ID as a consistent, static, opaque, unique identifier for the user\n",
+      "dataType": "",
+      "usedIn": [
+        "Customer"
+      ]
+    },
+    "statementId": {
+      "type": "property",
+      "description": "Long-term persistent identity of the statement. This identity must be unique within your organization\n",
+      "dataType": "",
+      "usedIn": [
+        "Statement"
+      ]
+    },
+    "statementDate": {
+      "type": "property",
+      "description": "The date the statement becomes available to be viewed by the user\n",
+      "dataType": "",
+      "usedIn": [
+        "Statement"
+      ]
+    },
+    "links": {
+      "type": "property",
+      "description": "The HATEOAS links to retrieve this account statement, or to invoke other APIs.\n\n**Note:** Plaid only accepts one link object in this array\n",
+      "dataType": "",
+      "usedIn": [
+        "Statement"
+      ]
+    },
+    "href": {
+      "type": "property",
+      "description": "The resource URL\n",
+      "dataType": "string",
+      "usedIn": [
+        "HateoasLink"
+      ]
+    },
+    "action": {
+      "type": "property",
+      "description": "The HTTP method to use for the request\n",
+      "dataType": "",
+      "usedIn": [
+        "HateoasLink"
+      ]
+    },
+    "rel": {
+      "type": "property",
+      "description": "The relation of this link to its containing entity, as defined by the [IETF RFC5988](https://datatracker.ietf.org/doc/html/rfc5988)\n",
+      "dataType": "string",
+      "usedIn": [
+        "HateoasLink"
+      ]
+    },
+    "types": {
+      "type": "property",
+      "description": "The content-types that can be used in the Accept header. **Note:** Plaid currently only accepts the PDF (`application/pdf`) content type\n",
+      "dataType": "array",
+      "usedIn": [
+        "HateoasLink"
+      ]
+    },
+    "HttpAction": {
+      "type": "enum",
+      "description": "The HTTP method to use for requests\n",
+      "values": [
+        "GET",
+        "POST",
+        "PATCH",
+        "DELETE",
+        "PUT"
+      ]
+    },
+    "ContentTypes": {
+      "type": "enum",
+      "description": "Types of document formats. (Suggested values)\n",
+      "values": [
+        "application/pdf",
+        "image/gif",
+        "image/jpeg",
+        "image/tiff",
+        "image/png",
+        "application/json"
+      ]
+    },
+    "assetTransferNetworks": {
+      "type": "property",
+      "description": "A paginated array of asset transfer networks for the account\n",
+      "dataType": "array",
+      "usedIn": [
+        "AssetTransferNetworkList"
+      ]
+    },
+    "identifierType": {
+      "type": "property",
+      "description": "",
+      "dataType": "",
+      "usedIn": [
+        "AssetTransferNetwork"
+      ]
+    },
+    "institutionName": {
+      "type": "property",
+      "description": "The name of the institution holding the account\n",
+      "dataType": "string",
+      "usedIn": [
+        "AssetTransferNetwork"
+      ]
+    },
+    "institutionId": {
+      "type": "property",
+      "description": "Institution identifier used by the asset transfer network, e.g., the Depository Trust and Clearing Corporation code for the institution holding the account\n",
+      "dataType": "string",
+      "usedIn": [
+        "AssetTransferNetwork"
+      ]
+    },
+    "jointAccount": {
+      "type": "property",
+      "description": "Whether this account has joint owners\n",
+      "dataType": "boolean",
+      "usedIn": [
+        "AssetTransferNetwork"
+      ]
+    },
+    "PaymentNetworkIdentifierType": {
+      "type": "enum",
+      "description": "The type of identifier used to identify the account in the payment network\n",
+      "values": [
+        "ACCOUNT_NUMBER",
+        "TOKENIZED_ACCOUNT_NUMBER"
+      ]
+    },
+    "AssetTransferType": {
+      "type": "enum",
+      "description": "The type of asset transfer\n",
+      "values": [
+        "CA_ATON",
+        "US_ACATS",
+        "US_DTC"
+      ]
+    }
+  }
+}

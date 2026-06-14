@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loan Account entity",
+  "description": "Full details of a loan account. The `accountType` field for loan accounts may be set to any of the [account types](#loan-account-types) listed below.\n\nPlaid only consumes the `MORTGAGE` and `STUDENTLOAN` types for its [Liabilities API](https://plaid.com/docs/api/products/liabilities/). For other loan account types Plaid consumes account details and transactions.\nPlaid consumes all loan account information as returned in the `GET /accounts` endpoint, as well as the additional information listed below:\n\nRequired for all loan accounts:\n* `principalBalance`\n* `interestRate`\n* `interestRateType`\n\nOptional fields for `STUDENTLOAN` accounts:\n* `interestPaidYearToDate`\n* `lastPaymentAmount`\n* `lastPaymentDate`\n* `maturityDate`\n* `nextPaymentDate`\n* `originalPrincipal`\n* `originatingDate`\n\nRequired for `MORTGAGE` accounts:\n* `accountNumber`\n\nOptional fields for `MORTGAGE` accounts:\n* `escrowBalance`\n* `interestPaidYearToDate`\n* `lastPaymentAmount`\n* `lastPaymentDate`\n* `loanTerm`\n* `maturityDate`\n* `nextPaymentAmount`\n* `nextPaymentDate`\n* `originalPrincipal`\n* `originatingDate`\n\nPlaid expects a decimal amount with two places (to represent fractional values of the base currency) for all monetary amounts. For example, `\"escrowBalance\": 192.00`\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/LoanAccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountNumber": {
+          "type": "string",
+          "example": "loanAccount0000001",
+          "description": "Full account number for the end user's handle for the account at the owning institution\n\nRequired for accountType 'MORTGAGE'\n"
+        },
+        "principalBalance": {
+          "type": "number",
+          "example": 580303.95,
+          "description": "Principal balance\n"
+        },
+        "escrowBalance": {
+          "type": "number",
+          "example": 3400.61,
+          "description": "Escrow balance of loan\n"
+        },
+        "originalPrincipal": {
+          "type": "number",
+          "example": 650400.0,
+          "description": "Original principal of loan\n"
+        },
+        "originatingDate": {
+          "$ref": "#/components/schemas/DateString",
+          "description": "Date loan originated\n\nISO 8601 full-date in format 'YYYY-MM-DD' according\nto [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)\n"
+        },
+        "loanTerm": {
+          "type": "integer",
+          "example": 360,
+          "description": "Term of loan in months\n"
+        },
+        "nextPaymentAmount": {
+          "type": "number",
+          "example": 2483.12,
+          "description": "Amount of next payment.\nMay differ from minimumPaymentAmount if the customer pays more than their minimum or out of cycle\n"
+        },
+        "nextPaymentDate": {
+          "$ref": "#/components/schemas/DateString",
+          "description": "Due date of next payment.\nMay differ from statementAmountDueDate if the customer pays out of cycle\nISO 8601 full-date in format 'YYYY-MM-DD' according\nto [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)\n"
+        },
+        "lastPaymentAmount": {
+          "type": "number",
+          "example": 2483.12,
+          "description": "Amount of last payment\n"
+        },
+        "lastPaymentDate": {
+          "$ref": "#/components/schemas/DateString",
+          "description": "Last payment date\n\nISO 8601 full-date in format 'YYYY-MM-DD' according\nto [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)\n"
+        },
+        "maturityDate": {
+          "$ref": "#/components/schemas/DateString",
+          "description": "Maturity date\n\nISO 8601 full-date in format 'YYYY-MM-DD' according\nto [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)\n"
+        },
+        "interestPaidYearToDate": {
+          "type": "number",
+          "example": 403.04,
+          "description": "Interest paid year to date\n"
+        },
+        "interestRate": {
+          "type": "number",
+          "example": 6.99,
+          "description": "The interest rate for the account, expressed as a number between 0 and 100. For example, `4` represents 4.00%, and `7.99` represents 7.99%.\n"
+        },
+        "interestRateType": {
+          "$ref": "#/components/schemas/InterestRateType"
+        },
+        "currentSchool": {
+          "type": "string",
+          "example": "University of California",
+          "description": "Current school the student loan is connected to\n"
+        },
+        "loanProviderName": {
+          "type": "string",
+          "example": "Great Lakes",
+          "description": "Name of the institution providing the loan\n"
+        }
+      },
+      "required": [
+        "principalBalance",
+        "interestRate",
+        "interestRateType"
+      ]
+    }
+  ]
+}

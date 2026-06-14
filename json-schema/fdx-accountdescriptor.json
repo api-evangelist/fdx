@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Account Descriptor entity",
+  "description": "This descriptor provides minimal information about the account for use in lightweight arrays\n",
+  "type": "object",
+  "discriminator": {
+    "propertyName": "accountCategory"
+  },
+  "properties": {
+    "accountCategory": {
+      "$ref": "#/components/schemas/AccountCategory"
+    },
+    "accountId": {
+      "description": "Long-term persistent identity of the account, though not an account number.\nThis identity must be unique within your organization.\n",
+      "$ref": "#/components/schemas/Identifier"
+    },
+    "accountNumberDisplay": {
+      "description": "Account display number for the end user's handle at the owning financial\ninstitution.\nPlaid expects that the last 4 digits of this masked number correspond to the last 4 digits of the account number.\n",
+      "type": "string",
+      "example": "4321"
+    },
+    "productName": {
+      "type": "string",
+      "example": "Premier Account",
+      "description": "Marketed product name for this account. Used in UIs to assist in account selection\n"
+    },
+    "nickname": {
+      "description": "Account nickname\n",
+      "type": "string"
+    },
+    "status": {
+      "$ref": "#/components/schemas/AccountStatus"
+    },
+    "currency": {
+      "$ref": "#/components/schemas/Currency"
+    }
+  },
+  "required": [
+    "accountCategory",
+    "accountId",
+    "productName",
+    "status",
+    "currency"
+  ]
+}

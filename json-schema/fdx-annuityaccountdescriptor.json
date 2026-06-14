@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AnnuityAccountDescriptor",
+  "description": "An annuity account. For example, a fixed or variable annuity account.\n\nThe `accountType` field for annuity accounts may be set to any of the following:\n\n- `ANNUITY`: A form of insurance or investment entitling the investor to a series of annual sums.\n- `FIXEDANNUITY`: A type of insurance contract that promises to pay the buyer a specific, guaranteed interest rate on their contributions to the account.\n- `VARIABLEANNUITY`: A type of insurance contract that promises to pay back the buyer based on the performance of an underlying portfolio of mutual funds selected by the buyer.\n\n**Note:** Annuity accounts are discoverable-only. Plaid does not consume downstream data (balances, transactions, Auth) for annuity accounts.\n",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/AccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "example": "ANNUITY_ACCOUNT",
+          "enum": [
+            "ANNUITY_ACCOUNT"
+          ]
+        },
+        "accountType": {
+          "$ref": "#/components/schemas/AnnuityAccountType"
+        }
+      },
+      "required": [
+        "accountType",
+        "accountCategory"
+      ]
+    }
+  ]
+}

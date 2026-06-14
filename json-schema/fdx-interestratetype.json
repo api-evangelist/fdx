@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Interest Rate Type",
+  "description": "Specifies whether an interest rate is fixed or variable. This information is helpful for personal financial planning and advising. For example, it affects the potential benefits of refinancing, and informs whether a mortgage payment is expected to change in the future\n",
+  "type": "string",
+  "example": "FIXED",
+  "enum": [
+    "FIXED",
+    "VARIABLE"
+  ]
+}

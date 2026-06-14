@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DepositAccountDescriptor",
+  "description": "A deposit account. For example, a checking, savings or money market account.\nPlaid consumes more detailed information for `CHECKING` and `SAVINGS` accounts.\n\nThe `accountType` field for deposit accounts may be set to any of the following:\n\n- `CHECKING`: A deposit account held at a financial institution that allows withdrawals and deposits.\n- `SAVINGS`: An interest-bearing deposit account held at a bank or other financial institution.\n- `CD`: A certificate of deposit (CD) is a product offered by banks and credit unions that provides an interest rate premium in exchange for the customer agreeing to leave a lump-sum deposit untouched for a predetermined period of time.\n- `COMMERCIALDEPOSIT`: A deposit account for commercial customers, for example a business trust account.\n- `ESCROW`: A contractual arrangement in which a third party (the stakeholder or escrow agent) receives and disburses money or property for the primary transacting parties, with the disbursement dependent on conditions agreed to by the transacting parties.\n- `MONEYMARKET`: A deposit account that pays interest based on current interest rates in the money markets.\n- `OTHERDEPOSIT`: Use when none of the listed enums apply.\n\n**Consumption scope:**\n- **Balances**: Plaid returns balances for all deposit account types.\n- **Auth**: Plaid only consumes `CHECKING` and `SAVINGS` by default for Auth. The following types are not Auth-eligible unless allowlisted: `CD`, `MONEYMARKET`, `ESCROW`, `HIGHINTERESTSAVINGSACCOUNT`, `FIRSTHOMESAVINGSACCOUNT`, `OTHERDEPOSIT`.\n- **Transactions**: Plaid consumes transactions only for accounts mapped to `depository` (CHECKING, SAVINGS, CD, MONEYMARKET). Other deposit types mapped to `other/other` return balances only (no Auth, no transactions).\n",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/AccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "example": "DEPOSIT_ACCOUNT",
+          "enum": [
+            "DEPOSIT_ACCOUNT"
+          ]
+        },
+        "accountType": {
+          "$ref": "#/components/schemas/DepositAccountType"
+        }
+      },
+      "required": [
+        "accountType",
+        "accountCategory"
+      ]
+    }
+  ]
+}

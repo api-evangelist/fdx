@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Transaction Status",
+  "description": "The status of a transaction. Plaid consumes solely the `PENDING` and `POSTED` enums,\nand treats `MEMO` and `AUTHORIZATION` as if they were `PENDING`. Plaid expects that pending and posted transactions\nhave different `transactionIds`.\n* `AUTHORIZATION`\n* `MEMO` - A pending transaction to be completed at the end of this day\n* `PENDING` - A pending transaction\n* `POSTED` - A posted transaction\n",
+  "type": "string",
+  "enum": [
+    "AUTHORIZATION",
+    "MEMO",
+    "PENDING",
+    "POSTED"
+  ]
+}

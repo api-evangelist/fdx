@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Security ID Type",
+  "description": "Plaid consumes solely CUSIP, ISIN, and SEDOL.\n\nThis field, along with `securityId` are **required** unless `symbol` is provided.\n\n**Note:** If `securityIdType` is provided, `securityId` is required.\n",
+  "type": "string",
+  "enum": [
+    "CINS",
+    "CMC",
+    "CME",
+    "CUSIP",
+    "ISIN",
+    "ITSA",
+    "NASDAQ",
+    "SEDOL",
+    "SICC",
+    "VALOR",
+    "WKN"
+  ]
+}

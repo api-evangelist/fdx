@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Holding Type",
+  "description": "Plaid maps the holding type to the Plaid [security type](https://plaid.com/docs/api/products/investments/#investments-transactions-get-response-securities-type).\nPlaid expects you to return `OTHER` and set the `holdingSubType` to indicate cash-type holdings (CASH, MONEYMARKET).\n",
+  "type": "string",
+  "enum": [
+    "ANNUITY",
+    "BOND",
+    "CD",
+    "DIGITALASSET",
+    "MUTUALFUND",
+    "OPTION",
+    "OTHER",
+    "STOCK"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Transactions entity",
+  "description": "FDX Transactions schema",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/PaginatedArray"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "transactions": {
+          "type": "array",
+          "description": "An optionally paginated array of transactions.\nMay be any of the following: [deposit transaction](#deposit-transaction), [investment transaction](#investment-transaction), [loan transaction](#loan-transaction), [line of credit transaction](#line-of-credit-transaction)\n",
+          "items": {
+            "discriminator": {
+              "propertyName": "accountCategory",
+              "mapping": {
+                "DEPOSIT_ACCOUNT": "#/components/schemas/DepositTransaction",
+                "INVESTMENT_ACCOUNT": "#/components/schemas/InvestmentTransaction",
+                "LOAN_ACCOUNT": "#/components/schemas/LoanTransaction",
+                "LOC_ACCOUNT": "#/components/schemas/LineOfCreditTransaction"
+              }
+            },
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DepositTransaction"
+              },
+              {
+                "$ref": "#/components/schemas/InvestmentTransaction"
+              },
+              {
+                "$ref": "#/components/schemas/LineOfCreditTransaction"
+              },
+              {
+                "$ref": "#/components/schemas/LoanTransaction"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "transactions"
+      ]
+    }
+  ]
+}

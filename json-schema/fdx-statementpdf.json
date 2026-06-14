@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Statement PDF",
+  "description": "An account statement in PDF format\n",
+  "format": "binary"
+}

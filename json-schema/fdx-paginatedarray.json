@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Paginated Array",
+  "description": "Base class for results that may be paginated\n",
+  "type": "object",
+  "properties": {
+    "page": {
+      "$ref": "#/components/schemas/PageMetadata"
+    }
+  }
+}

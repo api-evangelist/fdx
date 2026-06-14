@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Delivery Address Type",
+  "description": "The location type of an address\n",
+  "type": "string",
+  "enum": [
+    "BUSINESS",
+    "DELIVERY",
+    "HOME",
+    "MAILING"
+  ]
+}

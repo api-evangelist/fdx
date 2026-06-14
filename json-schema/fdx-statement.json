@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Statement entity",
+  "description": "An account statement\n",
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "$ref": "#/components/schemas/Identifier",
+      "description": "Corresponds to `accountId` in Account entity\n"
+    },
+    "statementId": {
+      "$ref": "#/components/schemas/Identifier",
+      "description": "Long-term persistent identity of the statement. This identity must be unique within your organization\n"
+    },
+    "statementDate": {
+      "$ref": "#/components/schemas/DateString",
+      "description": "The date the statement becomes available to be viewed by the user\n"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the statement\n"
+    },
+    "links": {
+      "$ref": "#/components/schemas/HateoasLinks",
+      "description": "The HATEOAS links to retrieve this account statement, or to invoke other APIs.\n\n**Note:** Plaid only accepts one link object in this array\n"
+    },
+    "status": {
+      "type": "string",
+      "description": "Availability status of statement\n"
+    }
+  }
+}

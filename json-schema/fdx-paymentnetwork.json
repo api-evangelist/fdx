@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Payment Network Supported by Account",
+  "description": "This provides details required to execute a transaction against the account within the payment network\n",
+  "type": "object",
+  "properties": {
+    "bankId": {
+      "type": "string",
+      "description": "Bank identifier used by the payment network. Typically the 9-digit\nrouting transit number (RTN) associated with the account number at a US institution,\nor the 3-digit Institution (FID) and 5-digit Transit numbers for Canadian institutions,\nincluding leading zeroes\n"
+    },
+    "identifier": {
+      "type": "string",
+      "description": "The number used to identify the account within the payment network.\n"
+    },
+    "type": {
+      "$ref": "#/components/schemas/PaymentNetworkType"
+    },
+    "transferIn": {
+      "type": "boolean",
+      "description": "Can transfer funds to the account using this information. Plaid expect that this value represents the account's current ability to be credited through a payment network.\nPlaid recommends dynamically updating this value, for example to represent if the account is locked or not.\n\n**Note:** Both `transferIn` and `transferOut` must be `true` in order for the account to support ACH\n"
+    },
+    "transferOut": {
+      "type": "boolean",
+      "description": "Can transfer funds from the account using this information. Plaid expect that this value represents the account's current ability to be debited through a payment network.\nPlaid recommends dynamically updating this value, for example to represent if the account is locked or not.\n\n**Note:** Both `transferIn` and `transferOut` must be `true` in order for the account to support ACH\n"
+    }
+  },
+  "required": [
+    "bankId",
+    "identifier",
+    "type",
+    "transferIn",
+    "transferOut"
+  ]
+}

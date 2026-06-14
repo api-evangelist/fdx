@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Telephone Number Purpose",
+  "description": "Purpose of the phone number: HOME, BUSINESS, PERSONAL, FAX, or BOTH.\nBOTH indicates number is used for both HOME and BUSINESS purposes.\n`CELL` value is deprecated in v6.3, replaced as a `network` value\n",
+  "type": "string",
+  "enum": [
+    "BOTH",
+    "BUSINESS",
+    "CELL",
+    "FAX",
+    "HOME",
+    "PERSONAL"
+  ]
+}

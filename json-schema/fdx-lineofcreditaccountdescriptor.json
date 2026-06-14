@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LineOfCreditAccountDescriptor",
+  "description": "A line-of-credit account. For example, a credit card or home equity line of credit.\nPlaid consumes more detailed information for `CREDITCARD` accounts.\n\nThe `accountType` field for line of credit accounts may be set to any of the following:\n\n- `LINEOFCREDIT`: A credit facility extended by a bank or other financial institution to a government, business or individual customer that enables the customer to draw on the facility when the customer needs funds.\n- `CHARGE`: An account to which goods and services may be charged on credit.\n- `COMMERCIALLINEOFCREDIT`: An account with a preset borrowing limit that can be used at any time.\n- `CREDITCARD`: Allows cardholders to borrow funds with which to pay for goods and services with merchants that accept cards for payment.\n- `HOMELINEOFCREDIT`: A loan in which the lender agrees to lend a maximum amount within an agreed period, where the collateral is the borrower's equity in their house.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/AccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "example": "LOC_ACCOUNT",
+          "enum": [
+            "LOC_ACCOUNT"
+          ]
+        },
+        "accountType": {
+          "$ref": "#/components/schemas/LineOfCreditAccountType"
+        }
+      },
+      "required": [
+        "accountType",
+        "accountCategory"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Security ID entity",
+  "description": "Unique identifier for a security\n",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "#/components/schemas/Identifier"
+    },
+    "idType": {
+      "$ref": "#/components/schemas/SecurityIdType"
+    }
+  }
+}

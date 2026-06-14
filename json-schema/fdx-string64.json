@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "String 64",
+  "description": "String with a maximum length of 64 characters\n",
+  "type": "string",
+  "maxLength": 64
+}

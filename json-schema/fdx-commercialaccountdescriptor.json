@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CommercialAccountDescriptor",
+  "description": "A commercial account. For example, a business deposit account. The `accountType` field for commercial accounts may be set to any of the [account types](#commercial-account-types) listed below.\n\n**Note:** Commercial accounts are discoverable-only. Plaid does not consume downstream data (balances, transactions, Auth) for commercial accounts.\n",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/AccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "example": "COMMERCIAL_ACCOUNT",
+          "enum": [
+            "COMMERCIAL_ACCOUNT"
+          ]
+        },
+        "accountType": {
+          "$ref": "#/components/schemas/CommercialAccountType"
+        }
+      },
+      "required": [
+        "accountType",
+        "accountCategory"
+      ]
+    }
+  ]
+}

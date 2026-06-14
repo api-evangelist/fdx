@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Unit Type",
+  "description": "The units of an investment transaction\n",
+  "type": "string",
+  "enum": [
+    "CURRENCY",
+    "SHARES"
+  ]
+}

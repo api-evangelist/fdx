@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Line-Of-Credit Transaction entity",
+  "description": "A line-of-credit transaction\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/Transaction"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "enum": [
+            "LOC_ACCOUNT"
+          ]
+        },
+        "transactionType": {
+          "$ref": "#/components/schemas/LineOfCreditTransactionType"
+        },
+        "checkNumber": {
+          "type": "integer",
+          "description": "Check number. Plaid expects this solely if the transaction involves a check\n"
+        }
+      },
+      "required": [
+        "accountCategory"
+      ]
+    }
+  ],
+  "example": {
+    "accountCategory": "LOC_ACCOUNT",
+    "transactionId": "78RJ3311PLU34300E",
+    "transactionTimestamp": "2024-07-15T14:46:41.375+02:00",
+    "description": "Recurring payment",
+    "debitCreditMemo": "CREDIT",
+    "status": "AUTHORIZATION",
+    "amount": 38.9
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Asset Transfer Network",
+  "description": "Information required to facilitate asset transfer from this account\n",
+  "type": "object",
+  "properties": {
+    "identifier": {
+      "type": "string",
+      "description": "The number used to identify the account within the asset transfer network. If identifierType is ACCOUNT_NUMBER, this is the account number; if identifierType is TOKENIZED_ACCOUNT_NUMBER, this is a tokenized account number\n"
+    },
+    "identifierType": {
+      "$ref": "#/components/schemas/PaymentNetworkIdentifierType"
+    },
+    "institutionName": {
+      "description": "The name of the institution holding the account\n",
+      "type": "string"
+    },
+    "institutionId": {
+      "description": "Institution identifier used by the asset transfer network, e.g., the Depository Trust and Clearing Corporation code for the institution holding the account\n",
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/components/schemas/AssetTransferType"
+    },
+    "jointAccount": {
+      "description": "Whether this account has joint owners\n",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "identifier",
+    "institutionId",
+    "type"
+  ]
+}

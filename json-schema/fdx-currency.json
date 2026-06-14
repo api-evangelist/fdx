@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Currency entity",
+  "description": "A currency object containing an [ISO 4217](https://www.iso.org/iso-4217-currency-codes.html) currency code.\n",
+  "type": "object",
+  "example": {
+    "currencyCode": "CAD"
+  },
+  "properties": {
+    "currencyCode": {
+      "$ref": "#/components/schemas/Iso4217Code"
+    }
+  },
+  "required": [
+    "currencyCode"
+  ]
+}

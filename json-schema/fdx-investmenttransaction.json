@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Investment Transaction entity",
+  "description": "A transaction on an investment account.\nIn addition to the required fields in the base `Transaction` model, Plaid requires the following fields\nfor all transactions on an investment account:\n\n* `fees`\n* `transactionType`\n\nIf the transaction involves a security, Plaid additionally requires the following fields:\n\n* `unitPrice`\n* `units`\n* `symbol` OR both `securityId` and `securityIdType`\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/Transaction"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "enum": [
+            "INVESTMENT_ACCOUNT"
+          ]
+        },
+        "transactionType": {
+          "$ref": "#/components/schemas/InvestmentTransactionType"
+        },
+        "securityId": {
+          "type": "string",
+          "description": "If you return the `securityId` for a holding, Plaid uses it to look up the closing price from NYSE Group Security Master.\nIf you don't return `securityId` for a holding that uses security IDs (not recommended), Plaid uses the `unitPrice` as the closing price.\n\nThis field, along with `securityIdType` are **required** unless `symbol` is provided.\n\n**Note:** If `securityId` is provided, `securityIdType` is required.\n"
+        },
+        "securityIdType": {
+          "$ref": "#/components/schemas/SecurityIdType"
+        },
+        "securityType": {
+          "$ref": "#/components/schemas/SecurityType"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Ticker / Market symbol\nThis field is **required** unless both `securityId` and `securityIdType` are provided\n"
+        },
+        "commission": {
+          "type": "number",
+          "description": "Plaid expects that your organization includes a value for commission if the commission isn't included in `fees`\n"
+        },
+        "fees": {
+          "type": "number",
+          "description": "Fees applied to the trade. Plaid expects that the `fees` include the commission, unless your organization separately provides a value for `commission`\n"
+        },
+        "unitPrice": {
+          "type": "number",
+          "description": "Unit price. Plaid uses this as the [price](https://plaid.com/docs/api/products/investments/#investments-transactions-get-response-investment-transactions-price). Plaid falls back to using this as the [close price](https://plaid.com/docs/api/products/investments/#investments-transactions-get-response-securities-close-price) if you don't return `securityId` for transactions involving securities.\n**Note:** This field is required if the transaction involves a security\n"
+        },
+        "units": {
+          "type": "number",
+          "description": "Plaid requires this field for holdings and transactions involving securities.\nFor security-based actions other than stock splits, quantity.\nShares for stocks, mutual funds, and others. Face value for bonds.\nContracts for options.\n\n**Note:** This field is required if the transaction involves a security.\n"
+        },
+        "unitType": {
+          "$ref": "#/components/schemas/UnitType"
+        },
+        "fiAttributes": {
+          "type": "array",
+          "description": "Array of financial institution-specific attributes. Plaid recommends including a value for [`is_cash_equivalent`](https://plaid.com/docs/api/products/investments/#investments-transactions-get-response-securities-is-cash-equivalent) property in this array. Plaid accepts `isCashEquivalent` as the attribute name and a string value of `true` or `false`.\n",
+          "items": {
+            "$ref": "#/components/schemas/FiAttribute"
+          }
+        }
+      },
+      "required": [
+        "fees",
+        "transactionType",
+        "accountCategory"
+      ]
+    }
+  ],
+  "example": {
+    "accountCategory": "INVESTMENT_ACCOUNT",
+    "transactionId": "78RJ3311PLU34300E",
+    "transactionTimestamp": "2024-07-15T14:46:41.375+02:00",
+    "description": "Share purchase",
+    "debitCreditMemo": "DEBIT",
+    "status": "PENDING",
+    "amount": 428.08,
+    "fees": 4.28,
+    "transactionType": "PURCHASED"
+  }
+}

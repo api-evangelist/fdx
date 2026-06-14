@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Date String",
+  "description": "ISO 8601 full-date in format 'YYYY-MM-DD' according\nto [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)\n",
+  "type": "string",
+  "format": "date",
+  "maxLength": 10,
+  "example": "2021-07-15"
+}

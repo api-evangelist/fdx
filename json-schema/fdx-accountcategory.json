@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Account Category type",
+  "description": "The category of account. For example, annuity, commercial, deposit, digital wallet, insurance, investment, loan, or line of credit.\n",
+  "enum": [
+    "ANNUITY_ACCOUNT",
+    "COMMERCIAL_ACCOUNT",
+    "DEPOSIT_ACCOUNT",
+    "DIGITAL_WALLET",
+    "INSURANCE_ACCOUNT",
+    "INVESTMENT_ACCOUNT",
+    "LOAN_ACCOUNT",
+    "LOC_ACCOUNT"
+  ]
+}

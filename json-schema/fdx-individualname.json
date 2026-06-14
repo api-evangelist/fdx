@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Individual name",
+  "description": "First name, middle initial, last name, suffix fields\n",
+  "type": "object",
+  "properties": {
+    "first": {
+      "description": "First name\n",
+      "type": "string"
+    },
+    "middle": {
+      "description": "Middle name\n",
+      "type": "string"
+    },
+    "last": {
+      "description": "Last name\n",
+      "type": "string"
+    },
+    "suffix": {
+      "description": "Generational or academic suffix, e.g. Jr., Sr., III\n",
+      "type": "string"
+    }
+  },
+  "required": [
+    "first",
+    "last"
+  ]
+}

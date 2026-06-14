@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Account entity",
+  "description": "This provides an instance of an account without full details. Plaid expects that the `accountType` field is set to one of the [account types](#account-types) listed below\n",
+  "type": "object",
+  "discriminator": {
+    "propertyName": "accountCategory",
+    "mapping": {
+      "ANNUITY_ACCOUNT": "#/components/schemas/AnnuityAccountDescriptor",
+      "COMMERCIAL_ACCOUNT": "#/components/schemas/CommercialAccountDescriptor",
+      "DEPOSIT_ACCOUNT": "#/components/schemas/DepositAccountDescriptor",
+      "DIGITAL_WALLET": "#/components/schemas/DigitalWalletDescriptor",
+      "INSURANCE_ACCOUNT": "#/components/schemas/InsuranceAccountDescriptor",
+      "INVESTMENT_ACCOUNT": "#/components/schemas/InvestmentAccountDescriptor",
+      "LOAN_ACCOUNT": "#/components/schemas/LoanAccountDescriptor",
+      "LOC_ACCOUNT": "#/components/schemas/LineOfCreditAccountDescriptor"
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/components/schemas/AnnuityAccountDescriptor"
+    },
+    {
+      "$ref": "#/components/schemas/CommercialAccountDescriptor"
+    },
+    {
+      "$ref": "#/components/schemas/DepositAccountDescriptor"
+    },
+    {
+      "$ref": "#/components/schemas/DigitalWalletDescriptor"
+    },
+    {
+      "$ref": "#/components/schemas/InsuranceAccountDescriptor"
+    },
+    {
+      "$ref": "#/components/schemas/InvestmentAccountDescriptor"
+    },
+    {
+      "$ref": "#/components/schemas/LoanAccountDescriptor"
+    },
+    {
+      "$ref": "#/components/schemas/LineOfCreditAccountDescriptor"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LineOfCreditAccount",
+  "description": "Full details of a line of credit account. The `accountType` field for line of credit accounts may be set to any of the [account types](#line-of-credit-account-types) listed below.\n\nPlaid may consume all the parameters returned by the `GET /accounts` endpoint:\n\n* `availableCredit`\n* `creditLine`\n* `currentBalance`\n\nAdditionally, for the `CREDITCARD` accountType, Plaid consumes the previous information plus the following for its liabilities product:\n\n* `advancesApr`\n* `lastPaymentAmount`\n* `lastPaymentDate`\n* `lastStmtBalance`\n* `lastStmtDate`\n* `minimumPaymentAmount`\n* `nextPaymentDate`\n* `purchasesApr`\nPlaid expects a decimal amount with two places (to represent fractional values of the base currency) for all monetary amounts. For example, `\"currentBalance\": 192.00`\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/LineOfCreditAccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "creditLine": {
+          "type": "number",
+          "example": 10000.0,
+          "description": "Credit limit\n"
+        },
+        "availableCredit": {
+          "type": "number",
+          "example": 8302.73,
+          "description": "Available credit. Required for all accountTypes except for `CHARGE`\n"
+        },
+        "nextPaymentAmount": {
+          "type": "number",
+          "example": 1832.11,
+          "description": "Amount of next payment.\nMay differ from minimumPaymentAmount if the customer pays more than their minimum or out of cycle\n"
+        },
+        "nextPaymentDate": {
+          "$ref": "#/components/schemas/DateString",
+          "description": "Due date of next payment.\nMay differ from statementAmountDueDate if the customer pays out of cycle\nISO 8601 full-date in format 'YYYY-MM-DD' according\nto [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)\n"
+        },
+        "principalBalance": {
+          "type": "number",
+          "example": 132.28,
+          "description": "Principal balance\n"
+        },
+        "currentBalance": {
+          "type": "number",
+          "example": 1722.81,
+          "description": "Current balance of line of credit\n"
+        },
+        "minimumPaymentAmount": {
+          "type": "number",
+          "example": 190.32,
+          "description": "Minimum payment amount from last statement balance,\nwhich is due at `statementAmountDueDate`\n"
+        },
+        "lastPaymentAmount": {
+          "type": "number",
+          "example": 2852.91,
+          "description": "Amount of last payment\n"
+        },
+        "lastPaymentDate": {
+          "$ref": "#/components/schemas/DateString",
+          "description": "Last payment date\n\nISO 8601 full-date in format 'YYYY-MM-DD' according\nto [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)\n"
+        },
+        "pastDueAmount": {
+          "type": "number",
+          "example": 0,
+          "description": "Amount owed that the account holder failed to pay on the due date\n"
+        },
+        "lastStmtBalance": {
+          "type": "number",
+          "example": 5393.81,
+          "description": "Final balance amount at end of last statement\n"
+        },
+        "lastStmtDate": {
+          "$ref": "#/components/schemas/DateString",
+          "description": "Last statement date\n\nISO 8601 full-date in format 'YYYY-MM-DD' according\nto [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)\n"
+        },
+        "purchasesApr": {
+          "type": "number",
+          "example": 0,
+          "description": "Annual percentage rate for purchases\n"
+        },
+        "advancesApr": {
+          "type": "number",
+          "example": 0,
+          "description": "Annual percentage rate for cash advances\n"
+        }
+      },
+      "required": [
+        "currentBalance"
+      ]
+    }
+  ]
+}

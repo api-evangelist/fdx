@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HATEOAS Link",
+  "description": "HATEOAS (Hypermedia As The Engine Of Application State) link\n",
+  "required": [
+    "href"
+  ],
+  "type": "object",
+  "properties": {
+    "href": {
+      "type": "string",
+      "format": "uri-reference",
+      "description": "The resource URL\n",
+      "example": "https://api.fi.com/fdx/v4/accounts/12345"
+    },
+    "action": {
+      "description": "The HTTP method to use for the request\n",
+      "$ref": "#/components/schemas/HttpAction"
+    },
+    "rel": {
+      "description": "The relation of this link to its containing entity, as defined by the [IETF RFC5988](https://datatracker.ietf.org/doc/html/rfc5988)\n",
+      "type": "string"
+    },
+    "types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ContentTypes"
+      },
+      "description": "The content-types that can be used in the Accept header. **Note:** Plaid currently only accepts the PDF (`application/pdf`) content type\n"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Payment Networks entity",
+  "description": "Array of payment networks.\nNot all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn't support ACH\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/PaginatedArray"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "paymentNetworks": {
+          "type": "array",
+          "description": "Array of payment networks.\nNot all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn't support ACH\n",
+          "items": {
+            "$ref": "#/components/schemas/PaymentNetwork"
+          },
+          "minItems": 1,
+          "example": [
+            {
+              "bankId": "010088889",
+              "identifier": "1111222233335820",
+              "type": "US_ACH",
+              "transferIn": true,
+              "transferOut": true
+            }
+          ]
+        }
+      },
+      "required": [
+        "paymentNetworks"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InvestmentAccountDescriptor",
+  "description": "An investment account. For example, a 401K or IRA.\nPlaid consumes the same details for all investment accounts.\n\nThe `accountType` field for investment accounts may be set to any of the following:\n\n- `401A`: An employer-sponsored money-purchase retirement plan that allows dollar or percentage-based contributions from the employer, the employee, or both.\n- `401K`: An employer-sponsored defined-contribution pension account defined in subsection 401(k) of the Internal Revenue Code.\n- `403B`: A U.S. tax-advantaged retirement savings plan available for public education organizations, some non-profit employers (only Internal Revenue Code 501(c)(3) organizations), cooperative hospital service organizations, and self-employed ministers in the United States.\n- `529`: A tax-advantaged savings plan designed to help pay for education.\n- `BROKERAGEPRODUCT`: Investment management offered by a licensed brokerage firm that places trades on behalf of the customer, utilizing any number of investment options.\n- `COMMERCIALINVESTMENT`: Investment Account for Commercial Customers. e.g. Commercial Brokerage Account.\n- `COVERDELL`: A trust or custodial account set up in the United States solely for paying qualified education expenses for the designated beneficiary of the account.\n- `DIGITALASSET`: An account containing digital assets.\n- `DEFINEDBENEFIT`: An employer-sponsored retirement plan where employee benefits are computed using a formula that considers several factors, such as length of employment and salary history.\n- `GUARDIAN`: An account of a child in the parent's name, with legal title to the assets in the account, as well as all capital gains and tax liabilities produced from the account belonging to the parent.\n- `INSTITUTIONALTRUST`: An institutional trust account.\n- `IRA`: An individual retirement account (IRA) is a tax-advantaged account that individuals use to save and invest for retirement.\n- `KEOGH`: A tax-deferred pension plan available to self-employed individuals or unincorporated businesses for retirement purposes.\n- `NONQUALIFIEDPLAN`: A type of tax-deferred employer-sponsored retirement plan that falls outside of ERISA guidelines.\n- `OTHERINVESTMENT`: Use when none of the listed enums apply.\n- `ROLLOVER`: An account containing investments rolled over from an employee-sponsored account.\n- `ROTH`: An individual retirement account that offers tax-free growth and tax-free withdrawals in retirement.\n- `SARSEP`: A simplified employee pension (SEP) plan set up before 1997 that includes a salary reduction arrangement.\n- `TAXABLE`: A taxable investment account.\n- `TDA`: TreasuryDirect Account.\n- `TRUST`: A type of financial account that is opened by an individual and managed by a designated trustee for the benefit of a third party in accordance with agreed-upon terms.\n- `TERM`: Life insurance that provides coverage at a fixed rate of payments for a limited period of time.\n- `UGMA`: Uniform Gifts to Minors Act account.\n- `UTMA`: Uniform Transfers to Minors Act account.\n",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/AccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "example": "INVESTMENT_ACCOUNT",
+          "enum": [
+            "INVESTMENT_ACCOUNT"
+          ]
+        },
+        "accountType": {
+          "$ref": "#/components/schemas/InvestmentAccountType"
+        }
+      },
+      "required": [
+        "accountType",
+        "accountCategory"
+      ]
+    }
+  ]
+}

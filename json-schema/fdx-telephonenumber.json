@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Telephone Number",
+  "description": "Standard for international phone numbers\n",
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/components/schemas/TelephoneNumberPurpose",
+      "description": "Purpose of the phone number: HOME, BUSINESS, PERSONAL, FAX, or BOTH.\nBOTH indicates number is used for both HOME and BUSINESS purposes.\n`CELL` value is deprecated in v6.3, replaced as a `network` value\n"
+    },
+    "country": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4,
+      "pattern": "^\\+?[1-9][0-9]{0,2}$",
+      "description": "Country calling codes defined by ITU-T recommendations E.123 and E.164,\nsuch as '+1' for United States and Canada, see\n[List_of_country_calling_codes](https://en.wikipedia.org/wiki/List_of_country_calling_codes)\n"
+    },
+    "number": {
+      "type": "string",
+      "maxLength": 15,
+      "pattern": "\\d+",
+      "description": "Telephone subscriber number defined by ITU-T recommendation E.164\n"
+    },
+    "network": {
+      "$ref": "#/components/schemas/TelephoneNetwork",
+      "description": "The network technology used for this telephone.\nOne of CELLULAR, LANDLINE, PAGER, SATELLITE, or VOIP\n"
+    },
+    "primary": {
+      "type": "boolean",
+      "description": "Whether this is the primary and first telephone number to call\n"
+    }
+  },
+  "required": [
+    "number",
+    "type"
+  ]
+}

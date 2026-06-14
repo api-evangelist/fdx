@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Account Holder Relationship",
+  "description": "Types of relationships between accounts and holders. Some definitions:\n* AUTHORIZED_SIGNER - An Authorized Signer is an individual who has been given permission\nby the account owner/holder to sign checks, make withdrawals, and conduct transactions\non behalf of an account holder for deposit account types, such as checking or savings,\nbut does not own the account. They may also have an ability to make changes to the account\n(e.g. can close the account)\n* AUTHORIZED_USER - An Authorized User is an individual added to a credit card account by\nthe primary account holder, who has been authorized to make purchases using the card,\nbut has no legal responsibility to repay the debt. The primary account holder remains\nlegally responsible for repaying the debt for all charges incurred, including those of\nthe Authorized User. Authorized User may not have access to the full account control\n(e.g. cannot close the account)\n",
+  "type": "string",
+  "enum": [
+    "AUTHORIZED_SIGNER",
+    "AUTHORIZED_USER",
+    "BUSINESS",
+    "FOR_BENEFIT_OF",
+    "FOR_BENEFIT_OF_PRIMARY",
+    "FOR_BENEFIT_OF_PRIMARY_JOINT_RESTRICTED",
+    "FOR_BENEFIT_OF_SECONDARY",
+    "FOR_BENEFIT_OF_SECONDARY_JOINT_RESTRICTED",
+    "FOR_BENEFIT_OF_SOLE_OWNER_RESTRICTED",
+    "POWER_OF_ATTORNEY",
+    "PRIMARY",
+    "PRIMARY_BORROWER",
+    "PRIMARY_JOINT",
+    "PRIMARY_JOINT_TENANTS",
+    "SECONDARY",
+    "SECONDARY_BORROWER",
+    "SECONDARY_JOINT",
+    "SECONDARY_JOINT_TENANTS",
+    "SOLE_OWNER",
+    "TRUSTEE",
+    "UNIFORM_TRANSFER_TO_MINOR"
+  ]
+}

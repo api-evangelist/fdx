@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DigitalWalletDescriptor",
+  "description": "Information for a digital wallet account\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/AccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "example": "DIGITAL_WALLET",
+          "enum": [
+            "DIGITAL_WALLET"
+          ]
+        },
+        "accountType": {
+          "$ref": "#/components/schemas/DigitalWalletType"
+        }
+      },
+      "required": [
+        "accountType",
+        "accountCategory"
+      ]
+    }
+  ]
+}

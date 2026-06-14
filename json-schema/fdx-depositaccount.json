@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Deposit Account Details entity",
+  "description": "Full details of a deposit account. Plaid consumes the same information for all types of deposit accounts.\nPlaid expects a decimal amount with two places (to represent fractional values of the base currency) for all monetary amounts. For example, `\"currentBalance\": 192.00`.\n\nThe `accountType` field for deposit accounts may be set to any of the [account types](#deposit-account-types) listed below.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/DepositAccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "currentBalance": {
+          "type": "number",
+          "example": 1399.02,
+          "description": "The total amount of money in the account (sum of all posted/cleared transactions, not including pending transactions).\nFor Plaid's full definition, see the [Transactions](https://plaid.com/docs/api/products/transactions/#transactions-get-response-accounts-balances-current)\n"
+        },
+        "availableBalance": {
+          "type": "number",
+          "example": 1399.02,
+          "description": "The money in the account available to spend (sum of all transactions, plus or minus pending transactions).\nFor Plaid's full definition, see [Transactions](https://plaid.com/docs/api/products/transactions/#transactions-get-response-accounts-balances-available)\n"
+        }
+      },
+      "required": [
+        "currentBalance",
+        "availableBalance"
+      ]
+    }
+  ]
+}

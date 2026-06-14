@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FI Attribute entity",
+  "description": "Financial institution-specific attribute.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the financial institution-specific attribute\n"
+    },
+    "value": {
+      "type": "string",
+      "description": "Value of the financial institution-specific attribute\n"
+    }
+  }
+}

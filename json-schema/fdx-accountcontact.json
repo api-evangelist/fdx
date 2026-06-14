@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Account Contact entity",
+  "description": "Details used to verify an account\n",
+  "type": "object",
+  "properties": {
+    "holders": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/AccountHolder"
+      },
+      "minItems": 1,
+      "description": "Owners of the account.\nNote that while the [FDX specification](https://financialdataexchange.org) enables associating holders and their\ncontact information in the full `AccountHolder` schema, Plaid doesn't consume these associations.\nInstead, Plaid consumes limited information for each `AccountHolder` and doesn't associate contact information such as emails,\naddresses, or telephone numbers to account holders.\nFor more information about Plaid's data model for account contact information, see [Identity](https://plaid.com/docs/api/products/identity/)\n",
+      "example": [
+        {
+          "relationship": "SECONDARY",
+          "name": {
+            "first": "Ernest",
+            "middle": "Miller",
+            "last": "Hemingway",
+            "suffix": "IV"
+          }
+        },
+        {
+          "relationship": "PRIMARY_JOINT",
+          "name": {
+            "first": "Maya",
+            "last": "Angelou",
+            "middle": "Annie"
+          }
+        }
+      ]
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "Email addresses associated with the account\n",
+      "example": [
+        "ernest.m.hemingway@domain.tld",
+        "m.angelou@domain.tld"
+      ]
+    },
+    "addresses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/DeliveryAddress"
+      },
+      "minItems": 1,
+      "description": "Physical mail addresses associated with the account\n",
+      "example": [
+        {
+          "line1": "1850 N Clark St",
+          "line2": "Apartment 103",
+          "city": "Chicago",
+          "region": "IL",
+          "postalCode": "60614",
+          "country": "US"
+        },
+        {
+          "line1": "2014 N Main St",
+          "city": "San Francisco",
+          "region": "CA",
+          "postalCode": "94105",
+          "country": "US"
+        }
+      ]
+    },
+    "telephones": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TelephoneNumber"
+      },
+      "minItems": 1,
+      "description": "Telephone numbers associated with the account\n",
+      "example": [
+        {
+          "type": "HOME",
+          "country": "1",
+          "number": "3127771926"
+        },
+        {
+          "type": "CELL",
+          "country": "53",
+          "number": "45915607"
+        },
+        {
+          "type": "HOME",
+          "country": "1",
+          "number": "4157771926"
+        }
+      ]
+    }
+  },
+  "required": [
+    "holders",
+    "emails",
+    "addresses",
+    "telephones"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DebitCreditMemo",
+  "description": "The posting type of a transaction. Because the transaction `amount` is an absolute value, this parameter is required to indicate the transaction direction and sign (+/-):\n- `DEBIT`: Money is leaving the account. The transaction amount will be exposed with a **positive** sign (+)\n- `CREDIT`: Money is entering the account. The transaction amount will be exposed with a **negative** sign (-)\n- `MEMO`: The transaction is pending and will be completed at the end of the day. (Plaid handles `MEMO` transaction the same as `DEBIT` transactions.)\n",
+  "type": "string",
+  "enum": [
+    "CREDIT",
+    "DEBIT",
+    "MEMO"
+  ]
+}

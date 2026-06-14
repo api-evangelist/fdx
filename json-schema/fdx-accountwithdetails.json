@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Account With Details entity",
+  "description": "An account with full details.\n",
+  "type": "object",
+  "discriminator": {
+    "propertyName": "accountCategory",
+    "mapping": {
+      "DEPOSIT_ACCOUNT": "#/components/schemas/DepositAccount",
+      "INVESTMENT_ACCOUNT": "#/components/schemas/InvestmentAccount",
+      "LOAN_ACCOUNT": "#/components/schemas/LoanAccount",
+      "LOC_ACCOUNT": "#/components/schemas/LineOfCreditAccount"
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/components/schemas/DepositAccount"
+    },
+    {
+      "$ref": "#/components/schemas/LoanAccount"
+    },
+    {
+      "$ref": "#/components/schemas/LineOfCreditAccount"
+    },
+    {
+      "$ref": "#/components/schemas/InvestmentAccount"
+    }
+  ]
+}

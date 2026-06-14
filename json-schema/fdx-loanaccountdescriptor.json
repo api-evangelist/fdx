@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LoanAccountDescriptor",
+  "description": "A loan account. For example, mortgage, student loan or auto loan.\nPlaid consumes more detailed information for `MORTGAGE` and `STUDENTLOAN` accounts.\n\nThe `accountType` field for loan accounts may be set to any of the following:\n\n- `AUTOLOAN`: A type of loan used to finance a car purchase.\n- `COMMERCIALLOAN`: A preset borrowing limit that can be used at any time.\n- `HOMEEQUITYLOAN`: A type of loan in which the borrower uses the equity of his or her home as collateral.\n- `INSTALLMENT`: A type of agreement or contract involving a loan that is repaid over time with a set number of scheduled payments.\n- `LOAN`: The lending of money by one or more individuals, organizations, or other entities to other individuals, organizations etc.\n- `MILITARYLOAN`: A military loan.\n- `MORTGAGE`: A type of loan you can use to buy or refinance a home.\n- `PERSONALLOAN`: A type of debt that is not protected by a guarantor, or collateralized by a lien on specific assets of the borrower.\n- `SMBLOAN`: A small/medium business loan.\n- `STUDENTLOAN`: A type of loan designed to help students pay for post-secondary education and the associated fees, such as tuition, books and supplies, and living expenses.\n",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/AccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "example": "LOAN_ACCOUNT",
+          "enum": [
+            "LOAN_ACCOUNT"
+          ]
+        },
+        "accountType": {
+          "$ref": "#/components/schemas/LoanAccountType"
+        }
+      },
+      "required": [
+        "accountType",
+        "accountCategory"
+      ]
+    }
+  ]
+}

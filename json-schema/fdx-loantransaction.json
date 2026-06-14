@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loan Transaction entity",
+  "description": "A transaction on a loan account\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/Transaction"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "enum": [
+            "LOAN_ACCOUNT"
+          ]
+        },
+        "transactionType": {
+          "$ref": "#/components/schemas/LoanTransactionType"
+        }
+      },
+      "required": [
+        "accountCategory"
+      ]
+    }
+  ],
+  "example": {
+    "accountCategory": "LOAN_ACCOUNT",
+    "transactionId": "78RJ3311PLU34300E",
+    "transactionTimestamp": "2024-07-15T14:46:41.375+02:00",
+    "description": "Monthly loan payment-minimum due",
+    "debitCreditMemo": "CREDIT",
+    "status": "POSTED",
+    "amount": 1638.83
+  }
+}

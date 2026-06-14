@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Holding entity",
+  "description": "A holding in an investment account.\nHoldings in the investment account.\nPlaid maps the `holding` and the `investmentAccount` FDX models to its securities models, which hold universal information like the ticker symbol, and to its holdings models, which hold account-specific information like balances. For more information, see [Plaid investments](https://plaid.com/docs/investments/#securities-and-holdings)\n",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "securityIds": {
+          "description": "Array of security identifiers\n",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/SecurityId"
+          }
+        },
+        "holdingName": {
+          "type": "string",
+          "description": "Holding name or security name\n"
+        },
+        "holdingType": {
+          "$ref": "#/components/schemas/HoldingType"
+        },
+        "holdingSubType": {
+          "$ref": "#/components/schemas/HoldingSubType"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Ticker / Market symbol\nThis field is **required** unless both `securityId` and `securityIdType` are provided\n"
+        },
+        "purchasedPrice": {
+          "type": "number",
+          "description": "Price of holding at the time of purchase.\nPlaid determines an approximate [cost basis](https://plaid.com/docs/api/products/investments/#investments-holdings-get-response-holdings-cost-basis)\nusing the purchase price and the number of units. Plaid cannot take fees into account to determine the cost basis\nbecause the FDX holding schema doesn't include fees.\n"
+        },
+        "currentUnitPrice": {
+          "type": "number",
+          "description": "Current unit price. Plaid uses this as the [institution_price](https://plaid.com/docs/api/products/investments/#investments-holdings-get-response-holdings-institution-price).\nPlaid falls back to using this as the [close price](https://plaid.com/docs/api/products/investments/#investments-holdings-get-response-securities-close-price)\nif you don't return `securityId` for holdings involving securities.\n"
+        },
+        "currentUnitPriceDate": {
+          "$ref": "#/components/schemas/DateString",
+          "description": "Current unit price as of date\n\nISO 8601 full-date in format 'YYYY-MM-DD' according\nto [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)\n"
+        },
+        "units": {
+          "type": "number",
+          "description": "Plaid requires this field for holdings and transactions involving securities.\nFor security-based actions other than stock splits, quantity.\nShares for stocks, mutual funds, and others. Face value for bonds.\nContracts for options.\n\n**Note:** This field is required if the transaction involves a security.\n"
+        },
+        "marketValue": {
+          "type": "number",
+          "description": "Market value at the time of data retrieved\n"
+        },
+        "faceValue": {
+          "type": "number",
+          "description": "Required for bonds. Face value at the time of data retrieved. If this isn't present,\nPlaid assumes the holding  isn't a bond and falls back to `marketValue`.\n"
+        },
+        "cashAccount": {
+          "type": "boolean",
+          "description": "If true, indicates that this holding is used to maintain proceeds\nfrom sales, dividends, and other cash postings to the investment account.\nIf you don't set a value for `isCashEquivalent` in the `fiAttributes` array,\nthen Plaid uses `cashAccount` in determining the [`is_cash_equivalent`](https://plaid.com/docs/api/products/investments/#investments-holdings-get-response-securities-is-cash-equivalent)\nstatus.\n"
+        },
+        "currency": {
+          "$ref": "#/components/schemas/Currency",
+          "description": "Currency information if it is different from Account entity\n"
+        },
+        "fiAttributes": {
+          "type": "array",
+          "description": "Array of financial institution-specific attributes.\nPlaid recommends including a value for [`is_cash_equivalent`](https://plaid.com/docs/api/products/investments/#investments-holdings-get-response-securities-is-cash-equivalent)\nproperty in this array.\nPlaid accepts `isCashEquivalent` as the attribute name and a string value of `true` or `false`.\nIf you return a value for `isCashEquivalent`, then return the same value for `cashAccount` as a boolean.\n",
+          "items": {
+            "$ref": "#/components/schemas/FiAttribute"
+          }
+        }
+      },
+      "required": [
+        "cashAccount",
+        "marketValue"
+      ]
+    }
+  ]
+}

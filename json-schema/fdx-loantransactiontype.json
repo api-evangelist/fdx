@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Loan Transaction Type",
+  "description": "The type of a loan transaction. Plaid passes through all loan transaction types\n\n- `ADJUSTMENT`: Adjustment or correction.\n- `FEE`: Fee charge. For example, a late payment fee.\n- `INTEREST`: Interest charge.\n- `PAYMENT`: Required payment that satisfies the minimum payment (e.g. principal + interest for mortgages).\n- `LUMP_SUM_PAYMENT`: A single payment of money, as opposed to a series of payments made over time.\n- `SKIP_PAYMENT`: Payment that satisfies deferral of a required payment.\n- `DOUBLE_UP_PAYMENT`: Additional payment beyond the required payment to reduce the principal.\n- `PAYOFF`: Payment that satisfies the terms of the mortgage loan and completely pays off the debt.\n",
+  "type": "string",
+  "enum": [
+    "ADJUSTMENT",
+    "FEE",
+    "INTEREST",
+    "PAYMENT",
+    "LUMP_SUM_PAYMENT",
+    "SKIP_PAYMENT",
+    "DOUBLE_UP_PAYMENT",
+    "PAYOFF"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Delivery Address",
+  "description": "A delivery address and its location type\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/Address"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/components/schemas/DeliveryAddressType",
+          "description": "Type of address location. One of BUSINESS, DELIVERY, HOME, MAILING"
+        },
+        "primary": {
+          "type": "boolean",
+          "description": "Whether this is the primary and first address to use for contact"
+        }
+      }
+    }
+  ]
+}

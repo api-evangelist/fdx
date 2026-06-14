@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "InsuranceAccountDescriptor",
+  "description": "An insurance account. For example, whole life insurance or short-term disability.\n\nThe `accountType` field for insurance accounts may be set to any of the following:\n\n- `LONGTERMDISABILITY`: Insurance that replaces a portion of the policyholder's income due to a disability for an extended period of time, usually more than a year.\n- `SHORTTERMDISABILITY`: Insurance that replaces a portion of the policyholder's income due to a disability for a short period of time, usually less than a year.\n- `UNIVERSALLIFE`: A type of a cash value life insurance where the excess of premium payments above the current cost of insurance is credited to the cash value of the policy, which in turn is credited each month with interest.\n- `WHOLELIFE`: Life insurance which is guaranteed to remain in force for the insured's entire lifetime, provided required premiums are paid, or to the maturity date.\n\n**Note:** Insurance accounts are discoverable-only. Plaid does not consume downstream data (balances, transactions, Auth) for insurance accounts.\n",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/AccountDescriptor"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accountCategory": {
+          "type": "string",
+          "example": "INSURANCE_ACCOUNT",
+          "enum": [
+            "INSURANCE_ACCOUNT"
+          ]
+        },
+        "accountType": {
+          "$ref": "#/components/schemas/InsuranceAccountType"
+        }
+      },
+      "required": [
+        "accountType",
+        "accountCategory"
+      ]
+    }
+  ]
+}

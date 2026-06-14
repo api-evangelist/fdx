@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Customer entity",
+  "description": "Represents a customer. Plaid-specific schema created to hold one property, the `name` property of the FDX `Customer` schema\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "#/components/schemas/CustomerName"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

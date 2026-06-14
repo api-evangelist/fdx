@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Customer entity.",
+  "description": "Represents a customer. Plaid-specific schema created to hold one property, the `customerId` property of the FDX `Customer` schema\n",
+  "type": "object",
+  "properties": {
+    "customerId": {
+      "$ref": "#/components/schemas/Identifier",
+      "description": "Long-term persistent identity of the customer. This identity must be unique within your organization. Plaid consumes this customer ID if your organization uses OAuth2 instead of OIDC to secure the API. Plaid expects your organization to issue the ID as a consistent, static, opaque, unique identifier for the user\n"
+    }
+  },
+  "required": [
+    "customerId"
+  ]
+}

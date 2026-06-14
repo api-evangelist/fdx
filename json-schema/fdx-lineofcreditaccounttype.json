@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LineOfCreditAccountType",
+  "description": "The account type.\nPlaid consumes basic balance account information from the `accounts/{accountId}` endpoint for a subset of the possible account types described in the FDX specification.\n",
+  "type": "string",
+  "example": "CREDITCARD",
+  "enum": [
+    "LINEOFCREDIT",
+    "CHARGE",
+    "CREDITCARD",
+    "HOMELINEOFCREDIT"
+  ]
+}

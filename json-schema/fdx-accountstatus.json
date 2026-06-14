@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Account Status",
+  "description": "Account status\n",
+  "type": "string",
+  "example": "OPEN",
+  "enum": [
+    "CLOSED",
+    "DELINQUENT",
+    "NEGATIVECURRENTBALANCE",
+    "OPEN",
+    "PAID",
+    "PENDINGCLOSE",
+    "PENDINGOPEN",
+    "RESTRICTED"
+  ]
+}

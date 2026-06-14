@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Holding SubType",
+  "description": "The subtype of an investment holding. Plaid expects you to return `OTHER` and set the `holdingSubType` to indicate cash-type holdings (CASH, MONEYMARKET).\n",
+  "type": "string",
+  "enum": [
+    "CASH",
+    "MONEYMARKET"
+  ]
+}

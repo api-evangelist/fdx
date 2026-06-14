@@ -1,0 +1,65 @@
+{
+  "@context": {
+    "@vocab": "https://financialdataexchange.org/vocabulary#",
+    "fdx": "https://financialdataexchange.org/vocabulary#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Account": "fdx:Account",
+    "DepositAccount": "fdx:DepositAccount",
+    "LoanAccount": "fdx:LoanAccount",
+    "InvestmentAccount": "fdx:InvestmentAccount",
+    "InsuranceAccount": "fdx:InsuranceAccount",
+    "accountId": "fdx:accountId",
+    "accountNumber": "fdx:accountNumber",
+    "accountType": "fdx:accountType",
+    "accountStatus": "fdx:accountStatus",
+    "nickname": "fdx:nickname",
+    "description": "schema:description",
+    "currency": "fdx:currency",
+    "balance": "fdx:balance",
+    "currentBalance": "fdx:currentBalance",
+    "availableBalance": "fdx:availableBalance",
+    "interestRate": "fdx:interestRate",
+    "maturityDate": {
+      "@id": "fdx:maturityDate",
+      "@type": "xsd:date"
+    },
+    "Transaction": "fdx:Transaction",
+    "transactionId": "fdx:transactionId",
+    "amount": "schema:price",
+    "transactionDate": {
+      "@id": "fdx:transactionDate",
+      "@type": "xsd:dateTime"
+    },
+    "postedDate": {
+      "@id": "fdx:postedDate",
+      "@type": "xsd:dateTime"
+    },
+    "category": "fdx:category",
+    "merchant": "fdx:merchant",
+    "Customer": "fdx:Customer",
+    "customerId": "fdx:customerId",
+    "name": "schema:name",
+    "email": "schema:email",
+    "ConsentGrant": "fdx:ConsentGrant",
+    "consentId": "fdx:consentId",
+    "dataClusters": "fdx:dataClusters",
+    "expirationDate": {
+      "@id": "fdx:expirationDate",
+      "@type": "xsd:dateTime"
+    },
+    "iso4217": "https://www.iso.org/iso-4217-currency-codes.html#",
+    "iso3166": "https://www.iso.org/iso-3166-country-codes.html#"
+  },
+  "@graph": [
+    {
+      "@id": "https://financialdataexchange.org/vocabulary#FDXAPIv631",
+      "@type": "schema:TechArticle",
+      "schema:name": "FDX API v6.3.1 Vocabulary",
+      "schema:description": "JSON-LD context for the Financial Data Exchange (FDX) API v6.3.1, a royalty-free REST standard for consumer-permissioned financial data sharing.",
+      "schema:version": "6.3.1",
+      "schema:url": "https://financialdataexchange.org",
+      "schema:license": "https://financialdataexchange.org/fdx-api-license-agreement/"
+    }
+  ]
+}

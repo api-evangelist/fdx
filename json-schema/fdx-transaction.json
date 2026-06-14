@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Transaction",
+  "description": "Base entity for financial transactions. For monetary amounts, Plaid expects a decimal amount, with two places to represent fractional values of the base currency, for example `101.99`\n",
+  "type": "object",
+  "discriminator": {
+    "propertyName": "accountCategory"
+  },
+  "properties": {
+    "accountCategory": {
+      "$ref": "#/components/schemas/AccountCategory"
+    },
+    "transactionId": {
+      "description": "Long term persistent identity of the transaction (unique to account). Plaid expects that `status: PENDING` and `status: POSTED` transactions have different IDs\n",
+      "$ref": "#/components/schemas/Identifier"
+    },
+    "referenceTransactionId": {
+      "description": "For reverse postings, the identity of the transaction being\nreversed. For the correction transaction, the identity of the\nreversing post. For credit card posting transactions, the identity\nof the authorization transaction\n",
+      "$ref": "#/components/schemas/Identifier"
+    },
+    "postedTimestamp": {
+      "description": "The date and time that the transaction was posted to the account.\nThis property is **required** by Plaid when `status=POSTED`. Plaid expects this property to be omitted when `status=PENDING`\nISO 8601 date-time in format `YYYY-MM-DDThh:mm:ss.nnn[Z|[+|-]hh:mm]` according to\n[IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)\n",
+      "$ref": "#/components/schemas/Timestamp"
+    },
+    "transactionTimestamp": {
+      "description": "The date and time that the transaction was added to the server backend systems\nISO 8601 date-time in format `YYYY-MM-DDThh:mm:ss.nnn[Z|[+|-]hh:mm]` according to\n[IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)\n",
+      "$ref": "#/components/schemas/Timestamp"
+    },
+    "cardNumberDisplay": {
+      "type": "string",
+      "description": "The payment card number (e.g. debit, credit or digital), suitably masked,\nused to originate the transaction. May differ from primary account number as a\nsecondary or employee card or a one-time use number. This is an optional field\nand won't be returned for certain types of transactions such as cash or check deposits\n"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the transaction, such as information about a merchant's\nname or place of business in a manner that is user friendly and accessible to the customer\n"
+    },
+    "debitCreditMemo": {
+      "$ref": "#/components/schemas/DebitCreditMemo"
+    },
+    "category": {
+      "type": "string",
+      "description": "Transaction category, preferably MCC or SIC. Plaid expects your organization to provide MCC, if available and applicable\n"
+    },
+    "subCategory": {
+      "type": "string",
+      "description": "Transaction category detail specifying the standard of the transaction category.\nFor example, \"MCC\"\n"
+    },
+    "status": {
+      "$ref": "#/components/schemas/TransactionStatus"
+    },
+    "amount": {
+      "type": "number",
+      "description": "The amount of money in the account currency. The amount is an absolute value. Plaid relies on the `DebitCreditMemo` enum to determine the direction (and sign) of the transaction\n"
+    },
+    "foreignAmount": {
+      "type": "number",
+      "description": "The amount of money in the foreign currency. If this amount is specified, then Plaid expects that the `foreignCurrency` property is also set\n"
+    },
+    "foreignCurrency": {
+      "$ref": "#/components/schemas/Iso4217Code"
+    }
+  },
+  "required": [
+    "debitCreditMemo",
+    "description",
+    "transactionId",
+    "transactionTimestamp",
+    "status",
+    "amount"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Line-Of-Credit Transaction Type",
+  "description": "The type of a line of credit (LOC) transaction. Plaid passes through all LOC transaction types\n",
+  "type": "string",
+  "enum": [
+    "ADJUSTMENT",
+    "CHECK",
+    "FEE",
+    "INTEREST",
+    "PAYMENT",
+    "WITHDRAWAL",
+    "PURCHASE"
+  ]
+}

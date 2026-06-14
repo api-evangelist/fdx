@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Address",
+  "description": "Postal address\n",
+  "type": "object",
+  "properties": {
+    "line1": {
+      "$ref": "#/components/schemas/String64",
+      "description": "Address line 1\n"
+    },
+    "line2": {
+      "$ref": "#/components/schemas/String64",
+      "description": "Address line 2\n"
+    },
+    "line3": {
+      "$ref": "#/components/schemas/String64",
+      "description": "Address line 3\n"
+    },
+    "city": {
+      "$ref": "#/components/schemas/String64",
+      "description": "City\n"
+    },
+    "region": {
+      "$ref": "#/components/schemas/String64",
+      "description": "State or province\n"
+    },
+    "postalCode": {
+      "type": "string",
+      "maxLength": 10,
+      "description": "Postal code\n"
+    },
+    "country": {
+      "$ref": "#/components/schemas/Iso3166CountryCode",
+      "description": "Country code\n"
+    }
+  },
+  "required": [
+    "line1",
+    "city",
+    "country"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Page Metadata",
+  "description": "Contains the opaque identifier, `nextOffset`, to indicate a paginated result set.\n",
+  "type": "object",
+  "properties": {
+    "nextOffset": {
+      "type": "string",
+      "example": "B47D80MVP23T",
+      "description": "Opaque cursor used by the provider to send the next set of records.\nDeprecated in favor of PageKeyQuery, will be removed with a future major release\n"
+    },
+    "nextPageKey": {
+      "type": "string",
+      "example": "B47D80MVP23T",
+      "description": "Opaque identifier. Does not need to be numeric or have any specific pattern.\nImplementation specific\n"
+    },
+    "totalElements": {
+      "type": "integer",
+      "example": 3,
+      "description": "Total number of elements\n"
+    }
+  }
+}

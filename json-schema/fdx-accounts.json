@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Accounts entity",
+  "description": "An optionally paginated array of account descriptors.\nEach account descriptor is sent as a key-value pair, with the account descriptor object as the value and the account type as the key.\nAccepted keys include: [`annuityAccount`](#annuity-account-descriptor), [`commercialAccount`](#commercial-account-descriptor), [`depositAccount`](#deposit-account-descriptor), [`digitalWallet`](#digital-wallet-descriptor), [`investmentAccount`](#investment-account-descriptor), [`locAccount`](#line-of-credit-account-descriptor), [`loanAccount`](#loan-account-descriptor), and [`insuranceAccount`](#insurance-account-descriptor).\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/PaginatedArray"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accounts": {
+          "type": "array",
+          "description": "An optionally paginated array of account descriptors.\nEach account descriptor is sent as a key-value pair, with the account descriptor object as the value and the account type as the key.\nAccepted keys include: [`annuityAccount`](#annuity-account-descriptor), [`commercialAccount`](#commercial-account-descriptor), [`depositAccount`](#deposit-account-descriptor), [`digitalWallet`](#digital-wallet-descriptor), [`investmentAccount`](#investment-account-descriptor), [`locAccount`](#line-of-credit-account-descriptor), [`loanAccount`](#loan-account-descriptor), and [`insuranceAccount`](#insurance-account-descriptor).\n",
+          "items": {
+            "$ref": "#/components/schemas/AccountWithDescriptor"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "accounts"
+      ]
+    }
+  ]
+}

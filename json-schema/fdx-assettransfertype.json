@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Asset Transfer Type",
+  "description": "The type of asset transfer\n",
+  "type": "string",
+  "enum": [
+    "CA_ATON",
+    "US_ACATS",
+    "US_DTC"
+  ]
+}

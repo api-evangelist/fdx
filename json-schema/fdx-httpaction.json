@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HTTP action type",
+  "description": "The HTTP method to use for requests\n",
+  "type": "string",
+  "enum": [
+    "GET",
+    "POST",
+    "PATCH",
+    "DELETE",
+    "PUT"
+  ]
+}

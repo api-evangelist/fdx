@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Telephone Network",
+  "description": "The network technology used for this telephone.\nOne of CELLULAR, LANDLINE, PAGER, SATELLITE, or VOIP\n",
+  "type": "string",
+  "enum": [
+    "CELLULAR",
+    "LANDLINE",
+    "PAGER",
+    "SATELLITE",
+    "VOIP"
+  ]
+}

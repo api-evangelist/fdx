@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HATEOAS links array",
+  "description": "An array of HATEOAS links\n",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/HateoasLink"
+  }
+}

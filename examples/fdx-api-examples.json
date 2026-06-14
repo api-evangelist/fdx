@@ -1,0 +1,190 @@
+[
+  {
+    "path": "/accounts",
+    "method": "GET",
+    "operationId": "searchForAccounts",
+    "summary": "List all accounts",
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/OffsetQuery"
+      },
+      {
+        "$ref": "#/components/parameters/PageKeyQuery"
+      },
+      {
+        "$ref": "#/components/parameters/LimitQuery"
+      }
+    ],
+    "responseSchema": {
+      "$ref": "#/components/schemas/Accounts"
+    }
+  },
+  {
+    "path": "/accounts/{accountId}",
+    "method": "GET",
+    "operationId": "getAccount",
+    "summary": "Get detailed information for a specific account",
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/AccountIdPath"
+      }
+    ],
+    "responseSchema": {
+      "$ref": "#/components/schemas/AccountWithDetails"
+    }
+  },
+  {
+    "path": "/accounts/{accountId}/contact",
+    "method": "GET",
+    "operationId": "getAccountContact",
+    "summary": "Get an account's contact information",
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/AccountIdPath"
+      }
+    ],
+    "responseSchema": {
+      "$ref": "#/components/schemas/AccountContact"
+    }
+  },
+  {
+    "path": "/accounts/{accountId}/payment-networks",
+    "method": "GET",
+    "operationId": "getAccountPaymentNetworks",
+    "summary": "Get payment networks supported by the account",
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/AccountIdPath"
+      },
+      {
+        "$ref": "#/components/parameters/OffsetQuery"
+      },
+      {
+        "$ref": "#/components/parameters/PageKeyQuery"
+      },
+      {
+        "$ref": "#/components/parameters/LimitQuery"
+      }
+    ],
+    "responseSchema": {
+      "$ref": "#/components/schemas/AccountPaymentNetworkList"
+    }
+  },
+  {
+    "path": "/accounts/{accountId}/transactions",
+    "method": "GET",
+    "operationId": "searchForAccountTransactions",
+    "summary": "Search for account transactions",
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/AccountIdPath"
+      },
+      {
+        "$ref": "#/components/parameters/OffsetQuery"
+      },
+      {
+        "$ref": "#/components/parameters/PageKeyQuery"
+      },
+      {
+        "$ref": "#/components/parameters/LimitQuery"
+      },
+      {
+        "$ref": "#/components/parameters/StartTimeQuery"
+      },
+      {
+        "$ref": "#/components/parameters/EndTimeQuery"
+      },
+      {
+        "$ref": "#/components/parameters/StartDateQuery"
+      },
+      {
+        "$ref": "#/components/parameters/EndDateQuery"
+      }
+    ],
+    "responseSchema": {
+      "$ref": "#/components/schemas/Transactions"
+    }
+  },
+  {
+    "path": "/customers/current",
+    "method": "GET",
+    "operationId": "getCustomerInfo",
+    "summary": "Get current authenticated customer ID",
+    "parameters": [],
+    "responseSchema": {
+      "$ref": "#/components/schemas/Customer"
+    }
+  },
+  {
+    "path": "/accounts/{accountId}/statements",
+    "method": "GET",
+    "operationId": "searchForAccountStatements",
+    "summary": "Search for statements",
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/AccountIdPath"
+      },
+      {
+        "$ref": "#/components/parameters/OffsetQuery"
+      },
+      {
+        "$ref": "#/components/parameters/PageKeyQuery"
+      },
+      {
+        "$ref": "#/components/parameters/LimitQuery"
+      },
+      {
+        "$ref": "#/components/parameters/StartTimeQuery"
+      },
+      {
+        "$ref": "#/components/parameters/EndTimeQuery"
+      },
+      {
+        "$ref": "#/components/parameters/StartDateQuery"
+      },
+      {
+        "$ref": "#/components/parameters/EndDateQuery"
+      }
+    ],
+    "responseSchema": {
+      "$ref": "#/components/schemas/Statements"
+    }
+  },
+  {
+    "path": "/accounts/{accountId}/statements/{statementId}",
+    "method": "GET",
+    "operationId": "getAccountStatement",
+    "summary": "Get account statement",
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/AccountIdPath"
+      },
+      {
+        "$ref": "#/components/parameters/StatementIdPath"
+      }
+    ],
+    "responseSchema": {
+      "$ref": "#/components/schemas/StatementPDF"
+    }
+  },
+  {
+    "path": "/accounts/{accountId}/asset-transfer-networks",
+    "method": "GET",
+    "operationId": "getAccountAssetTransferNetworks",
+    "summary": "Get asset transfer details for this account",
+    "parameters": [
+      {
+        "$ref": "#/components/parameters/AccountIdPath"
+      },
+      {
+        "$ref": "#/components/parameters/OffsetQuery"
+      },
+      {
+        "$ref": "#/components/parameters/LimitQuery"
+      }
+    ],
+    "responseSchema": {
+      "$ref": "#/components/schemas/AssetTransferNetworkList"
+    }
+  }
+]
