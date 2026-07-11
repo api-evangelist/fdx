@@ -151,6 +151,10 @@ apis:
   - type: Documentation
     url: https://financialdataexchange.org
 common:
+- type: DomainSecurity
+  url: security/fdx-domain-security.yml
+- type: Authentication
+  url: authentication/fdx-authentication.yml
 - type: OAuthScopes
   url: scopes/fdx-scopes.yml
 - type: Website
