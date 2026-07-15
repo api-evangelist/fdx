@@ -151,6 +151,8 @@ apis:
   - type: Documentation
     url: https://financialdataexchange.org
 common:
+- type: AgenticAccess
+  url: agentic-access/fdx-agentic-access.yml
 - type: DomainSecurity
   url: security/fdx-domain-security.yml
 - type: Authentication
