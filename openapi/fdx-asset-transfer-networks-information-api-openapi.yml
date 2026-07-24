@@ -1,0 +1,178 @@
+openapi: 3.0.3
+info:
+  version: 6.0.0
+  title: FDX V6.0.0 Account Information Asset Transfer Networks Information API
+  description: "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/. The FDX API specification is distributed exclusively by FDX. Modifications to eliminate required or\nconditional elements prescribed in the FDX API Certification Use Cases will render any implementations using said modifications non-conformant with the FDX API Certification Use Cases.\nPlease note that building the FDX-compliant Core Exchange API and permitting Plaid to call your build constitutes acceptance of\nthe FDX end user license agreement, which can be found at https://financialdataexchange.org/.\nThe full FDX API standard specification is distributed exclusively by FDX.\n\n## Download the specification\n\nTo view this specification and documentation as an OpenAPI YAML file, see [the public Core Exchange Github repository](https://github.com/plaid/core-exchange/tree/main/versions).\n\n## Endpoints\n\nThis specification contains the following endpoints:\n\n  - `/customers/current`\n\n  - `/accounts`\n\n  - `/accounts/{accountId}`\n\n  - `/accounts/{accountId}/payment-networks`\n\n  - `/accounts/{accountId}/asset-transfer-networks`\n\n  - `/accounts/{accountId}/statements`\n\n  - `/accounts/{accountId}/statements/{statementId}`\n\n  - `/accounts/{accountId}/contact`\n\n  - `/accounts/{accountId}/transactions`\n\n## Error responses\n\nAn error entity which can be used at the API level for error responses or at the account level to indicate a problem specific to a particular account.\nError responses must contain a `code` and `message`, and may optionally include a `debugMessage`.\nSee the descriptions below:\n\n- `code`: The FDX error code: A long-term persistent identifier which can be used to trace error condition back to log information.\n  (**Note:** This code may differ from the HTTP status code.)\n- `message`: End user displayable information which might help the customer diagnose an error\n- `debugMessage`: Message used to debug the root cause of the error. Contents should not be used in consumer's business logic. Can change at any time and should only be used for consumer to communicate with the data provider about an issue. Provider can include an error GUID in message for their use\n\n### Example error\n\nThe following is an example response with an HTTP status code of 409.\n\n```\n{\n  \"code\": 705,\n  \"message\": \"Account is closed\",\n  \"debugMessage\": \"Operation is not supported by the closed account\"\n}\n```\n\nSee the Errors table in each endpoint description for more specific message and debug message examples.\n"
+  contact:
+    name: Plaid support
+    url: https://plaid.com/data-connectivity-core-exchange/
+    email: dataconnectivity@plaid.com
+servers:
+- url: https://api.your-organization.com/fdx/v6
+  description: Financial Data Exchange V6.0 Core API
+tags:
+- name: Asset Transfer Networks Information
+  description: Search and view asset transfer networks networks
+paths:
+  /accounts/{accountId}/asset-transfer-networks:
+    get:
+      operationId: getAccountAssetTransferNetworks
+      tags:
+      - Asset Transfer Networks Information
+      description: 'Get asset transfer networks supported by an account. For example, Automated Customer Account Transfer Service (ACATS). For more information about how Plaid uses this information, see the [Plaid Investments Move API](https://plaid.com/docs/api/products/investments-move/#investmentsauthget).
+
+        '
+      summary: Get asset transfer details for this account
+      parameters:
+      - $ref: '#/components/parameters/AccountIdPath'
+      - $ref: '#/components/parameters/OffsetQuery'
+      - $ref: '#/components/parameters/LimitQuery'
+      responses:
+        '200':
+          description: 'Information required to execute an asset transfer transaction against this account.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetTransferNetworkList'
+              example:
+                assetTransferNetworks:
+                - identifier: '23348817826'
+                  identifierType: ACCOUNT_NUMBER
+                  institutionName: First Plaidypus Bank
+                  institutionId: FPB
+                  type: US_ACATS
+                  jointAccount: true
+components:
+  parameters:
+    OffsetQuery:
+      name: offset
+      in: query
+      description: 'An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.
+
+        '
+      schema:
+        type: string
+        example: qwer123454q2f
+    LimitQuery:
+      name: limit
+      in: query
+      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+
+        '
+      schema:
+        type: integer
+    AccountIdPath:
+      name: accountId
+      in: path
+      description: 'Account identifier, found in the `GET /accounts` endpoint response.
+
+        Plaid expects the ID to be a different value from the account number
+
+
+        **Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.
+
+        '
+      required: true
+      schema:
+        $ref: '#/components/schemas/Identifier'
+  schemas:
+    AssetTransferType:
+      title: Asset Transfer Type
+      description: 'The type of asset transfer
+
+        '
+      type: string
+      enum:
+      - CA_ATON
+      - US_ACATS
+      - US_DTC
+    PaymentNetworkIdentifierType:
+      title: Payment Network Identifier Type
+      description: 'The type of identifier used to identify the account in the payment network
+
+        '
+      type: string
+      enum:
+      - ACCOUNT_NUMBER
+      - TOKENIZED_ACCOUNT_NUMBER
+    AssetTransferNetwork:
+      title: Asset Transfer Network
+      description: 'Information required to facilitate asset transfer from this account
+
+        '
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: 'The number used to identify the account within the asset transfer network. If identifierType is ACCOUNT_NUMBER, this is the account number; if identifierType is TOKENIZED_ACCOUNT_NUMBER, this is a tokenized account number
+
+            '
+        identifierType:
+          $ref: '#/components/schemas/PaymentNetworkIdentifierType'
+        institutionName:
+          description: 'The name of the institution holding the account
+
+            '
+          type: string
+        institutionId:
+          description: 'Institution identifier used by the asset transfer network, e.g., the Depository Trust and Clearing Corporation code for the institution holding the account
+
+            '
+          type: string
+        type:
+          $ref: '#/components/schemas/AssetTransferType'
+        jointAccount:
+          description: 'Whether this account has joint owners
+
+            '
+          type: boolean
+      required:
+      - identifier
+      - institutionId
+      - type
+    Identifier:
+      title: Identifier
+      description: 'Value for a unique identifier
+
+        '
+      type: string
+      maxLength: 256
+      example: someLongTermUniqueIDString
+    AssetTransferNetworkList:
+      title: Asset Transfer Networks
+      description: 'A paginated array of asset transfer networks for the account
+
+        '
+      type: object
+      properties:
+        assetTransferNetworks:
+          type: array
+          description: 'A paginated array of asset transfer networks for the account
+
+            '
+          items:
+            $ref: '#/components/schemas/AssetTransferNetwork'
+      required:
+      - assetTransferNetworks
+  securitySchemes:
+    openIdConnect:
+      type: openIdConnect
+      description: 'This API uses an [OpenID Connect (OIDC) authentication flow](/core-exchange/authentication) and accepts the resulting [access token](/core-exchange/authentication#response-parameters) as a bearer token. For example,  `curl -H ''Authorization: Bearer <ACCESS&#95;TOKEN|''`.
+
+        '
+      openIdConnectUrl: https://www.your-organization.com/.well-known/openid-configuration
+    oauth2:
+      type: oauth2
+      description: 'This API uses an [OAuth2.0 authorization code flow](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow) and accepts the resulting access token as a bearer token. For example,  `curl -H ''Authorization: Bearer <ACCESS&#95;TOKEN|''`.
+
+        '
+      flows:
+        authorizationCode:
+          authorizationUrl: https://www.your-organization.com/authorize
+          tokenUrl: https://www.your-organization.com/token
+          scopes:
+            Account: (optional) Read account data
+            Customer: (optional) Read customer data
+            Transactions: (optional) Read transaction data

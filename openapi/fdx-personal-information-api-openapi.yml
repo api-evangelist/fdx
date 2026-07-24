@@ -1,0 +1,669 @@
+openapi: 3.0.3
+info:
+  version: 6.0.0
+  title: FDX V6.0.0 Account Information Personal Information API
+  description: "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/. The FDX API specification is distributed exclusively by FDX. Modifications to eliminate required or\nconditional elements prescribed in the FDX API Certification Use Cases will render any implementations using said modifications non-conformant with the FDX API Certification Use Cases.\nPlease note that building the FDX-compliant Core Exchange API and permitting Plaid to call your build constitutes acceptance of\nthe FDX end user license agreement, which can be found at https://financialdataexchange.org/.\nThe full FDX API standard specification is distributed exclusively by FDX.\n\n## Download the specification\n\nTo view this specification and documentation as an OpenAPI YAML file, see [the public Core Exchange Github repository](https://github.com/plaid/core-exchange/tree/main/versions).\n\n## Endpoints\n\nThis specification contains the following endpoints:\n\n  - `/customers/current`\n\n  - `/accounts`\n\n  - `/accounts/{accountId}`\n\n  - `/accounts/{accountId}/payment-networks`\n\n  - `/accounts/{accountId}/asset-transfer-networks`\n\n  - `/accounts/{accountId}/statements`\n\n  - `/accounts/{accountId}/statements/{statementId}`\n\n  - `/accounts/{accountId}/contact`\n\n  - `/accounts/{accountId}/transactions`\n\n## Error responses\n\nAn error entity which can be used at the API level for error responses or at the account level to indicate a problem specific to a particular account.\nError responses must contain a `code` and `message`, and may optionally include a `debugMessage`.\nSee the descriptions below:\n\n- `code`: The FDX error code: A long-term persistent identifier which can be used to trace error condition back to log information.\n  (**Note:** This code may differ from the HTTP status code.)\n- `message`: End user displayable information which might help the customer diagnose an error\n- `debugMessage`: Message used to debug the root cause of the error. Contents should not be used in consumer's business logic. Can change at any time and should only be used for consumer to communicate with the data provider about an issue. Provider can include an error GUID in message for their use\n\n### Example error\n\nThe following is an example response with an HTTP status code of 409.\n\n```\n{\n  \"code\": 705,\n  \"message\": \"Account is closed\",\n  \"debugMessage\": \"Operation is not supported by the closed account\"\n}\n```\n\nSee the Errors table in each endpoint description for more specific message and debug message examples.\n"
+  contact:
+    name: Plaid support
+    url: https://plaid.com/data-connectivity-core-exchange/
+    email: dataconnectivity@plaid.com
+servers:
+- url: https://api.your-organization.com/fdx/v6
+  description: Financial Data Exchange V6.0 Core API
+tags:
+- name: Personal Information
+  description: Search and view customer or customers
+paths:
+  /accounts/{accountId}/contact:
+    get:
+      operationId: getAccountContact
+      tags:
+      - Personal Information
+      description: 'Get contact information on the account. Plaid links contact information to accounts, rather than to users. Plaid consumes multiple holders and their contact information for the account, but doesn''t attempt to correlate holders to their respective contact information. For more information about Plaid''s identity model, see [Plaid Identity API](https://plaid.com/docs/api/products/identity/).
+
+        '
+      summary: Get an account's contact information
+      parameters:
+      - $ref: '#/components/parameters/AccountIdPath'
+      security:
+      - openIdConnect:
+        - Customer
+      - oauth2:
+        - Customer
+      responses:
+        '200':
+          description: 'Details used to verify an account.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountContact'
+  /customers/current:
+    get:
+      operationId: getCustomerInfo
+      tags:
+      - Personal Information
+      description: 'Get the ID of the customer within the authorization scope. If you use [OIDC authentication](https://plaid.com/core-exchange/docs/authentication/oauth-server-setup) (recommended) you *do not* need to implement this endpoint. Plaid will identify the customer using the OIDC [ID token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken). If you use OAuth2 authentication, Plaid will use this endpoint as an alternate method of customer identification.
+
+        '
+      summary: Get current authenticated customer ID
+      security:
+      - openIdConnect: []
+      - oauth2: []
+      responses:
+        '200':
+          description: 'Data describing current authenticated customer.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+              example:
+                customerId: someLongTermUniqueIDString
+components:
+  schemas:
+    Customer:
+      title: Customer entity.
+      description: 'Represents a customer. Plaid-specific schema created to hold one property, the `customerId` property of the FDX `Customer` schema
+
+        '
+      type: object
+      properties:
+        customerId:
+          $ref: '#/components/schemas/Identifier'
+          description: 'Long-term persistent identity of the customer. This identity must be unique within your organization. Plaid consumes this customer ID if your organization uses OAuth2 instead of OIDC to secure the API. Plaid expects your organization to issue the ID as a consistent, static, opaque, unique identifier for the user
+
+            '
+      required:
+      - customerId
+    AccountHolderRelationship:
+      title: Account Holder Relationship
+      description: 'Types of relationships between accounts and holders
+
+        '
+      type: string
+      enum:
+      - AUTHORIZED_USER
+      - BUSINESS
+      - FOR_BENEFIT_OF
+      - FOR_BENEFIT_OF_PRIMARY
+      - FOR_BENEFIT_OF_PRIMARY_JOINT_RESTRICTED
+      - FOR_BENEFIT_OF_SECONDARY
+      - FOR_BENEFIT_OF_SECONDARY_JOINT_RESTRICTED
+      - FOR_BENEFIT_OF_SOLE_OWNER_RESTRICTED
+      - POWER_OF_ATTORNEY
+      - PRIMARY
+      - PRIMARY_BORROWER
+      - PRIMARY_JOINT
+      - PRIMARY_JOINT_TENANTS
+      - SECONDARY
+      - SECONDARY_BORROWER
+      - SECONDARY_JOINT
+      - SECONDARY_JOINT_TENANTS
+      - SOLE_OWNER
+      - TRUSTEE
+      - UNIFORM_TRANSFER_TO_MINOR
+    TelephoneNumberType:
+      title: Telephone Number Type
+      description: 'Telephone number type
+
+        '
+      type: string
+      enum:
+      - HOME
+      - BUSINESS
+      - CELL
+      - FAX
+    CustomerName:
+      title: Customer Name entity
+      description: 'The name of an individual in their role as a customer. Plaid expects at least one populated name field.
+
+        If any field is missing (for example, no first name), then you respond with an empty string for that field
+
+        '
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/IndividualName'
+      - type: object
+        properties:
+          prefix:
+            description: 'Prefix, e.g. Mr., Mrs., Dr.
+
+              '
+            type: string
+    AccountContact:
+      title: Account Contact entity
+      description: 'Details used to verify an account
+
+        '
+      type: object
+      properties:
+        holders:
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountHolder'
+          minItems: 1
+          description: 'Owners of the account.
+
+            Note that while the [FDX specification](https://financialdataexchange.org) enables associating holders and their
+
+            contact information in the full `AccountHolder` schema, Plaid doesn''t consume these associations.
+
+            Instead, Plaid consumes limited information for each `AccountHolder` and doesn''t associate contact information such as emails,
+
+            addresses, or telephone numbers to account holders.
+
+            For more information about Plaid''s data model for account contact information, see [Identity](https://plaid.com/docs/api/products/identity/)
+
+            '
+          example:
+          - relationship: SECONDARY
+            name:
+              first: Ernest
+              middle: Miller
+              last: Hemingway
+              suffix: IV
+          - relationship: PRIMARY_JOINT
+            name:
+              first: Maya
+              last: Angelou
+              middle: Annie
+        emails:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: 'Email addresses associated with the account
+
+            '
+          example:
+          - ernest.m.hemingway@domain.tld
+          - m.angelou@domain.tld
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeliveryAddress'
+          minItems: 1
+          description: 'Physical mail addresses associated with the account
+
+            '
+          example:
+          - line1: 1850 N Clark St
+            line2: Apartment 103
+            city: Chicago
+            region: IL
+            postalCode: '60614'
+            country: US
+          - line1: 2014 N Main St
+            city: San Francisco
+            region: CA
+            postalCode: '94105'
+            country: US
+        telephones:
+          type: array
+          items:
+            $ref: '#/components/schemas/TelephoneNumber'
+          minItems: 1
+          description: 'Telephone numbers associated with the account
+
+            '
+          example:
+          - type: HOME
+            country: '1'
+            number: '3127771926'
+          - type: CELL
+            country: '53'
+            number: '45915607'
+          - type: HOME
+            country: '1'
+            number: '4157771926'
+      required:
+      - holders
+      - emails
+      - addresses
+      - telephones
+    String64:
+      title: String 64
+      description: 'String with a maximum length of 64 characters
+
+        '
+      type: string
+      maxLength: 64
+    TelephoneNumber:
+      title: Telephone Number
+      description: 'Standard for international phone numbers
+
+        '
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TelephoneNumberType'
+        country:
+          type: string
+          maxLength: 3
+          description: 'Country calling codes defined by ITU-T recommendations E.123 and E.164,
+
+            such as ''+1'' for United States and Canada, see
+
+            [List_of_country_calling_codes](https://en.wikipedia.org/wiki/List_of_country_calling_codes)
+
+            '
+        number:
+          type: string
+          maxLength: 15
+          pattern: \d+
+          description: 'Telephone subscriber number defined by ITU-T recommendation E.164
+
+            '
+      required:
+      - number
+      - type
+    AccountHolder:
+      title: Account Holder entity
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/CustomerWithName'
+      - type: object
+        properties:
+          relationship:
+            $ref: '#/components/schemas/AccountHolderRelationship'
+            description: 'Customer''s relationship to the account
+
+              '
+    Iso3166CountryCode:
+      title: ISO 3166 Country Code
+      description: 'ISO 3166-1 alpha-2 codes as of April 5, 2023, from officially assigned Country Codes on [ISO Online Browsing Platform](https://www.iso.org/obp/ui/). Change log is at [ISO 3166 Maintenance Agency](https://www.iso.org/fr/committee/48750.html?t=3V3rukDb61p05Wd6ojyTRvE0S3Yg_fZgUjrLjHWcd9-mDmTKHOGjbX3nEJ3SqHar&view=documents#section-isodocuments-top)
+
+        '
+      type: string
+      enum:
+      - AD
+      - AE
+      - AF
+      - AG
+      - AI
+      - AL
+      - AM
+      - AO
+      - AQ
+      - AR
+      - AS
+      - AT
+      - AU
+      - AW
+      - AX
+      - AZ
+      - BA
+      - BB
+      - BD
+      - BE
+      - BF
+      - BG
+      - BH
+      - BI
+      - BJ
+      - BL
+      - BM
+      - BN
+      - BO
+      - BQ
+      - BR
+      - BS
+      - BT
+      - BV
+      - BW
+      - BY
+      - BZ
+      - CA
+      - CC
+      - CD
+      - CF
+      - CG
+      - CH
+      - CI
+      - CK
+      - CL
+      - CM
+      - CN
+      - CO
+      - CR
+      - CU
+      - CV
+      - CW
+      - CX
+      - CY
+      - CZ
+      - DE
+      - DJ
+      - DK
+      - DM
+      - DO
+      - DZ
+      - EC
+      - EE
+      - EG
+      - EH
+      - ER
+      - ES
+      - ET
+      - FI
+      - FJ
+      - FK
+      - FM
+      - FO
+      - FR
+      - GA
+      - GB
+      - GD
+      - GE
+      - GF
+      - GG
+      - GH
+      - GI
+      - GL
+      - GM
+      - GN
+      - GP
+      - GQ
+      - GR
+      - GS
+      - GT
+      - GU
+      - GW
+      - GY
+      - HK
+      - HM
+      - HN
+      - HR
+      - HT
+      - HU
+      - ID
+      - IE
+      - IL
+      - IM
+      - IN
+      - IO
+      - IQ
+      - IR
+      - IS
+      - IT
+      - JE
+      - JM
+      - JO
+      - JP
+      - KE
+      - KG
+      - KH
+      - KI
+      - KM
+      - KN
+      - KP
+      - KR
+      - KW
+      - KY
+      - KZ
+      - LA
+      - LB
+      - LC
+      - LI
+      - LK
+      - LR
+      - LS
+      - LT
+      - LU
+      - LV
+      - LY
+      - MA
+      - MC
+      - MD
+      - ME
+      - MF
+      - MG
+      - MH
+      - MK
+      - ML
+      - MM
+      - MN
+      - MO
+      - MP
+      - MQ
+      - MR
+      - MS
+      - MT
+      - MU
+      - MV
+      - MW
+      - MX
+      - MY
+      - MZ
+      - NA
+      - NC
+      - NE
+      - NF
+      - NG
+      - NI
+      - NL
+      - 'NO'
+      - NP
+      - NR
+      - NU
+      - NZ
+      - OM
+      - PA
+      - PE
+      - PF
+      - PG
+      - PH
+      - PK
+      - PL
+      - PM
+      - PN
+      - PR
+      - PS
+      - PT
+      - PW
+      - PY
+      - QA
+      - RE
+      - RO
+      - RS
+      - RU
+      - RW
+      - SA
+      - SB
+      - SC
+      - SD
+      - SE
+      - SG
+      - SH
+      - SI
+      - SJ
+      - SK
+      - SL
+      - SM
+      - SN
+      - SO
+      - SR
+      - SS
+      - ST
+      - SV
+      - SX
+      - SY
+      - SZ
+      - TC
+      - TD
+      - TF
+      - TG
+      - TH
+      - TJ
+      - TK
+      - TL
+      - TM
+      - TN
+      - TO
+      - TR
+      - TT
+      - TV
+      - TW
+      - TZ
+      - UA
+      - UG
+      - UM
+      - US
+      - UY
+      - UZ
+      - VA
+      - VC
+      - VE
+      - VG
+      - VI
+      - VN
+      - VU
+      - WF
+      - WS
+      - YE
+      - YT
+      - ZA
+      - ZM
+      - ZW
+    IndividualName:
+      title: Individual name
+      description: 'First name, middle initial, last name, suffix fields
+
+        '
+      type: object
+      properties:
+        first:
+          description: 'First name
+
+            '
+          type: string
+        middle:
+          description: 'Middle name
+
+            '
+          type: string
+        last:
+          description: 'Last name
+
+            '
+          type: string
+        suffix:
+          description: 'Generational or academic suffix, e.g. Jr., Sr., III
+
+            '
+          type: string
+      required:
+      - first
+      - last
+    Identifier:
+      title: Identifier
+      description: 'Value for a unique identifier
+
+        '
+      type: string
+      maxLength: 256
+      example: someLongTermUniqueIDString
+    DeliveryAddress:
+      title: Delivery Address
+      description: 'A delivery address and its location type
+
+        '
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Address'
+    CustomerWithName:
+      title: Customer entity
+      description: 'Represents a customer. Plaid-specific schema created to hold one property, the `name` property of the FDX `Customer` schema
+
+        '
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/CustomerName'
+      required:
+      - name
+    Address:
+      title: Address
+      description: 'Postal address
+
+        '
+      type: object
+      properties:
+        line1:
+          $ref: '#/components/schemas/String64'
+          description: 'Address line 1
+
+            '
+        line2:
+          $ref: '#/components/schemas/String64'
+          description: 'Address line 2
+
+            '
+        line3:
+          $ref: '#/components/schemas/String64'
+          description: 'Address line 3
+
+            '
+        city:
+          $ref: '#/components/schemas/String64'
+          description: 'City
+
+            '
+        region:
+          $ref: '#/components/schemas/String64'
+          description: 'State or province
+
+            '
+        postalCode:
+          type: string
+          maxLength: 10
+          description: 'Postal code
+
+            '
+        country:
+          $ref: '#/components/schemas/Iso3166CountryCode'
+          description: 'Country code
+
+            '
+      required:
+      - line1
+      - city
+      - country
+  parameters:
+    AccountIdPath:
+      name: accountId
+      in: path
+      description: 'Account identifier, found in the `GET /accounts` endpoint response.
+
+        Plaid expects the ID to be a different value from the account number
+
+
+        **Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.
+
+        '
+      required: true
+      schema:
+        $ref: '#/components/schemas/Identifier'
+  securitySchemes:
+    openIdConnect:
+      type: openIdConnect
+      description: 'This API uses an [OpenID Connect (OIDC) authentication flow](/core-exchange/authentication) and accepts the resulting [access token](/core-exchange/authentication#response-parameters) as a bearer token. For example,  `curl -H ''Authorization: Bearer <ACCESS&#95;TOKEN|''`.
+
+        '
+      openIdConnectUrl: https://www.your-organization.com/.well-known/openid-configuration
+    oauth2:
+      type: oauth2
+      description: 'This API uses an [OAuth2.0 authorization code flow](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow) and accepts the resulting access token as a bearer token. For example,  `curl -H ''Authorization: Bearer <ACCESS&#95;TOKEN|''`.
+
+        '
+      flows:
+        authorizationCode:
+          authorizationUrl: https://www.your-organization.com/authorize
+          tokenUrl: https://www.your-organization.com/token
+          scopes:
+            Account: (optional) Read account data
+            Customer: (optional) Read customer data
+            Transactions: (optional) Read transaction data

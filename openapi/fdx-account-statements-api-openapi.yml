@@ -1,0 +1,354 @@
+openapi: 3.0.3
+info:
+  version: 6.0.0
+  title: FDX V6.0.0 Account Information Account Statements API
+  description: "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/. The FDX API specification is distributed exclusively by FDX. Modifications to eliminate required or\nconditional elements prescribed in the FDX API Certification Use Cases will render any implementations using said modifications non-conformant with the FDX API Certification Use Cases.\nPlease note that building the FDX-compliant Core Exchange API and permitting Plaid to call your build constitutes acceptance of\nthe FDX end user license agreement, which can be found at https://financialdataexchange.org/.\nThe full FDX API standard specification is distributed exclusively by FDX.\n\n## Download the specification\n\nTo view this specification and documentation as an OpenAPI YAML file, see [the public Core Exchange Github repository](https://github.com/plaid/core-exchange/tree/main/versions).\n\n## Endpoints\n\nThis specification contains the following endpoints:\n\n  - `/customers/current`\n\n  - `/accounts`\n\n  - `/accounts/{accountId}`\n\n  - `/accounts/{accountId}/payment-networks`\n\n  - `/accounts/{accountId}/asset-transfer-networks`\n\n  - `/accounts/{accountId}/statements`\n\n  - `/accounts/{accountId}/statements/{statementId}`\n\n  - `/accounts/{accountId}/contact`\n\n  - `/accounts/{accountId}/transactions`\n\n## Error responses\n\nAn error entity which can be used at the API level for error responses or at the account level to indicate a problem specific to a particular account.\nError responses must contain a `code` and `message`, and may optionally include a `debugMessage`.\nSee the descriptions below:\n\n- `code`: The FDX error code: A long-term persistent identifier which can be used to trace error condition back to log information.\n  (**Note:** This code may differ from the HTTP status code.)\n- `message`: End user displayable information which might help the customer diagnose an error\n- `debugMessage`: Message used to debug the root cause of the error. Contents should not be used in consumer's business logic. Can change at any time and should only be used for consumer to communicate with the data provider about an issue. Provider can include an error GUID in message for their use\n\n### Example error\n\nThe following is an example response with an HTTP status code of 409.\n\n```\n{\n  \"code\": 705,\n  \"message\": \"Account is closed\",\n  \"debugMessage\": \"Operation is not supported by the closed account\"\n}\n```\n\nSee the Errors table in each endpoint description for more specific message and debug message examples.\n"
+  contact:
+    name: Plaid support
+    url: https://plaid.com/data-connectivity-core-exchange/
+    email: dataconnectivity@plaid.com
+servers:
+- url: https://api.your-organization.com/fdx/v6
+  description: Financial Data Exchange V6.0 Core API
+tags:
+- name: Account Statements
+  description: Search and retrieve account statements
+paths:
+  /accounts/{accountId}/statements:
+    get:
+      operationId: searchForAccountStatements
+      tags:
+      - Account Statements
+      description: 'Get account statements.
+
+        '
+      summary: Search for statements
+      parameters:
+      - $ref: '#/components/parameters/AccountIdPath'
+      - $ref: '#/components/parameters/OffsetQuery'
+      - $ref: '#/components/parameters/LimitQuery'
+      - $ref: '#/components/parameters/StartTimeQuery'
+      - $ref: '#/components/parameters/EndTimeQuery'
+      responses:
+        '200':
+          description: 'Paginated list of available statements.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Statements'
+              example:
+                page:
+                  nextOffset: B47D80MVP23T
+                  total: 3
+                statements:
+                - accountId: '10001'
+                  statementId: '20001'
+                  statementDate: '2024-01-15'
+                  description: January 2024 Monthly Statement
+                  links:
+                  - href: /accounts/10001/statements/20001
+                    rel: self
+                    action: GET
+                    types:
+                    - application/pdf
+                  - href: /accounts/10001/statements/20001/download
+                    rel: download
+                    action: GET
+                    types:
+                    - application/pdf
+                  status: AVAILABLE
+                - accountId: '10001'
+                  statementId: '20002'
+                  statementDate: '2024-02-15'
+                  description: February 2024 Monthly Statement
+                  links:
+                  - href: /accounts/10001/statements/20002
+                    rel: self
+                    action: GET
+                    types:
+                    - application/pdf
+                  status: PROCESSING
+  /accounts/{accountId}/statements/{statementId}:
+    get:
+      operationId: getAccountStatement
+      tags:
+      - Account Statements
+      description: 'Get account statement PDF.
+
+        '
+      summary: Get account statement
+      parameters:
+      - $ref: '#/components/parameters/AccountIdPath'
+      - $ref: '#/components/parameters/StatementIdPath'
+      responses:
+        '200':
+          description: 'A pdf of an account statement.
+
+            '
+          content:
+            application/pdf:
+              schema:
+                $ref: '#/components/schemas/StatementPDF'
+components:
+  parameters:
+    StartTimeQuery:
+      name: startTime
+      in: query
+      description: 'Start time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.
+
+        '
+      schema:
+        $ref: '#/components/schemas/DateString'
+    EndTimeQuery:
+      name: endTime
+      in: query
+      description: 'End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.
+
+        '
+      schema:
+        $ref: '#/components/schemas/DateString'
+    StatementIdPath:
+      name: statementId
+      in: path
+      description: 'Statement identifier, found in the `GET /accounts/{accountId}/statements` endpoint response
+
+        '
+      required: true
+      schema:
+        $ref: '#/components/schemas/Identifier'
+    OffsetQuery:
+      name: offset
+      in: query
+      description: 'An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.
+
+        '
+      schema:
+        type: string
+        example: qwer123454q2f
+    LimitQuery:
+      name: limit
+      in: query
+      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+
+        '
+      schema:
+        type: integer
+    AccountIdPath:
+      name: accountId
+      in: path
+      description: 'Account identifier, found in the `GET /accounts` endpoint response.
+
+        Plaid expects the ID to be a different value from the account number
+
+
+        **Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.
+
+        '
+      required: true
+      schema:
+        $ref: '#/components/schemas/Identifier'
+  schemas:
+    DateString:
+      title: Date String
+      description: 'ISO 8601 full-date in format ''YYYY-MM-DD'' according
+
+        to [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)
+
+        '
+      type: string
+      format: date
+      maxLength: 10
+      example: '2021-07-15'
+    HateoasLinks:
+      title: HATEOAS links array
+      description: 'An array of HATEOAS links
+
+        '
+      type: array
+      items:
+        $ref: '#/components/schemas/HateoasLink'
+    HttpAction:
+      title: HTTP action type
+      description: 'The HTTP method to use for requests
+
+        '
+      type: string
+      enum:
+      - GET
+      - POST
+      - PATCH
+      - DELETE
+      - PUT
+    Statements:
+      title: Statements entity
+      description: 'A paginated array of account statements
+
+        '
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PaginatedArray'
+      - type: object
+        properties:
+          statements:
+            type: array
+            description: 'An array of statements, each with its own HATEOAS link to retrieve the account statement
+
+              '
+            items:
+              $ref: '#/components/schemas/Statement'
+        required:
+        - statements
+    StatementPDF:
+      title: Statement PDF
+      description: 'An account statement in PDF format
+
+        '
+      format: binary
+    HateoasLink:
+      title: HATEOAS Link
+      description: 'HATEOAS (Hypermedia As The Engine Of Application State) link
+
+        '
+      required:
+      - href
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri-reference
+          description: 'The resource URL
+
+            '
+          example: https://api.fi.com/fdx/v4/accounts/12345
+        action:
+          description: 'The HTTP method to use for the request
+
+            '
+          $ref: '#/components/schemas/HttpAction'
+        rel:
+          description: 'The relation of this link to its containing entity, as defined by the [IETF RFC5988](https://datatracker.ietf.org/doc/html/rfc5988)
+
+            '
+          type: string
+        types:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentTypes'
+          description: 'The content-types that can be used in the Accept header. **Note:** Plaid currently only accepts the PDF (`application/pdf`) content type
+
+            '
+    Statement:
+      title: Statement entity
+      description: 'An account statement
+
+        '
+      type: object
+      properties:
+        accountId:
+          $ref: '#/components/schemas/Identifier'
+          description: 'Corresponds to `accountId` in Account entity
+
+            '
+        statementId:
+          $ref: '#/components/schemas/Identifier'
+          description: 'Long-term persistent identity of the statement. This identity must be unique within your organization
+
+            '
+        statementDate:
+          $ref: '#/components/schemas/DateString'
+          description: 'The date the statement becomes available to be viewed by the user
+
+            '
+        description:
+          type: string
+          description: 'Description of the statement
+
+            '
+        links:
+          $ref: '#/components/schemas/HateoasLinks'
+          description: 'The HATEOAS links to retrieve this account statement, or to invoke other APIs.
+
+
+            **Note:** Plaid only accepts one link object in this array
+
+            '
+        status:
+          type: string
+          description: 'Availability status of statement
+
+            '
+          enum:
+          - AVAILABLE
+          - PROCESSING
+          - FAILED
+    Identifier:
+      title: Identifier
+      description: 'Value for a unique identifier
+
+        '
+      type: string
+      maxLength: 256
+      example: someLongTermUniqueIDString
+    ContentTypes:
+      title: Content Types
+      description: 'Types of document formats. (Suggested values)
+
+        '
+      type: string
+      enum:
+      - application/pdf
+      - image/gif
+      - image/jpeg
+      - image/tiff
+      - image/png
+      - application/json
+    PaginatedArray:
+      title: Paginated Array
+      description: 'Base class for results that may be paginated
+
+        '
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/PageMetadata'
+    PageMetadata:
+      title: Page Metadata
+      description: 'Contains the opaque identifier, `nextOffset`, to indicate a paginated result set.
+
+        '
+      type: object
+      properties:
+        nextOffset:
+          type: string
+          example: B47D80MVP23T
+          description: 'Opaque offset identifier
+
+            '
+        totalElements:
+          type: integer
+          example: 3
+          description: 'Total number of elements
+
+            '
+  securitySchemes:
+    openIdConnect:
+      type: openIdConnect
+      description: 'This API uses an [OpenID Connect (OIDC) authentication flow](/core-exchange/authentication) and accepts the resulting [access token](/core-exchange/authentication#response-parameters) as a bearer token. For example,  `curl -H ''Authorization: Bearer <ACCESS&#95;TOKEN|''`.
+
+        '
+      openIdConnectUrl: https://www.your-organization.com/.well-known/openid-configuration
+    oauth2:
+      type: oauth2
+      description: 'This API uses an [OAuth2.0 authorization code flow](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow) and accepts the resulting access token as a bearer token. For example,  `curl -H ''Authorization: Bearer <ACCESS&#95;TOKEN|''`.
+
+        '
+      flows:
+        authorizationCode:
+          authorizationUrl: https://www.your-organization.com/authorize
+          tokenUrl: https://www.your-organization.com/token
+          scopes:
+            Account: (optional) Read account data
+            Customer: (optional) Read customer data
+            Transactions: (optional) Read transaction data
