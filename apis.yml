@@ -9,7 +9,20 @@ description: Financial Data Exchange (FDX) is a non-profit industry standards bo
   user credentials. As of early 2026 over 130 million consumer accounts are connected
   via the FDX API across 200+ member organizations including Bank of America, Chase,
   Citi, Wells Fargo, Plaid, and MX. FDX API v6.5 is the current stable release.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: free
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Free · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/fdx.png
 url: https://raw.githubusercontent.com/api-evangelist/fdx/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -33,32 +46,11 @@ tags:
 - FAPI
 - CFPB 1033
 apis:
-- name: FDX Accounts API
-  description: RESTful endpoints for retrieving consumer deposit, loan, investment,
-    and insurance account details including account numbers, balances, account holder
-    identity, and account metadata. Supports the full FDX account data cluster across
-    all account types recognized by the standard.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://financialdataexchange.org
-  baseURL: https://api.financialdataexchange.org
-  tags:
-  - Accounts
-  - Deposit Accounts
-  - Loan Accounts
-  - Account Balances
-  - Account Holder
-  properties:
-  - type: Documentation
-    url: https://financialdataexchange.org
-  - type: OpenAPI
-    url: https://github.com/plaid/core-exchange
-  - url: graphql/fdx-graphql.md
-    type: GraphQL
 - name: FDX Transactions API
-  description: RESTful endpoints for retrieving consumer transaction histories including
-    pending and posted transactions, transaction categorization, merchant data, and
-    transaction amounts across deposit, loan, and investment accounts within the permissioned
-    scope.
+  description: >-
+    RESTful endpoints for retrieving consumer transaction histories including pending and posted transactions,
+    transaction categorization, merchant data, and transaction amounts across deposit, loan, and investment
+    accounts within the permissioned scope.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://financialdataexchange.org
   baseURL: https://api.financialdataexchange.org
@@ -71,10 +63,10 @@ apis:
   - type: Documentation
     url: https://financialdataexchange.org
 - name: FDX Investment API
-  description: RESTful endpoints for retrieving investment account data including
-    holdings, positions, investment transactions, cost basis, and portfolio composition.
-    Covers brokerage, retirement, and managed investment accounts under the FDX investment
-    data cluster.
+  description: >-
+    RESTful endpoints for retrieving investment account data including holdings, positions, investment
+    transactions, cost basis, and portfolio composition. Covers brokerage, retirement, and managed investment
+    accounts under the FDX investment data cluster.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://financialdataexchange.org
   baseURL: https://api.financialdataexchange.org
@@ -88,9 +80,9 @@ apis:
   - type: Documentation
     url: https://financialdataexchange.org
 - name: FDX Insurance API
-  description: RESTful endpoints for retrieving insurance policy information including
-    policy coverage details, premium schedules, claims history, and beneficiary data
-    under the FDX insurance data cluster.
+  description: >-
+    RESTful endpoints for retrieving insurance policy information including policy coverage details, premium
+    schedules, claims history, and beneficiary data under the FDX insurance data cluster.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://financialdataexchange.org
   baseURL: https://api.financialdataexchange.org
@@ -103,9 +95,10 @@ apis:
   - type: Documentation
     url: https://financialdataexchange.org
 - name: FDX Tax API
-  description: RESTful endpoints for retrieving consumer tax data including tax document
-    metadata and structured tax form data (1099s, W-2s, and related forms) as defined
-    by the FDX US Tax Data specification and the CSDF Consensus Standard Data Format.
+  description: >-
+    RESTful endpoints for retrieving consumer tax data including tax document metadata and structured
+    tax form data (1099s, W-2s, and related forms) as defined by the FDX US Tax Data specification and
+    the CSDF Consensus Standard Data Format.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://financialdataexchange.org
   baseURL: https://api.financialdataexchange.org
@@ -118,10 +111,10 @@ apis:
   - type: Documentation
     url: https://financialdataexchange.org
 - name: FDX Payroll API
-  description: RESTful endpoints introduced in FDX API v6.0 for retrieving permissioned
-    payroll data including employment records, pay stubs, income verification, and
-    direct deposit details, supporting lending and personal financial management use
-    cases.
+  description: >-
+    RESTful endpoints introduced in FDX API v6.0 for retrieving permissioned payroll data including employment
+    records, pay stubs, income verification, and direct deposit details, supporting lending and personal
+    financial management use cases.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://financialdataexchange.org
   baseURL: https://api.financialdataexchange.org
@@ -134,10 +127,10 @@ apis:
   - type: Documentation
     url: https://financialdataexchange.org
 - name: FDX Consent API
-  description: RESTful endpoints implementing the FDX Consent API Behavioral Specification
-    for managing user permissions and consent events. Enables data recipients to initiate
-    consent, query active consent grants, update scope, and handle consent revocation
-    in compliance with CFPB Section 1033 requirements.
+  description: >-
+    RESTful endpoints implementing the FDX Consent API Behavioral Specification for managing user permissions
+    and consent events. Enables data recipients to initiate consent, query active consent grants, update
+    scope, and handle consent revocation in compliance with CFPB Section 1033 requirements.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://financialdataexchange.org
   baseURL: https://api.financialdataexchange.org
@@ -150,6 +143,90 @@ apis:
   properties:
   - type: Documentation
     url: https://financialdataexchange.org
+- aid: fdx:fdx-account-information-api
+  name: Financial Data Exchange (FDX) Account Information API
+  description: Search and view customer accounts
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Account Information
+  properties:
+  - type: OpenAPI
+    url: openapi/fdx-account-information-api-openapi.yml
+  - type: Documentation
+    url: https://financialdataexchange.org
+  - type: GraphQL
+    url: graphql/fdx-graphql.md
+- aid: fdx:fdx-account-statements-api
+  name: Financial Data Exchange (FDX) Account Statements API
+  description: Search and retrieve account statements
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Account Statements
+  properties:
+  - type: OpenAPI
+    url: openapi/fdx-account-statements-api-openapi.yml
+  - type: Documentation
+    url: https://financialdataexchange.org
+  - type: GraphQL
+    url: graphql/fdx-graphql.md
+- aid: fdx:fdx-account-transactions-api
+  name: Financial Data Exchange (FDX) Account Transactions API
+  description: Search and view account transactions
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Account Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/fdx-account-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://financialdataexchange.org
+  - type: GraphQL
+    url: graphql/fdx-graphql.md
+- aid: fdx:fdx-asset-transfer-networks-information-api
+  name: Financial Data Exchange (FDX) Asset Transfer Networks Information API
+  description: Search and view asset transfer networks networks
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Asset Transfer Networks Information
+  properties:
+  - type: OpenAPI
+    url: openapi/fdx-asset-transfer-networks-information-api-openapi.yml
+  - type: Documentation
+    url: https://financialdataexchange.org
+  - type: GraphQL
+    url: graphql/fdx-graphql.md
+- aid: fdx:fdx-payment-networks-information-api
+  name: Financial Data Exchange (FDX) Payment Networks Information API
+  description: Search and view account payment networks
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Payment Networks Information
+  properties:
+  - type: OpenAPI
+    url: openapi/fdx-payment-networks-information-api-openapi.yml
+  - type: Documentation
+    url: https://financialdataexchange.org
+  - type: GraphQL
+    url: graphql/fdx-graphql.md
+- aid: fdx:fdx-personal-information-api
+  name: Financial Data Exchange (FDX) Personal Information API
+  description: Search and view customer or customers
+  humanURL: https://financialdataexchange.org
+  baseURL: https://api.financialdataexchange.org
+  tags:
+  - Personal Information
+  properties:
+  - type: OpenAPI
+    url: openapi/fdx-personal-information-api-openapi.yml
+  - type: Documentation
+    url: https://financialdataexchange.org
+  - type: GraphQL
+    url: graphql/fdx-graphql.md
 common:
 - type: AgenticAccess
   url: agentic-access/fdx-agentic-access.yml
