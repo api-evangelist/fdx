@@ -1,0 +1,24 @@
+{
+  "provider": "fdx",
+  "sources": [
+    "fdx-account-information-api-openapi.yml",
+    "fdx-account-statements-api-openapi.yml",
+    "fdx-account-transactions-api-openapi.yml",
+    "fdx-asset-transfer-networks-information-api-openapi.yml",
+    "fdx-payment-networks-information-api-openapi.yml",
+    "fdx-personal-information-api-openapi.yml"
+  ],
+  "outputs": [
+    "fdx-account-information-api-openapi.yml",
+    "fdx-account-statements-api-openapi.yml",
+    "fdx-account-transactions-api-openapi.yml",
+    "fdx-asset-transfer-networks-information-api-openapi.yml",
+    "fdx-payment-networks-information-api-openapi.yml",
+    "fdx-personal-information-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
