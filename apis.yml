@@ -9,6 +9,18 @@ description: Financial Data Exchange (FDX) is a non-profit industry standards bo
   user credentials. As of early 2026 over 130 million consumer accounts are connected
   via the FDX API across 200+ member organizations including Bank of America, Chase,
   Citi, Wells Fargo, Plaid, and MX. FDX API v6.5 is the current stable release.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-11'
+  method: derived
 accessModel:
   pricing: free
   onboarding: self-serve
