@@ -1,0 +1,250 @@
+{
+  "item": [
+    {
+      "id": "c4b893f8-dea4-497a-a8b3-88a01497fffb",
+      "name": "Personal Information",
+      "description": {
+        "content": "Search and view customer or customers",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ddc2eeb2-3c6d-4b49-807a-a2d64cab7143",
+          "name": "Get an account's contact information",
+          "request": {
+            "name": "Get an account's contact information",
+            "description": {
+              "content": "Get contact information on the account. Plaid links contact information to accounts, rather than to users. Plaid consumes multiple holders and their contact information for the account, but doesn't attempt to correlate holders to their respective contact information. For more information about Plaid's identity model, see [Plaid Identity API](https://plaid.com/docs/api/products/identity/).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "contact"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountId",
+                  "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "Account Customer Transactions"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://www.your-organization.com/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://www.your-organization.com/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "76dbca5d-87c7-4a8c-8ba7-09774a66b91d",
+              "name": "Details used to verify an account.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "contact"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"holders\": [\n    {\n      \"relationship\": \"SECONDARY\",\n      \"name\": {\n        \"first\": \"Ernest\",\n        \"middle\": \"Miller\",\n        \"last\": \"Hemingway\",\n        \"suffix\": \"IV\"\n      }\n    },\n    {\n      \"relationship\": \"PRIMARY_JOINT\",\n      \"name\": {\n        \"first\": \"Maya\",\n        \"last\": \"Angelou\",\n        \"middle\": \"Annie\"\n      }\n    }\n  ],\n  \"emails\": [\n    \"ernest.m.hemingway@domain.tld\",\n    \"m.angelou@domain.tld\"\n  ],\n  \"addresses\": [\n    {\n      \"line1\": \"1850 N Clark St\",\n      \"line2\": \"Apartment 103\",\n      \"city\": \"Chicago\",\n      \"region\": \"IL\",\n      \"postalCode\": \"60614\",\n      \"country\": \"US\"\n    },\n    {\n      \"line1\": \"2014 N Main St\",\n      \"city\": \"San Francisco\",\n      \"region\": \"CA\",\n      \"postalCode\": \"94105\",\n      \"country\": \"US\"\n    }\n  ],\n  \"telephones\": [\n    {\n      \"type\": \"HOME\",\n      \"country\": \"1\",\n      \"number\": \"3127771926\"\n    },\n    {\n      \"type\": \"CELL\",\n      \"country\": \"53\",\n      \"number\": \"45915607\"\n    },\n    {\n      \"type\": \"HOME\",\n      \"country\": \"1\",\n      \"number\": \"4157771926\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "719c3162-3a13-481f-9087-9e9af5d4a777",
+          "name": "Get current authenticated customer ID",
+          "request": {
+            "name": "Get current authenticated customer ID",
+            "description": {
+              "content": "Get the ID of the customer within the authorization scope. If you use [OIDC authentication](https://plaid.com/core-exchange/docs/authentication/oauth-server-setup) (recommended) you *do not* need to implement this endpoint. Plaid will identify the customer using the OIDC [ID token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken). If you use OAuth2 authentication, Plaid will use this endpoint as an alternate method of customer identification.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customers",
+                "current"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "Account Customer Transactions"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://www.your-organization.com/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://www.your-organization.com/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7043debc-c472-4dbe-bc4b-274705e32fcd",
+              "name": "Data describing current authenticated customer.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customers",
+                    "current"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"customerId\": \"someLongTermUniqueIDString\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.your-organization.com/fdx/v6",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3f8da210-69b4-4d60-a315-42ee18bb4e27",
+    "name": "FDX V6.0.0 Account Information Personal Information API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/. The FDX API specification is distributed exclusively by FDX. Modifications to eliminate required or\nconditional elements prescribed in the FDX API Certification Use Cases will render any implementations using said modifications non-conformant with the FDX API Certification Use Cases.\nPlease note that building the FDX-compliant Core Exchange API and permitting Plaid to call your build constitutes acceptance of\nthe FDX end user license agreement, which can be found at https://financialdataexchange.org/.\nThe full FDX API standard specification is distributed exclusively by FDX.\n\n## Download the specification\n\nTo view this specification and documentation as an OpenAPI YAML file, see [the public Core Exchange Github repository](https://github.com/plaid/core-exchange/tree/main/versions).\n\n## Endpoints\n\nThis specification contains the following endpoints:\n\n  - `/customers/current`\n\n  - `/accounts`\n\n  - `/accounts/{accountId}`\n\n  - `/accounts/{accountId}/payment-networks`\n\n  - `/accounts/{accountId}/asset-transfer-networks`\n\n  - `/accounts/{accountId}/statements`\n\n  - `/accounts/{accountId}/statements/{statementId}`\n\n  - `/accounts/{accountId}/contact`\n\n  - `/accounts/{accountId}/transactions`\n\n## Error responses\n\nAn error entity which can be used at the API level for error responses or at the account level to indicate a problem specific to a particular account.\nError responses must contain a `code` and `message`, and may optionally include a `debugMessage`.\nSee the descriptions below:\n\n- `code`: The FDX error code: A long-term persistent identifier which can be used to trace error condition back to log information.\n  (**Note:** This code may differ from the HTTP status code.)\n- `message`: End user displayable information which might help the customer diagnose an error\n- `debugMessage`: Message used to debug the root cause of the error. Contents should not be used in consumer's business logic. Can change at any time and should only be used for consumer to communicate with the data provider about an issue. Provider can include an error GUID in message for their use\n\n### Example error\n\nThe following is an example response with an HTTP status code of 409.\n\n```\n{\n  \"code\": 705,\n  \"message\": \"Account is closed\",\n  \"debugMessage\": \"Operation is not supported by the closed account\"\n}\n```\n\nSee the Errors table in each endpoint description for more specific message and debug message examples.\n\n\nContact Support:\n Name: Plaid support\n Email: dataconnectivity@plaid.com",
+      "type": "text/plain"
+    }
+  }
+}

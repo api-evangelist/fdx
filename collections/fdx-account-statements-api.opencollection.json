@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "FDX V6.0.0 Account Information Account Statements API",
+    "version": "6.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search for statements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.your-organization.com/fdx/v6/accounts/:accountId/statements",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.\n"
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Start time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n"
+              }
+            ]
+          },
+          "docs": "Get account statements.\n"
+        },
+        {
+          "info": {
+            "name": "Get account statement",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.your-organization.com/fdx/v6/accounts/:accountId/statements/:statementId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+              },
+              {
+                "name": "statementId",
+                "value": "",
+                "type": "path",
+                "description": "Statement identifier, found in the `GET /accounts/{accountId}/statements` endpoint response\n"
+              }
+            ]
+          },
+          "docs": "Get account statement PDF.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

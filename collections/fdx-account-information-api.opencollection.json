@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "FDX V6.0.0 Account Information API",
+    "version": "6.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Information",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.your-organization.com/fdx/v6/accounts",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.\n"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.\n"
+              }
+            ]
+          },
+          "docs": "Search and view customer accounts.\n"
+        },
+        {
+          "info": {
+            "name": "Get detailed information for a specific account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.your-organization.com/fdx/v6/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+              }
+            ]
+          },
+          "docs": "Get account balances, liabilities, and other information. Plaid calls this endpoint for [deposit](#deposit-account), [investment](#investment-account), [loan](#loan-account), and [line of credit](#line-of-credit-account) accounts. Plaid uses this endpoint to get balances for deposit accounts, get liabilities for `STUDENTLOAN`, `MORTGAGE`, and `CREDITCARD` loan accounts, and get balances and holdings for investment accounts.\n\nSee [Plaid Balance API](https://plaid.com/docs/api/products/balance/), "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,192 @@
+{
+  "item": [
+    {
+      "id": "49052d44-4410-4d73-80f0-87777a5e1c26",
+      "name": "Account Transactions",
+      "description": {
+        "content": "Search and view account transactions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "024c628b-e15c-442d-acdf-72442a4ab2d7",
+          "name": "Search for account transactions",
+          "request": {
+            "name": "Search for account transactions",
+            "description": {
+              "content": "List all account transactions. Plaid always queries this endpoint using a `startTime` and an `endTime`, for example, `/accounts/{accountId}/transactions?startTime=2022-01-30&endTime=2022-05-30`, and expects the time filters to be based on the `postedTimestamp`.\n\nPlaid consumes data from this endpoint only for [loan](#loan-account), [investment](#investment-account), [deposit](#deposit-account), and [line of credit](#line-of-credit-account) accounts.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<date>",
+                  "description": "Start time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<date>",
+                  "description": "End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountId",
+                  "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "Account Customer Transactions"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://www.your-organization.com/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://www.your-organization.com/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7ddf328e-1297-467b-a5f6-4e3a0f2c676a",
+              "name": "Paginated collection of transactions. Plaid consumes the following transaction types: InvestmentTransaction, DepositTransaction, LoanTransaction, or LocTransaction.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "qwer123454q2f"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "startTime",
+                      "value": "2021-07-15"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "2021-07-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"nextOffset\": \"B47D80MVP23T\"\n  },\n  \"transactions\": [\n    {\n      \"accountCategory\": \"DEPOSIT_ACCOUNT\",\n      \"checkNumber\": 1234,\n      \"payee\": \"ACME LLC\",\n      \"transactionId\": \"depositTransaction000000001\",\n      \"postedTimestamp\": \"2022-04-06T00:00:00.000Z\",\n      \"transactionTimestamp\": \"2022-04-05T00:00:00.000Z\",\n      \"description\": \"check for latest ACME invoice\",\n      \"debitCreditMemo\": \"DEBIT\",\n      \"status\": \"PENDING\",\n      \"amount\": 400\n    },\n    {\n      \"accountCategory\": \"DEPOSIT_ACCOUNT\",\n      \"transactionId\": \"depositTransaction000000002\",\n      \"postedTimestamp\": \"2022-04-07T00:00:00.000Z\",\n      \"transactionTimestamp\": \"2022-04-07T00:00:00.000Z\",\n      \"description\": \"reconciliation/adjustment of bank statement error\",\n      \"debitCreditMemo\": \"DEBIT\",\n      \"status\": \"POSTED\",\n      \"amount\": 0.8\n    },\n    {\n      \"accountCategory\": \"DEPOSIT_ACCOUNT\",\n      \"transactionId\": \"depositTransaction000000003\",\n      \"postedTimestamp\": \"2022-04-08T00:00:00.000Z\",\n      \"transactionTimestamp\": \"2022-04-08T00:00:00.000Z\",\n      \"description\": \"ATM cash deposit location #1234\",\n      \"debitCreditMemo\": \"CREDIT\",\n      \"status\": \"POSTED\",\n      \"amount\": 101.8\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.your-organization.com/fdx/v6",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7dec6b7a-d9de-4f43-bbf4-f147c43c085e",
+    "name": "FDX V6.0.0 Account Information Account Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/. The FDX API specification is distributed exclusively by FDX. Modifications to eliminate required or\nconditional elements prescribed in the FDX API Certification Use Cases will render any implementations using said modifications non-conformant with the FDX API Certification Use Cases.\nPlease note that building the FDX-compliant Core Exchange API and permitting Plaid to call your build constitutes acceptance of\nthe FDX end user license agreement, which can be found at https://financialdataexchange.org/.\nThe full FDX API standard specification is distributed exclusively by FDX.\n\n## Download the specification\n\nTo view this specification and documentation as an OpenAPI YAML file, see [the public Core Exchange Github repository](https://github.com/plaid/core-exchange/tree/main/versions).\n\n## Endpoints\n\nThis specification contains the following endpoints:\n\n  - `/customers/current`\n\n  - `/accounts`\n\n  - `/accounts/{accountId}`\n\n  - `/accounts/{accountId}/payment-networks`\n\n  - `/accounts/{accountId}/asset-transfer-networks`\n\n  - `/accounts/{accountId}/statements`\n\n  - `/accounts/{accountId}/statements/{statementId}`\n\n  - `/accounts/{accountId}/contact`\n\n  - `/accounts/{accountId}/transactions`\n\n## Error responses\n\nAn error entity which can be used at the API level for error responses or at the account level to indicate a problem specific to a particular account.\nError responses must contain a `code` and `message`, and may optionally include a `debugMessage`.\nSee the descriptions below:\n\n- `code`: The FDX error code: A long-term persistent identifier which can be used to trace error condition back to log information.\n  (**Note:** This code may differ from the HTTP status code.)\n- `message`: End user displayable information which might help the customer diagnose an error\n- `debugMessage`: Message used to debug the root cause of the error. Contents should not be used in consumer's business logic. Can change at any time and should only be used for consumer to communicate with the data provider about an issue. Provider can include an error GUID in message for their use\n\n### Example error\n\nThe following is an example response with an HTTP status code of 409.\n\n```\n{\n  \"code\": 705,\n  \"message\": \"Account is closed\",\n  \"debugMessage\": \"Operation is not supported by the closed account\"\n}\n```\n\nSee the Errors table in each endpoint description for more specific message and debug message examples.\n\n\nContact Support:\n Name: Plaid support\n Email: dataconnectivity@plaid.com",
+      "type": "text/plain"
+    }
+  }
+}

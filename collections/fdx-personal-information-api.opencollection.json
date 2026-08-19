@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "FDX V6.0.0 Account Information Personal Information API",
+    "version": "6.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Personal Information",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an account's contact information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.your-organization.com/fdx/v6/accounts/:accountId/contact",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+              }
+            ]
+          },
+          "docs": "Get contact information on the account. Plaid links contact information to accounts, rather than to users. Plaid consumes multiple holders and their contact information for the account, but doesn't attempt to correlate holders to their respective contact information. For more information about Plaid's identity model, see [Plaid Identity API](https://plaid.com/docs/api/products/identity/).\n"
+        },
+        {
+          "info": {
+            "name": "Get current authenticated customer ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.your-organization.com/fdx/v6/customers/current"
+          },
+          "docs": "Get the ID of the customer within the authorization scope. If you use [OIDC authentication](https://plaid.com/core-exchange/docs/authentication/oauth-server-setup) (recommended) you *do not* need to implement this endpoint. Plaid will identify the customer using the OIDC [ID token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken). If you use OAuth2 authentication, Plaid will use this endpoint as an alternate method of customer identification.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
