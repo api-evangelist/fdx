@@ -46,6 +46,22 @@ tags:
 - Open Banking
 - Open Finance
 - Financial Data Exchange
+- Consumer-Permissioned
+- Account Data
+- Transaction
+- Investments
+- Insurance
+- Tax Data
+- Payroll
+- REST
+- Authentication
+- FAPI
+- CFPB 1033
+tags_raw:
+- Financial Data
+- Open Banking
+- Open Finance
+- Financial Data Exchange
 - Consumer Permissioned
 - Account Data
 - Transactions
@@ -67,6 +83,11 @@ apis:
   humanURL: https://financialdataexchange.org
   baseURL: https://api.financialdataexchange.org
   tags:
+  - Transaction
+  - Transaction History
+  - Pending Transactions
+  - Merchant Data
+  tags_raw:
   - Transactions
   - Transaction History
   - Pending Transactions
@@ -131,6 +152,11 @@ apis:
   humanURL: https://financialdataexchange.org
   baseURL: https://api.financialdataexchange.org
   tags:
+  - Payroll
+  - Income Verification
+  - Employment
+  - Paystubs
+  tags_raw:
   - Payroll
   - Income Verification
   - Employment
