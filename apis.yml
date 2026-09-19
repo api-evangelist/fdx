@@ -49,7 +49,7 @@ tags:
 - Consumer-Permissioned
 - Account Data
 - Transaction
-- Investments
+- Investment
 - Insurance
 - Tax Data
 - Payroll
@@ -104,6 +104,12 @@ apis:
   humanURL: https://financialdataexchange.org
   baseURL: https://api.financialdataexchange.org
   tags:
+  - Investment
+  - Holdings
+  - Portfolio
+  - Brokerage
+  - Retirement
+  tags_raw:
   - Investments
   - Holdings
   - Portfolio
