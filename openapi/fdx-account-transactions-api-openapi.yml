@@ -1,8 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   version: 6.0.0
-  title: FDX V6.0.0 Account Information Account Transactions API
-  description: "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/. The FDX API specification is distributed exclusively by FDX. Modifications to eliminate required or\nconditional elements prescribed in the FDX API Certification Use Cases will render any implementations using said modifications non-conformant with the FDX API Certification Use Cases.\nPlease note that building the FDX-compliant Core Exchange API and permitting Plaid to call your build constitutes acceptance of\nthe FDX end user license agreement, which can be found at https://financialdataexchange.org/.\nThe full FDX API standard specification is distributed exclusively by FDX.\n\n## Download the specification\n\nTo view this specification and documentation as an OpenAPI YAML file, see [the public Core Exchange Github repository](https://github.com/plaid/core-exchange/tree/main/versions).\n\n## Endpoints\n\nThis specification contains the following endpoints:\n\n  - `/customers/current`\n\n  - `/accounts`\n\n  - `/accounts/{accountId}`\n\n  - `/accounts/{accountId}/payment-networks`\n\n  - `/accounts/{accountId}/asset-transfer-networks`\n\n  - `/accounts/{accountId}/statements`\n\n  - `/accounts/{accountId}/statements/{statementId}`\n\n  - `/accounts/{accountId}/contact`\n\n  - `/accounts/{accountId}/transactions`\n\n## Error responses\n\nAn error entity which can be used at the API level for error responses or at the account level to indicate a problem specific to a particular account.\nError responses must contain a `code` and `message`, and may optionally include a `debugMessage`.\nSee the descriptions below:\n\n- `code`: The FDX error code: A long-term persistent identifier which can be used to trace error condition back to log information.\n  (**Note:** This code may differ from the HTTP status code.)\n- `message`: End user displayable information which might help the customer diagnose an error\n- `debugMessage`: Message used to debug the root cause of the error. Contents should not be used in consumer's business logic. Can change at any time and should only be used for consumer to communicate with the data provider about an issue. Provider can include an error GUID in message for their use\n\n### Example error\n\nThe following is an example response with an HTTP status code of 409.\n\n```\n{\n  \"code\": 705,\n  \"message\": \"Account is closed\",\n  \"debugMessage\": \"Operation is not supported by the closed account\"\n}\n```\n\nSee the Errors table in each endpoint description for more specific message and debug message examples.\n"
+  title: FDX V6.0.0 Account Transactions API
+  description: '## FDX compliance
+
+
+    The Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API
+
+    License Agreement, which can be found at https://financialdataexchange.org/.'
   contact:
     name: Plaid support
     url: https://plaid.com/data-connectivity-core-exchange/
@@ -22,9 +27,7 @@ paths:
       description: 'List all account transactions. Plaid always queries this endpoint using a `startTime` and an `endTime`, for example, `/accounts/{accountId}/transactions?startTime=2022-01-30&endTime=2022-05-30`, and expects the time filters to be based on the `postedTimestamp`.
 
 
-        Plaid consumes data from this endpoint only for [loan](#loan-account), [investment](#investment-account), [deposit](#deposit-account), and [line of credit](#line-of-credit-account) accounts.
-
-        '
+        Plaid consumes data from this endpoint only for loan, investment, deposit, and line of credit accounts.'
       summary: Search for account transactions
       security:
       - openIdConnect:
@@ -78,22 +81,286 @@ paths:
                   amount: 101.8
 components:
   schemas:
-    DebitCreditMemo:
-      title: DebitCreditMemo
-      description: 'The posting type of a transaction. Because the transaction `amount` is an absolute value, this parameter is required to indicate the transaction direction and sign (+/-):
+    InvestmentTransactionType:
+      title: Investment Transaction Type
+      description: 'The type of an investment transaction.
 
-        - `DEBIT`: Money is leaving the account. The transaction amount will be exposed with a **positive** sign (+)
+        Plaid maps these enums to Plaid [investment transaction types](https://plaid.com/docs/api/accounts/#investment-transaction-types-schema).
 
-        - `CREDIT`: Money is entering the account. The transaction amount will be exposed with a **negative** sign (-)
+        Plaid doesn''t map these enums to Plaid-specific transaction subtypes.
 
-        - `MEMO`: The transaction is pending and will be completed at the end of the day. (Plaid handles `MEMO` transaction the same as `DEBIT` transactions.)
+        Plaid maps these enums as follows:
+
+
+        * ADJUSTMENT - fee
+
+        * ATM - cash
+
+        * CASH - cash
+
+        * CHECK - cash
+
+        * CLOSURE - Plaid suggests using SOLDTOCLOSE, PURCHASETOCLOSE, OPTIONEXERCISE or OPTIONEXPIRATION to indicate the specific type of closure, instead of using this enum.
+
+        * CLOSUREOPT - Plaid suggests using SOLDTOCLOSE, PURCHASETOCLOSE, OPTIONEXERCISE or OPTIONEXPIRATION to indicate the specific type of closure, instead of using this enum.
+
+        * CONTRIBUTION - buy (if transaction involves a security) or cash
+
+        * DEP - cash
+
+        * DEPOSIT - cash
+
+        * DIRECTDEBIT - cash
+
+        * DIRECTDEP - cash
+
+        * DIV - cash
+
+        * DIVIDEND - cash
+
+        * DIVIDENDREINVEST - buy
+
+        * EXPENSE - cash
+
+        * FEE - fee
+
+        * INCOME - cash
+
+        * INTEREST - cash
+
+        * INVEXPENSE - cash
+
+        * JRNLFUND - transfer
+
+        * JRNLSEC - transfer
+
+        * MARGININTEREST - cash
+
+        * OPTIONEXERCISE - transfer
+
+        * OPTIONEXPIRATION - transfer
+
+        * OTHER - cash - (unclassified)
+
+        * PAYMENT - cash
+
+        * POS - cash
+
+        * PURCHASED - buy
+
+        * PURCHASEDTOCOVER - buy
+
+        * PURCHASETOCLOSE - buy
+
+        * PURCHASETOOPEN - buy
+
+        * REINVESTOFINCOME - buy
+
+        * REPEATPMT - cash
+
+        * RETURNOFCAPITAL - cash
+
+        * SOLD - sell
+
+        * SOLDTOCLOSE - sell
+
+        * SOLDTOOPEN - sell
+
+        * SPLIT - transfer
+
+        * SRVCHG - fee
+
+        * TRANSFER - transfer
+
+        * XFER - transfer
 
         '
       type: string
       enum:
-      - CREDIT
-      - DEBIT
-      - MEMO
+      - ADJUSTMENT
+      - ATM
+      - CASH
+      - CHECK
+      - CLOSURE
+      - CLOSUREOPT
+      - CONTRIBUTION
+      - DEP
+      - DEPOSIT
+      - DIRECTDEBIT
+      - DIRECTDEP
+      - DIV
+      - DIVIDEND
+      - DIVIDENDREINVEST
+      - EXPENSE
+      - FEE
+      - INCOME
+      - INTEREST
+      - INVEXPENSE
+      - JRNLFUND
+      - JRNLSEC
+      - MARGININTEREST
+      - OPTIONEXERCISE
+      - OPTIONEXPIRATION
+      - OTHER
+      - PAYMENT
+      - POS
+      - PURCHASED
+      - PURCHASEDTOCOVER
+      - PURCHASETOCLOSE
+      - PURCHASETOOPEN
+      - REINVESTOFINCOME
+      - REPEATPMT
+      - RETURNOFCAPITAL
+      - SOLD
+      - SOLDTOCLOSE
+      - SOLDTOOPEN
+      - SPLIT
+      - SRVCHG
+      - TRANSFER
+      - XFER
+    LoanTransactionType:
+      title: Loan Transaction Type
+      description: 'The type of a loan transaction. Plaid passes through all loan transaction types
+
+
+        - `ADJUSTMENT`: Adjustment or correction.
+
+        - `FEE`: Fee charge. For example, a late payment fee.
+
+        - `INTEREST`: Interest charge.
+
+        - `PAYMENT`: Required payment that satisfies the minimum payment (e.g. principal + interest for mortgages).
+
+        - `LUMP_SUM_PAYMENT`: A single payment of money, as opposed to a series of payments made over time.
+
+        - `SKIP_PAYMENT`: Payment that satisfies deferral of a required payment.
+
+        - `DOUBLE_UP_PAYMENT`: Additional payment beyond the required payment to reduce the principal.
+
+        - `PAYOFF`: Payment that satisfies the terms of the mortgage loan and completely pays off the debt.
+
+        '
+      type: string
+      enum:
+      - ADJUSTMENT
+      - FEE
+      - INTEREST
+      - PAYMENT
+      - LUMP_SUM_PAYMENT
+      - SKIP_PAYMENT
+      - DOUBLE_UP_PAYMENT
+      - PAYOFF
+    SecurityIdType:
+      title: Security ID Type
+      description: 'Plaid consumes solely CUSIP, ISIN, and SEDOL.
+
+
+        This field, along with `securityId` are **required** unless `symbol` is provided.
+
+
+        **Note:** If `securityIdType` is provided, `securityId` is required.
+
+        '
+      type: string
+      enum:
+      - CINS
+      - CMC
+      - CME
+      - CUSIP
+      - ISIN
+      - ITSA
+      - NASDAQ
+      - SEDOL
+      - SICC
+      - VALOR
+      - WKN
+    FiAttribute:
+      title: FI Attribute entity
+      description: 'Financial institution-specific attribute.
+
+        '
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Name of the financial institution-specific attribute
+
+            '
+        value:
+          type: string
+          description: 'Value of the financial institution-specific attribute
+
+            '
+    LineOfCreditTransaction:
+      title: Line-Of-Credit Transaction entity
+      description: 'A line-of-credit transaction
+
+        '
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Transaction'
+      - type: object
+        properties:
+          accountCategory:
+            type: string
+            enum:
+            - LOC_ACCOUNT
+          transactionType:
+            $ref: '#/components/schemas/LineOfCreditTransactionType'
+          checkNumber:
+            type: integer
+            description: 'Check number. Plaid expects this solely if the transaction involves a check
+
+              '
+        required:
+        - accountCategory
+      example:
+        accountCategory: LOC_ACCOUNT
+        transactionId: 78RJ3311PLU34300E
+        transactionTimestamp: '2024-07-15T14:46:41.375+02:00'
+        description: Recurring payment
+        debitCreditMemo: MEMO
+        status: AUTHORIZATION
+        amount: 38.9
+    Transactions:
+      title: Transactions entity
+      allOf:
+      - $ref: '#/components/schemas/PaginatedArray'
+      - type: object
+        properties:
+          transactions:
+            type: array
+            description: 'An optionally paginated array of transactions.
+
+              May be any of the following: [deposit transaction](#deposit-transaction), [investment transaction](#investment-transaction), [loan transaction](#loan-transaction), [line of credit transaction](#line-of-credit-transaction)
+
+              '
+            items:
+              discriminator:
+                propertyName: accountCategory
+                mapping:
+                  DEPOSIT_ACCOUNT: '#/components/schemas/DepositTransaction'
+                  INVESTMENT_ACCOUNT: '#/components/schemas/InvestmentTransaction'
+                  LOAN_ACCOUNT: '#/components/schemas/LoanTransaction'
+                  LOC_ACCOUNT: '#/components/schemas/LineOfCreditTransaction'
+              oneOf:
+              - $ref: '#/components/schemas/DepositTransaction'
+              - $ref: '#/components/schemas/InvestmentTransaction'
+              - $ref: '#/components/schemas/LineOfCreditTransaction'
+              - $ref: '#/components/schemas/LoanTransaction'
+        required:
+        - transactions
+    DateString:
+      title: Date String
+      description: 'ISO 8601 full-date in format ''YYYY-MM-DD'' according
+
+        to [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)
+
+        '
+      type: string
+      format: date
+      maxLength: 10
+      example: '2021-07-15'
     LoanTransaction:
       title: Loan Transaction entity
       description: 'A transaction on a loan account
@@ -120,17 +387,6 @@ components:
         debitCreditMemo: CREDIT
         status: POSTED
         amount: 1638.83
-    DateString:
-      title: Date String
-      description: 'ISO 8601 full-date in format ''YYYY-MM-DD'' according
-
-        to [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)
-
-        '
-      type: string
-      format: date
-      maxLength: 10
-      example: '2021-07-15'
     Iso4217Code:
       title: ISO 4217 Code
       description: 'Currency, fund and precious metal codes as of Jan. 1, 2023 per [ISO 4217 Currency Code Maintenance](https://www.six-group.com/en/products-services/financial-information/data-standards.html)
@@ -319,71 +575,15 @@ components:
       - ZAR
       - ZMW
       - ZWL
-    DepositTransaction:
-      title: Deposit Transaction entity
-      description: 'A transaction on a deposit account type
+    PaginatedArray:
+      title: Paginated Array
+      description: 'Base class for results that may be paginated
 
         '
       type: object
-      allOf:
-      - $ref: '#/components/schemas/Transaction'
-      - type: object
-        properties:
-          accountCategory:
-            type: string
-            enum:
-            - DEPOSIT_ACCOUNT
-          payee:
-            $ref: '#/components/schemas/String255'
-            description: 'Payee name
-
-              '
-          checkNumber:
-            type: integer
-            description: 'Check number. Plaid expects this solely if the transaction involves a check
-
-              '
-        required:
-        - accountCategory
-      example:
-        accountCategory: DEPOSIT_ACCOUNT
-        transactionId: 78RJ3311PLU34300E
-        transactionTimestamp: '2024-07-15T14:46:41.375+02:00'
-        description: ATM deposit
-        debitCreditMemo: DEBIT
-        status: PENDING
-        amount: 38.9
-    LineOfCreditTransaction:
-      title: Line-Of-Credit Transaction entity
-      description: 'A line-of-credit transaction
-
-        '
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/Transaction'
-      - type: object
-        properties:
-          accountCategory:
-            type: string
-            enum:
-            - LOC_ACCOUNT
-          transactionType:
-            $ref: '#/components/schemas/LineOfCreditTransactionType'
-          checkNumber:
-            type: integer
-            description: 'Check number. Plaid expects this solely if the transaction involves a check
-
-              '
-        required:
-        - accountCategory
-      example:
-        accountCategory: LOC_ACCOUNT
-        transactionId: 78RJ3311PLU34300E
-        transactionTimestamp: '2024-07-15T14:46:41.375+02:00'
-        description: Recurring payment
-        debitCreditMemo: MEMO
-        status: AUTHORIZATION
-        amount: 38.9
+      properties:
+        page:
+          $ref: '#/components/schemas/PageMetadata'
     AccountCategory:
       title: Account Category type
       description: 'The category of account. For example, annuity, commercial, deposit, insurance, investment, loan, or line of credit.
@@ -397,29 +597,29 @@ components:
       - INVESTMENT_ACCOUNT
       - LOAN_ACCOUNT
       - LOC_ACCOUNT
-    UnitType:
-      title: Unit Type
-      description: 'The units of an investment transaction
+    String255:
+      title: String 255
+      description: 'String with a maximum length of 255 characters
+
+        '
+      type: string
+      maxLength: 255
+    DebitCreditMemo:
+      title: DebitCreditMemo
+      description: 'The posting type of a transaction. Because the transaction `amount` is an absolute value, this parameter is required to indicate the transaction direction and sign (+/-):
+
+        - `DEBIT`: Money is leaving the account. The transaction amount will be exposed with a **positive** sign (+)
+
+        - `CREDIT`: Money is entering the account. The transaction amount will be exposed with a **negative** sign (-)
+
+        - `MEMO`: The transaction is pending and will be completed at the end of the day. (Plaid handles `MEMO` transaction the same as `DEBIT` transactions.)
 
         '
       type: string
       enum:
-      - CURRENCY
-      - SHARES
-    LineOfCreditTransactionType:
-      title: Line-Of-Credit Transaction Type
-      description: 'The type of a line of credit (LOC) transaction. Plaid passes through all LOC transaction types
-
-        '
-      type: string
-      enum:
-      - ADJUSTMENT
-      - CHECK
-      - FEE
-      - INTEREST
-      - PAYMENT
-      - WITHDRAWAL
-      - PURCHASE
+      - CREDIT
+      - DEBIT
+      - MEMO
     InvestmentTransaction:
       title: Investment Transaction entity
       description: 'A transaction on an investment account.
@@ -533,70 +733,6 @@ components:
         amount: 428.08
         fees: 4.28
         transactionType: PURCHASED
-    PaginatedArray:
-      title: Paginated Array
-      description: 'Base class for results that may be paginated
-
-        '
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/PageMetadata'
-    Transactions:
-      title: Transactions entity
-      allOf:
-      - $ref: '#/components/schemas/PaginatedArray'
-      - type: object
-        properties:
-          transactions:
-            type: array
-            description: 'An optionally paginated array of transactions.
-
-              May be any of the following: [deposit transaction](#deposit-transaction), [investment transaction](#investment-transaction), [loan transaction](#loan-transaction), [line of credit transaction](#line-of-credit-transaction)
-
-              '
-            items:
-              discriminator:
-                propertyName: accountCategory
-                mapping:
-                  DEPOSIT_ACCOUNT: '#/components/schemas/DepositTransaction'
-                  INVESTMENT_ACCOUNT: '#/components/schemas/InvestmentTransaction'
-                  LOAN_ACCOUNT: '#/components/schemas/LoanTransaction'
-                  LOC_ACCOUNT: '#/components/schemas/LineOfCreditTransaction'
-              oneOf:
-              - $ref: '#/components/schemas/DepositTransaction'
-              - $ref: '#/components/schemas/InvestmentTransaction'
-              - $ref: '#/components/schemas/LineOfCreditTransaction'
-              - $ref: '#/components/schemas/LoanTransaction'
-        required:
-        - transactions
-    Identifier:
-      title: Identifier
-      description: 'Value for a unique identifier
-
-        '
-      type: string
-      maxLength: 256
-      example: someLongTermUniqueIDString
-    PageMetadata:
-      title: Page Metadata
-      description: 'Contains the opaque identifier, `nextOffset`, to indicate a paginated result set.
-
-        '
-      type: object
-      properties:
-        nextOffset:
-          type: string
-          example: B47D80MVP23T
-          description: 'Opaque offset identifier
-
-            '
-        totalElements:
-          type: integer
-          example: 3
-          description: 'Total number of elements
-
-            '
     SecurityType:
       title: Security Type
       description: 'The type of a security
@@ -612,160 +748,96 @@ components:
       - OTHER
       - STOCK
       - SWEEP
-    InvestmentTransactionType:
-      title: Investment Transaction Type
-      description: 'The type of an investment transaction.
+    UnitType:
+      title: Unit Type
+      description: 'The units of an investment transaction
 
-        Plaid maps these enums to Plaid [investment transaction types](https://plaid.com/docs/api/accounts/#investment-transaction-types-schema).
+        '
+      type: string
+      enum:
+      - CURRENCY
+      - SHARES
+    DepositTransaction:
+      title: Deposit Transaction entity
+      description: 'A transaction on a deposit account type
 
-        Plaid doesn''t map these enums to Plaid-specific transaction subtypes.
+        '
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/Transaction'
+      - type: object
+        properties:
+          accountCategory:
+            type: string
+            enum:
+            - DEPOSIT_ACCOUNT
+          payee:
+            $ref: '#/components/schemas/String255'
+            description: 'Payee name
 
-        Plaid maps these enums as follows:
+              '
+          checkNumber:
+            type: integer
+            description: 'Check number. Plaid expects this solely if the transaction involves a check
 
+              '
+        required:
+        - accountCategory
+      example:
+        accountCategory: DEPOSIT_ACCOUNT
+        transactionId: 78RJ3311PLU34300E
+        transactionTimestamp: '2024-07-15T14:46:41.375+02:00'
+        description: ATM deposit
+        debitCreditMemo: DEBIT
+        status: PENDING
+        amount: 38.9
+    TransactionStatus:
+      title: Transaction Status
+      description: 'The status of a transaction. Plaid consumes solely the `PENDING` and `POSTED` enums,
 
-        * ADJUSTMENT - fee
+        and treats `MEMO` and `AUTHORIZATION` as if they were `PENDING`. Plaid expects that pending and posted transactions
 
-        * ATM - cash
+        have different `transactionIds`.
 
-        * CASH - cash
+        * `AUTHORIZATION`
 
-        * CHECK - cash
+        * `MEMO` - A pending transaction to be completed at the end of this day
 
-        * CLOSURE - Plaid suggests using SOLDTOCLOSE, PURCHASETOCLOSE, OPTIONEXERCISE or OPTIONEXPIRATION to indicate the specific type of closure, instead of using this enum.
+        * `PENDING` - A pending transaction
 
-        * CLOSUREOPT - Plaid suggests using SOLDTOCLOSE, PURCHASETOCLOSE, OPTIONEXERCISE or OPTIONEXPIRATION to indicate the specific type of closure, instead of using this enum.
+        * `POSTED` - A posted transaction
 
-        * CONTRIBUTION - buy (if transaction involves a security) or cash
-
-        * DEP - cash
-
-        * DEPOSIT - cash
-
-        * DIRECTDEBIT - cash
-
-        * DIRECTDEP - cash
-
-        * DIV - cash
-
-        * DIVIDEND - cash
-
-        * DIVIDENDREINVEST - buy
-
-        * EXPENSE - cash
-
-        * FEE - fee
-
-        * INCOME - cash
-
-        * INTEREST - cash
-
-        * INVEXPENSE - cash
-
-        * JRNLFUND - transfer
-
-        * JRNLSEC - transfer
-
-        * MARGININTEREST - cash
-
-        * OPTIONEXERCISE - transfer
-
-        * OPTIONEXPIRATION - transfer
-
-        * OTHER - cash - (unclassified)
-
-        * PAYMENT - cash
-
-        * POS - cash
-
-        * PURCHASED - buy
-
-        * PURCHASEDTOCOVER - buy
-
-        * PURCHASETOCLOSE - buy
-
-        * PURCHASETOOPEN - buy
-
-        * REINVESTOFINCOME - buy
-
-        * REPEATPMT - cash
-
-        * RETURNOFCAPITAL - cash
-
-        * SOLD - sell
-
-        * SOLDTOCLOSE - sell
-
-        * SOLDTOOPEN - sell
-
-        * SPLIT - transfer
-
-        * SRVCHG - fee
-
-        * TRANSFER - transfer
-
-        * XFER - transfer
+        '
+      type: string
+      enum:
+      - AUTHORIZATION
+      - MEMO
+      - PENDING
+      - POSTED
+    LineOfCreditTransactionType:
+      title: Line-Of-Credit Transaction Type
+      description: 'The type of a line of credit (LOC) transaction. Plaid passes through all LOC transaction types
 
         '
       type: string
       enum:
       - ADJUSTMENT
-      - ATM
-      - CASH
       - CHECK
-      - CLOSURE
-      - CLOSUREOPT
-      - CONTRIBUTION
-      - DEP
-      - DEPOSIT
-      - DIRECTDEBIT
-      - DIRECTDEP
-      - DIV
-      - DIVIDEND
-      - DIVIDENDREINVEST
-      - EXPENSE
       - FEE
-      - INCOME
       - INTEREST
-      - INVEXPENSE
-      - JRNLFUND
-      - JRNLSEC
-      - MARGININTEREST
-      - OPTIONEXERCISE
-      - OPTIONEXPIRATION
-      - OTHER
       - PAYMENT
-      - POS
-      - PURCHASED
-      - PURCHASEDTOCOVER
-      - PURCHASETOCLOSE
-      - PURCHASETOOPEN
-      - REINVESTOFINCOME
-      - REPEATPMT
-      - RETURNOFCAPITAL
-      - SOLD
-      - SOLDTOCLOSE
-      - SOLDTOOPEN
-      - SPLIT
-      - SRVCHG
-      - TRANSFER
-      - XFER
-    FiAttribute:
-      title: FI Attribute entity
-      description: 'Financial institution-specific attribute.
+      - WITHDRAWAL
+      - PURCHASE
+    Timestamp:
+      title: Timestamp
+      description: 'ISO 8601 date-time in format `YYYY-MM-DDThh:mm:ss.nnn[Z|[+|-]hh:mm]` according to
+
+        [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
 
         '
-      type: object
-      properties:
-        name:
-          type: string
-          description: 'Name of the financial institution-specific attribute
-
-            '
-        value:
-          type: string
-          description: 'Value of the financial institution-specific attribute
-
-            '
+      type: string
+      format: date-time
+      example: '2021-07-15T14:46:41.375Z'
     Transaction:
       title: Transaction
       description: 'Base entity for financial transactions. For monetary amounts, Plaid expects a decimal amount, with two places to represent fractional values of the base currency, for example `101.99`
@@ -855,107 +927,38 @@ components:
       - transactionTimestamp
       - status
       - amount
-    TransactionStatus:
-      title: Transaction Status
-      description: 'The status of a transaction. Plaid consumes solely the `PENDING` and `POSTED` enums,
-
-        and treats `MEMO` and `AUTHORIZATION` as if they were `PENDING`. Plaid expects that pending and posted transactions
-
-        have different `transactionIds`.
-
-        * `AUTHORIZATION`
-
-        * `MEMO` - A pending transaction to be completed at the end of this day
-
-        * `PENDING` - A pending transaction
-
-        * `POSTED` - A posted transaction
+    Identifier:
+      title: Identifier
+      description: 'Value for a unique identifier
 
         '
       type: string
-      enum:
-      - AUTHORIZATION
-      - MEMO
-      - PENDING
-      - POSTED
-    Timestamp:
-      title: Timestamp
-      description: 'ISO 8601 date-time in format `YYYY-MM-DDThh:mm:ss.nnn[Z|[+|-]hh:mm]` according to
-
-        [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
+      maxLength: 256
+      example: someLongTermUniqueIDString
+    PageMetadata:
+      title: Page Metadata
+      description: 'Contains the opaque identifier, `nextOffset`, to indicate a paginated result set.
 
         '
-      type: string
-      format: date-time
-      example: '2021-07-15T14:46:41.375Z'
-    String255:
-      title: String 255
-      description: 'String with a maximum length of 255 characters
+      type: object
+      properties:
+        nextOffset:
+          type: string
+          example: B47D80MVP23T
+          description: 'Opaque offset identifier
 
-        '
-      type: string
-      maxLength: 255
-    SecurityIdType:
-      title: Security ID Type
-      description: 'Plaid consumes solely CUSIP, ISIN, and SEDOL.
+            '
+        totalElements:
+          type: integer
+          example: 3
+          description: 'Total number of elements
 
-
-        This field, along with `securityId` are **required** unless `symbol` is provided.
-
-
-        **Note:** If `securityIdType` is provided, `securityId` is required.
-
-        '
-      type: string
-      enum:
-      - CINS
-      - CMC
-      - CME
-      - CUSIP
-      - ISIN
-      - ITSA
-      - NASDAQ
-      - SEDOL
-      - SICC
-      - VALOR
-      - WKN
-    LoanTransactionType:
-      title: Loan Transaction Type
-      description: 'The type of a loan transaction. Plaid passes through all loan transaction types
-
-
-        - `ADJUSTMENT`: Adjustment or correction.
-
-        - `FEE`: Fee charge. For example, a late payment fee.
-
-        - `INTEREST`: Interest charge.
-
-        - `PAYMENT`: Required payment that satisfies the minimum payment (e.g. principal + interest for mortgages).
-
-        - `LUMP_SUM_PAYMENT`: A single payment of money, as opposed to a series of payments made over time.
-
-        - `SKIP_PAYMENT`: Payment that satisfies deferral of a required payment.
-
-        - `DOUBLE_UP_PAYMENT`: Additional payment beyond the required payment to reduce the principal.
-
-        - `PAYOFF`: Payment that satisfies the terms of the mortgage loan and completely pays off the debt.
-
-        '
-      type: string
-      enum:
-      - ADJUSTMENT
-      - FEE
-      - INTEREST
-      - PAYMENT
-      - LUMP_SUM_PAYMENT
-      - SKIP_PAYMENT
-      - DOUBLE_UP_PAYMENT
-      - PAYOFF
+            '
   parameters:
-    EndTimeQuery:
-      name: endTime
+    StartTimeQuery:
+      name: startTime
       in: query
-      description: 'End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.
+      description: 'Start time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.
 
         '
       schema:
@@ -968,10 +971,10 @@ components:
         '
       schema:
         type: integer
-    StartTimeQuery:
-      name: startTime
+    EndTimeQuery:
+      name: endTime
       in: query
-      description: 'Start time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.
+      description: 'End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.
 
         '
       schema:

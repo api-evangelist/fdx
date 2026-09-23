@@ -1,8 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   version: 6.0.0
-  title: FDX V6.0.0 Account Information Payment Networks Information API
-  description: "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/. The FDX API specification is distributed exclusively by FDX. Modifications to eliminate required or\nconditional elements prescribed in the FDX API Certification Use Cases will render any implementations using said modifications non-conformant with the FDX API Certification Use Cases.\nPlease note that building the FDX-compliant Core Exchange API and permitting Plaid to call your build constitutes acceptance of\nthe FDX end user license agreement, which can be found at https://financialdataexchange.org/.\nThe full FDX API standard specification is distributed exclusively by FDX.\n\n## Download the specification\n\nTo view this specification and documentation as an OpenAPI YAML file, see [the public Core Exchange Github repository](https://github.com/plaid/core-exchange/tree/main/versions).\n\n## Endpoints\n\nThis specification contains the following endpoints:\n\n  - `/customers/current`\n\n  - `/accounts`\n\n  - `/accounts/{accountId}`\n\n  - `/accounts/{accountId}/payment-networks`\n\n  - `/accounts/{accountId}/asset-transfer-networks`\n\n  - `/accounts/{accountId}/statements`\n\n  - `/accounts/{accountId}/statements/{statementId}`\n\n  - `/accounts/{accountId}/contact`\n\n  - `/accounts/{accountId}/transactions`\n\n## Error responses\n\nAn error entity which can be used at the API level for error responses or at the account level to indicate a problem specific to a particular account.\nError responses must contain a `code` and `message`, and may optionally include a `debugMessage`.\nSee the descriptions below:\n\n- `code`: The FDX error code: A long-term persistent identifier which can be used to trace error condition back to log information.\n  (**Note:** This code may differ from the HTTP status code.)\n- `message`: End user displayable information which might help the customer diagnose an error\n- `debugMessage`: Message used to debug the root cause of the error. Contents should not be used in consumer's business logic. Can change at any time and should only be used for consumer to communicate with the data provider about an issue. Provider can include an error GUID in message for their use\n\n### Example error\n\nThe following is an example response with an HTTP status code of 409.\n\n```\n{\n  \"code\": 705,\n  \"message\": \"Account is closed\",\n  \"debugMessage\": \"Operation is not supported by the closed account\"\n}\n```\n\nSee the Errors table in each endpoint description for more specific message and debug message examples.\n"
+  title: FDX V6.0.0 Payment Networks Information API
+  description: '## FDX compliance
+
+
+    The Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API
+
+    License Agreement, which can be found at https://financialdataexchange.org/.'
   contact:
     name: Plaid support
     url: https://plaid.com/data-connectivity-core-exchange/
@@ -19,9 +24,7 @@ paths:
       operationId: getAccountPaymentNetworks
       tags:
       - Payment Networks Information
-      description: 'Get payment networks supported by an account, for example ACH (Automated Clearing House). For more information about how Plaid uses this information, see the [Plaid Auth API](https://plaid.com/docs/api/products/auth/).
-
-        '
+      description: Get payment networks supported by an account, for example ACH (Automated Clearing House). For more information about how Plaid uses this information, see the Plaid Auth API.
       summary: Get payment networks supported by the account
       security:
       - openIdConnect:
@@ -52,57 +55,15 @@ paths:
                   transferOut: true
 components:
   schemas:
-    PaymentNetwork:
-      title: Payment Network Supported by Account
-      description: 'This provides details required to execute a transaction against the account within the payment network
+    PaginatedArray:
+      title: Paginated Array
+      description: 'Base class for results that may be paginated
 
         '
       type: object
       properties:
-        bankId:
-          type: string
-          description: 'Bank identifier used by the payment network. Typically the 9-digit
-
-            routing transit number (RTN) associated with the account number at a US institution,
-
-            or the 3-digit Institution (FID) and 5-digit Transit numbers for Canadian institutions,
-
-            including leading zeroes
-
-            '
-        identifier:
-          type: string
-          description: 'The number used to identify the account within the payment network.
-
-            '
-        type:
-          $ref: '#/components/schemas/PaymentNetworkType'
-        transferIn:
-          type: boolean
-          description: 'Can transfer funds to the account using this information. Plaid expect that this value represents the account''s current ability to be credited through a payment network.
-
-            Plaid recommends dynamically updating this value, for example to represent if the account is locked or not.
-
-
-            **Note:** Both `transferIn` and `transferOut` must be `true` in order for the account to support ACH
-
-            '
-        transferOut:
-          type: boolean
-          description: 'Can transfer funds from the account using this information. Plaid expect that this value represents the account''s current ability to be debited through a payment network.
-
-            Plaid recommends dynamically updating this value, for example to represent if the account is locked or not.
-
-
-            **Note:** Both `transferIn` and `transferOut` must be `true` in order for the account to support ACH
-
-            '
-      required:
-      - bankId
-      - identifier
-      - type
-      - transferIn
-      - transferOut
+        page:
+          $ref: '#/components/schemas/PageMetadata'
     PaymentNetworkType:
       title: Payment Network Type
       description: 'Suggested values for Payment Network Type. `US&#95;` refers to the USA, and `CA&#95;` refers to Canada.
@@ -163,23 +124,6 @@ components:
               transferOut: true
         required:
         - paymentNetworks
-    Identifier:
-      title: Identifier
-      description: 'Value for a unique identifier
-
-        '
-      type: string
-      maxLength: 256
-      example: someLongTermUniqueIDString
-    PaginatedArray:
-      title: Paginated Array
-      description: 'Base class for results that may be paginated
-
-        '
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/PageMetadata'
     PageMetadata:
       title: Page Metadata
       description: 'Contains the opaque identifier, `nextOffset`, to indicate a paginated result set.
@@ -199,7 +143,74 @@ components:
           description: 'Total number of elements
 
             '
+    Identifier:
+      title: Identifier
+      description: 'Value for a unique identifier
+
+        '
+      type: string
+      maxLength: 256
+      example: someLongTermUniqueIDString
+    PaymentNetwork:
+      title: Payment Network Supported by Account
+      description: 'This provides details required to execute a transaction against the account within the payment network
+
+        '
+      type: object
+      properties:
+        bankId:
+          type: string
+          description: 'Bank identifier used by the payment network. Typically the 9-digit
+
+            routing transit number (RTN) associated with the account number at a US institution,
+
+            or the 3-digit Institution (FID) and 5-digit Transit numbers for Canadian institutions,
+
+            including leading zeroes
+
+            '
+        identifier:
+          type: string
+          description: 'The number used to identify the account within the payment network.
+
+            '
+        type:
+          $ref: '#/components/schemas/PaymentNetworkType'
+        transferIn:
+          type: boolean
+          description: 'Can transfer funds to the account using this information. Plaid expect that this value represents the account''s current ability to be credited through a payment network.
+
+            Plaid recommends dynamically updating this value, for example to represent if the account is locked or not.
+
+
+            **Note:** Both `transferIn` and `transferOut` must be `true` in order for the account to support ACH
+
+            '
+        transferOut:
+          type: boolean
+          description: 'Can transfer funds from the account using this information. Plaid expect that this value represents the account''s current ability to be debited through a payment network.
+
+            Plaid recommends dynamically updating this value, for example to represent if the account is locked or not.
+
+
+            **Note:** Both `transferIn` and `transferOut` must be `true` in order for the account to support ACH
+
+            '
+      required:
+      - bankId
+      - identifier
+      - type
+      - transferIn
+      - transferOut
   parameters:
+    LimitQuery:
+      name: limit
+      in: query
+      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+
+        '
+      schema:
+        type: integer
     OffsetQuery:
       name: offset
       in: query
@@ -209,14 +220,6 @@ components:
       schema:
         type: string
         example: qwer123454q2f
-    LimitQuery:
-      name: limit
-      in: query
-      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
-
-        '
-      schema:
-        type: integer
     AccountIdPath:
       name: accountId
       in: path

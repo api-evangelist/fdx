@@ -1,12 +1,7 @@
 {
   "provider": "fdx",
   "sources": [
-    "fdx-account-information-api-openapi.yml",
-    "fdx-account-statements-api-openapi.yml",
-    "fdx-account-transactions-api-openapi.yml",
-    "fdx-asset-transfer-networks-information-api-openapi.yml",
-    "fdx-payment-networks-information-api-openapi.yml",
-    "fdx-personal-information-api-openapi.yml"
+    "_original/fdx-corex-6.0.0.yaml"
   ],
   "outputs": [
     "fdx-account-information-api-openapi.yml",
@@ -19,6 +14,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "2 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "fdx-corex-6.0.0.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/fdx-corex-6.3.1.yaml: archived document superseded by a larger archived document",
+    "_original/fdx-corex-6.2.0.yaml: archived document superseded by a larger archived document",
+    "fdx-account-information-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fdx-account-statements-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fdx-account-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fdx-asset-transfer-networks-information-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fdx-payment-networks-information-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fdx-personal-information-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
