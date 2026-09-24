@@ -199,8 +199,6 @@ apis:
     url: openapi/fdx-account-information-api-openapi.yml
   - type: Documentation
     url: https://financialdataexchange.org
-  - type: GraphQL
-    url: graphql/fdx-graphql.md
 - aid: fdx:fdx-account-statements-api
   name: Financial Data Exchange (FDX) Account Statements API
   description: Search and retrieve account statements
@@ -213,8 +211,6 @@ apis:
     url: openapi/fdx-account-statements-api-openapi.yml
   - type: Documentation
     url: https://financialdataexchange.org
-  - type: GraphQL
-    url: graphql/fdx-graphql.md
 - aid: fdx:fdx-account-transactions-api
   name: Financial Data Exchange (FDX) Account Transactions API
   description: Search and view account transactions
@@ -227,8 +223,6 @@ apis:
     url: openapi/fdx-account-transactions-api-openapi.yml
   - type: Documentation
     url: https://financialdataexchange.org
-  - type: GraphQL
-    url: graphql/fdx-graphql.md
 - aid: fdx:fdx-asset-transfer-networks-information-api
   name: Financial Data Exchange (FDX) Asset Transfer Networks Information API
   description: Search and view asset transfer networks networks
@@ -241,8 +235,6 @@ apis:
     url: openapi/fdx-asset-transfer-networks-information-api-openapi.yml
   - type: Documentation
     url: https://financialdataexchange.org
-  - type: GraphQL
-    url: graphql/fdx-graphql.md
 - aid: fdx:fdx-payment-networks-information-api
   name: Financial Data Exchange (FDX) Payment Networks Information API
   description: Search and view account payment networks
@@ -255,8 +247,6 @@ apis:
     url: openapi/fdx-payment-networks-information-api-openapi.yml
   - type: Documentation
     url: https://financialdataexchange.org
-  - type: GraphQL
-    url: graphql/fdx-graphql.md
 - aid: fdx:fdx-personal-information-api
   name: Financial Data Exchange (FDX) Personal Information API
   description: Search and view customer or customers
@@ -269,8 +259,6 @@ apis:
     url: openapi/fdx-personal-information-api-openapi.yml
   - type: Documentation
     url: https://financialdataexchange.org
-  - type: GraphQL
-    url: graphql/fdx-graphql.md
 common:
 - type: CapabilityMap
   url: capabilities/fdx-capability-edges.yml
