@@ -55,15 +55,6 @@ paths:
                   transferOut: true
 components:
   schemas:
-    PaginatedArray:
-      title: Paginated Array
-      description: 'Base class for results that may be paginated
-
-        '
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/PageMetadata'
     PaymentNetworkType:
       title: Payment Network Type
       description: 'Suggested values for Payment Network Type. `US&#95;` refers to the USA, and `CA&#95;` refers to Canada.
@@ -94,36 +85,15 @@ components:
       - US_FEDNOW
       - US_FEDWIRE
       - US_RTP
-    AccountPaymentNetworkList:
-      title: Payment Networks entity
-      type: object
-      description: 'Array of payment networks.
-
-        Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
+    PaginatedArray:
+      title: Paginated Array
+      description: 'Base class for results that may be paginated
 
         '
-      allOf:
-      - $ref: '#/components/schemas/PaginatedArray'
-      - type: object
-        properties:
-          paymentNetworks:
-            type: array
-            description: 'Array of payment networks.
-
-              Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
-
-              '
-            items:
-              $ref: '#/components/schemas/PaymentNetwork'
-            minItems: 1
-            example:
-            - bankId: 010088889
-              identifier: '1111222233335820'
-              type: US_ACH
-              transferIn: true
-              transferOut: true
-        required:
-        - paymentNetworks
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/PageMetadata'
     PageMetadata:
       title: Page Metadata
       description: 'Contains the opaque identifier, `nextOffset`, to indicate a paginated result set.
@@ -143,14 +113,6 @@ components:
           description: 'Total number of elements
 
             '
-    Identifier:
-      title: Identifier
-      description: 'Value for a unique identifier
-
-        '
-      type: string
-      maxLength: 256
-      example: someLongTermUniqueIDString
     PaymentNetwork:
       title: Payment Network Supported by Account
       description: 'This provides details required to execute a transaction against the account within the payment network
@@ -202,15 +164,45 @@ components:
       - type
       - transferIn
       - transferOut
-  parameters:
-    LimitQuery:
-      name: limit
-      in: query
-      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+    Identifier:
+      title: Identifier
+      description: 'Value for a unique identifier
 
         '
-      schema:
-        type: integer
+      type: string
+      maxLength: 256
+      example: someLongTermUniqueIDString
+    AccountPaymentNetworkList:
+      title: Payment Networks entity
+      type: object
+      description: 'Array of payment networks.
+
+        Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/PaginatedArray'
+      - type: object
+        properties:
+          paymentNetworks:
+            type: array
+            description: 'Array of payment networks.
+
+              Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
+
+              '
+            items:
+              $ref: '#/components/schemas/PaymentNetwork'
+            minItems: 1
+            example:
+            - bankId: 010088889
+              identifier: '1111222233335820'
+              type: US_ACH
+              transferIn: true
+              transferOut: true
+        required:
+        - paymentNetworks
+  parameters:
     OffsetQuery:
       name: offset
       in: query
@@ -234,6 +226,14 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/Identifier'
+    LimitQuery:
+      name: limit
+      in: query
+      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+
+        '
+      schema:
+        type: integer
   securitySchemes:
     openIdConnect:
       type: openIdConnect

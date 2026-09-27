@@ -49,49 +49,6 @@ paths:
                   jointAccount: true
 components:
   schemas:
-    AssetTransferType:
-      title: Asset Transfer Type
-      description: 'The type of asset transfer
-
-        '
-      type: string
-      enum:
-      - CA_ATON
-      - US_ACATS
-      - US_DTC
-    PaymentNetworkIdentifierType:
-      title: Payment Network Identifier Type
-      description: 'The type of identifier used to identify the account in the payment network
-
-        '
-      type: string
-      enum:
-      - ACCOUNT_NUMBER
-      - TOKENIZED_ACCOUNT_NUMBER
-    AssetTransferNetworkList:
-      title: Asset Transfer Networks
-      description: 'A paginated array of asset transfer networks for the account
-
-        '
-      type: object
-      properties:
-        assetTransferNetworks:
-          type: array
-          description: 'A paginated array of asset transfer networks for the account
-
-            '
-          items:
-            $ref: '#/components/schemas/AssetTransferNetwork'
-      required:
-      - assetTransferNetworks
-    Identifier:
-      title: Identifier
-      description: 'Value for a unique identifier
-
-        '
-      type: string
-      maxLength: 256
-      example: someLongTermUniqueIDString
     AssetTransferNetwork:
       title: Asset Transfer Network
       description: 'Information required to facilitate asset transfer from this account
@@ -127,15 +84,50 @@ components:
       - identifier
       - institutionId
       - type
-  parameters:
-    LimitQuery:
-      name: limit
-      in: query
-      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+    AssetTransferNetworkList:
+      title: Asset Transfer Networks
+      description: 'A paginated array of asset transfer networks for the account
 
         '
-      schema:
-        type: integer
+      type: object
+      properties:
+        assetTransferNetworks:
+          type: array
+          description: 'A paginated array of asset transfer networks for the account
+
+            '
+          items:
+            $ref: '#/components/schemas/AssetTransferNetwork'
+      required:
+      - assetTransferNetworks
+    PaymentNetworkIdentifierType:
+      title: Payment Network Identifier Type
+      description: 'The type of identifier used to identify the account in the payment network
+
+        '
+      type: string
+      enum:
+      - ACCOUNT_NUMBER
+      - TOKENIZED_ACCOUNT_NUMBER
+    Identifier:
+      title: Identifier
+      description: 'Value for a unique identifier
+
+        '
+      type: string
+      maxLength: 256
+      example: someLongTermUniqueIDString
+    AssetTransferType:
+      title: Asset Transfer Type
+      description: 'The type of asset transfer
+
+        '
+      type: string
+      enum:
+      - CA_ATON
+      - US_ACATS
+      - US_DTC
+  parameters:
     OffsetQuery:
       name: offset
       in: query
@@ -159,6 +151,14 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/Identifier'
+    LimitQuery:
+      name: limit
+      in: query
+      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+
+        '
+      schema:
+        type: integer
   securitySchemes:
     openIdConnect:
       type: openIdConnect
