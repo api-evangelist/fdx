@@ -94,76 +94,6 @@ paths:
                 $ref: '#/components/schemas/StatementPDF'
 components:
   schemas:
-    ContentTypes:
-      title: Content Types
-      description: 'Types of document formats. (Suggested values)
-
-        '
-      type: string
-      enum:
-      - application/pdf
-      - image/gif
-      - image/jpeg
-      - image/tiff
-      - image/png
-      - application/json
-    DateString:
-      title: Date String
-      description: 'ISO 8601 full-date in format ''YYYY-MM-DD'' according
-
-        to [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)
-
-        '
-      type: string
-      format: date
-      maxLength: 10
-      example: '2021-07-15'
-    PageMetadata:
-      title: Page Metadata
-      description: 'Contains the opaque identifier, `nextOffset`, to indicate a paginated result set.
-
-        '
-      type: object
-      properties:
-        nextOffset:
-          type: string
-          example: B47D80MVP23T
-          description: 'Opaque offset identifier
-
-            '
-        totalElements:
-          type: integer
-          example: 3
-          description: 'Total number of elements
-
-            '
-    HttpAction:
-      title: HTTP action type
-      description: 'The HTTP method to use for requests
-
-        '
-      type: string
-      enum:
-      - GET
-      - POST
-      - PATCH
-      - DELETE
-      - PUT
-    PaginatedArray:
-      title: Paginated Array
-      description: 'Base class for results that may be paginated
-
-        '
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/PageMetadata'
-    StatementPDF:
-      title: Statement PDF
-      description: 'An account statement in PDF format
-
-        '
-      format: binary
     Identifier:
       title: Identifier
       description: 'Value for a unique identifier
@@ -172,58 +102,6 @@ components:
       type: string
       maxLength: 256
       example: someLongTermUniqueIDString
-    Statements:
-      title: Statements entity
-      description: 'A paginated array of account statements
-
-        '
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/PaginatedArray'
-      - type: object
-        properties:
-          statements:
-            type: array
-            description: 'An array of statements, each with its own HATEOAS link to retrieve the account statement
-
-              '
-            items:
-              $ref: '#/components/schemas/Statement'
-        required:
-        - statements
-    HateoasLink:
-      title: HATEOAS Link
-      description: 'HATEOAS (Hypermedia As The Engine Of Application State) link
-
-        '
-      required:
-      - href
-      type: object
-      properties:
-        href:
-          type: string
-          format: uri-reference
-          description: 'The resource URL
-
-            '
-          example: https://api.fi.com/fdx/v4/accounts/12345
-        action:
-          description: 'The HTTP method to use for the request
-
-            '
-          $ref: '#/components/schemas/HttpAction'
-        rel:
-          description: 'The relation of this link to its containing entity, as defined by the [IETF RFC5988](https://datatracker.ietf.org/doc/html/rfc5988)
-
-            '
-          type: string
-        types:
-          type: array
-          items:
-            $ref: '#/components/schemas/ContentTypes'
-          description: 'The content-types that can be used in the Accept header. **Note:** Plaid currently only accepts the PDF (`application/pdf`) content type
-
-            '
     Statement:
       title: Statement entity
       description: 'An account statement
@@ -276,15 +154,129 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/HateoasLink'
-  parameters:
-    EndTimeQuery:
-      name: endTime
-      in: query
-      description: 'End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.
+    DateString:
+      title: Date String
+      description: 'ISO 8601 full-date in format ''YYYY-MM-DD'' according
+
+        to [IETF RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339.html#section-5.6)
 
         '
-      schema:
-        $ref: '#/components/schemas/DateString'
+      type: string
+      format: date
+      maxLength: 10
+      example: '2021-07-15'
+    ContentTypes:
+      title: Content Types
+      description: 'Types of document formats. (Suggested values)
+
+        '
+      type: string
+      enum:
+      - application/pdf
+      - image/gif
+      - image/jpeg
+      - image/tiff
+      - image/png
+      - application/json
+    StatementPDF:
+      title: Statement PDF
+      description: 'An account statement in PDF format
+
+        '
+      format: binary
+    HateoasLink:
+      title: HATEOAS Link
+      description: 'HATEOAS (Hypermedia As The Engine Of Application State) link
+
+        '
+      required:
+      - href
+      type: object
+      properties:
+        href:
+          type: string
+          format: uri-reference
+          description: 'The resource URL
+
+            '
+          example: https://api.fi.com/fdx/v4/accounts/12345
+        action:
+          description: 'The HTTP method to use for the request
+
+            '
+          $ref: '#/components/schemas/HttpAction'
+        rel:
+          description: 'The relation of this link to its containing entity, as defined by the [IETF RFC5988](https://datatracker.ietf.org/doc/html/rfc5988)
+
+            '
+          type: string
+        types:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContentTypes'
+          description: 'The content-types that can be used in the Accept header. **Note:** Plaid currently only accepts the PDF (`application/pdf`) content type
+
+            '
+    PageMetadata:
+      title: Page Metadata
+      description: 'Contains the opaque identifier, `nextOffset`, to indicate a paginated result set.
+
+        '
+      type: object
+      properties:
+        nextOffset:
+          type: string
+          example: B47D80MVP23T
+          description: 'Opaque offset identifier
+
+            '
+        totalElements:
+          type: integer
+          example: 3
+          description: 'Total number of elements
+
+            '
+    HttpAction:
+      title: HTTP action type
+      description: 'The HTTP method to use for requests
+
+        '
+      type: string
+      enum:
+      - GET
+      - POST
+      - PATCH
+      - DELETE
+      - PUT
+    Statements:
+      title: Statements entity
+      description: 'A paginated array of account statements
+
+        '
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/PaginatedArray'
+      - type: object
+        properties:
+          statements:
+            type: array
+            description: 'An array of statements, each with its own HATEOAS link to retrieve the account statement
+
+              '
+            items:
+              $ref: '#/components/schemas/Statement'
+        required:
+        - statements
+    PaginatedArray:
+      title: Paginated Array
+      description: 'Base class for results that may be paginated
+
+        '
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/PageMetadata'
+  parameters:
     StatementIdPath:
       name: statementId
       in: path
@@ -294,23 +286,6 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/Identifier'
-    OffsetQuery:
-      name: offset
-      in: query
-      description: 'An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.
-
-        '
-      schema:
-        type: string
-        example: qwer123454q2f
-    LimitQuery:
-      name: limit
-      in: query
-      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
-
-        '
-      schema:
-        type: integer
     AccountIdPath:
       name: accountId
       in: path
@@ -329,6 +304,31 @@ components:
       name: startTime
       in: query
       description: 'Start time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.
+
+        '
+      schema:
+        $ref: '#/components/schemas/DateString'
+    LimitQuery:
+      name: limit
+      in: query
+      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+
+        '
+      schema:
+        type: integer
+    OffsetQuery:
+      name: offset
+      in: query
+      description: 'An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.
+
+        '
+      schema:
+        type: string
+        example: qwer123454q2f
+    EndTimeQuery:
+      name: endTime
+      in: query
+      description: 'End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.
 
         '
       schema:

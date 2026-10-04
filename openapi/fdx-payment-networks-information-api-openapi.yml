@@ -55,6 +55,74 @@ paths:
                   transferOut: true
 components:
   schemas:
+    Identifier:
+      title: Identifier
+      description: 'Value for a unique identifier
+
+        '
+      type: string
+      maxLength: 256
+      example: someLongTermUniqueIDString
+    AccountPaymentNetworkList:
+      title: Payment Networks entity
+      type: object
+      description: 'Array of payment networks.
+
+        Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/PaginatedArray'
+      - type: object
+        properties:
+          paymentNetworks:
+            type: array
+            description: 'Array of payment networks.
+
+              Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
+
+              '
+            items:
+              $ref: '#/components/schemas/PaymentNetwork'
+            minItems: 1
+            example:
+            - bankId: 010088889
+              identifier: '1111222233335820'
+              type: US_ACH
+              transferIn: true
+              transferOut: true
+        required:
+        - paymentNetworks
+    PaymentNetworkType:
+      title: Payment Network Type
+      description: 'Suggested values for Payment Network Type. `US&#95;` refers to the USA, and `CA&#95;` refers to Canada.
+
+        Possible values:
+
+
+        * CA&#95;ACSS: Automated Clearing House Settlement System
+
+        * CA&#95;LVTS: Large-Value Transfer System
+
+        * US&#95;ACH: Automated Clearing House, also called Fed ACH network (mostly small banks)
+
+        * US&#95;CHIPS: Clearinghouse Interbank Payments System. Also called Clearing House ACH network (primarily big banks)
+
+        * US&#95;FEDNOW: Federal Reserve Instant Payment System
+
+
+        **NOTE**: `US&#95;FEDWIRE` and `US&#95;RTP` are not supported payment network types.
+
+        '
+      type: string
+      enum:
+      - CA_ACSS
+      - CA_LVTS
+      - US_ACH
+      - US_CHIPS
+      - US_FEDNOW
+      - US_FEDWIRE
+      - US_RTP
     PaymentNetwork:
       title: Payment Network Supported by Account
       description: 'This provides details required to execute a transaction against the account within the payment network
@@ -134,75 +202,21 @@ components:
       properties:
         page:
           $ref: '#/components/schemas/PageMetadata'
-    Identifier:
-      title: Identifier
-      description: 'Value for a unique identifier
-
-        '
-      type: string
-      maxLength: 256
-      example: someLongTermUniqueIDString
-    PaymentNetworkType:
-      title: Payment Network Type
-      description: 'Suggested values for Payment Network Type. `US&#95;` refers to the USA, and `CA&#95;` refers to Canada.
-
-        Possible values:
-
-
-        * CA&#95;ACSS: Automated Clearing House Settlement System
-
-        * CA&#95;LVTS: Large-Value Transfer System
-
-        * US&#95;ACH: Automated Clearing House, also called Fed ACH network (mostly small banks)
-
-        * US&#95;CHIPS: Clearinghouse Interbank Payments System. Also called Clearing House ACH network (primarily big banks)
-
-        * US&#95;FEDNOW: Federal Reserve Instant Payment System
-
-
-        **NOTE**: `US&#95;FEDWIRE` and `US&#95;RTP` are not supported payment network types.
-
-        '
-      type: string
-      enum:
-      - CA_ACSS
-      - CA_LVTS
-      - US_ACH
-      - US_CHIPS
-      - US_FEDNOW
-      - US_FEDWIRE
-      - US_RTP
-    AccountPaymentNetworkList:
-      title: Payment Networks entity
-      type: object
-      description: 'Array of payment networks.
-
-        Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
-
-        '
-      allOf:
-      - $ref: '#/components/schemas/PaginatedArray'
-      - type: object
-        properties:
-          paymentNetworks:
-            type: array
-            description: 'Array of payment networks.
-
-              Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
-
-              '
-            items:
-              $ref: '#/components/schemas/PaymentNetwork'
-            minItems: 1
-            example:
-            - bankId: 010088889
-              identifier: '1111222233335820'
-              type: US_ACH
-              transferIn: true
-              transferOut: true
-        required:
-        - paymentNetworks
   parameters:
+    AccountIdPath:
+      name: accountId
+      in: path
+      description: 'Account identifier, found in the `GET /accounts` endpoint response.
+
+        Plaid expects the ID to be a different value from the account number
+
+
+        **Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.
+
+        '
+      required: true
+      schema:
+        $ref: '#/components/schemas/Identifier'
     OffsetQuery:
       name: offset
       in: query
@@ -220,20 +234,6 @@ components:
         '
       schema:
         type: integer
-    AccountIdPath:
-      name: accountId
-      in: path
-      description: 'Account identifier, found in the `GET /accounts` endpoint response.
-
-        Plaid expects the ID to be a different value from the account number
-
-
-        **Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.
-
-        '
-      required: true
-      schema:
-        $ref: '#/components/schemas/Identifier'
   securitySchemes:
     openIdConnect:
       type: openIdConnect
