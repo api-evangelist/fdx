@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: FDX Membership Plans and API Access
 description: FDX API specifications are available royalty-free under the FDX API License Agreement. Full specification access and developer tooling require FDX membership or observer enrollment through the onboarding portal. Membership is open to financial sector organizations; tiers are based on organizational type and size. Individual developers and researchers may access specifications at the observer level.
 specificationVersion: '0.1'
@@ -48,3 +52,35 @@ plans:
       - Access to FDX research and white papers
       - Advisory input into consumer protection standards
 notes: FDX API specifications are royalty-free once accessed under the FDX API License Agreement. Implementation of the FDX API by data providers, data access platforms, and data recipients does not require ongoing royalty payments. Membership fees fund standards development, certification programs, and governance operations.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  units: []
+  plans:
+  - name: Observer Access
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Associate Member
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Full Member
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Affiliate Member
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []

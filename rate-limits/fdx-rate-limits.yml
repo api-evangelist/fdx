@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: FDX API Rate Limits
 description: The FDX API is a standard specification rather than a centrally hosted API service. Rate limits are defined and enforced by individual data provider implementations (financial institutions and aggregators). The FDX specification recommends implementers adopt limits aligned with consumer use patterns, regulatory guidance under CFPB Section 1033, and fair access principles. The guidance below reflects typical industry practice for FDX-compliant implementations.
 specificationVersion: '0.1'

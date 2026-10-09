@@ -1,3 +1,11 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+# Coverage demoted 2026-10-07 (roadmap#942, PLAN.md Stage A): this file was written by an API Evangelist
+# sweep and names no billing unit, meters or pricing category read from the provider — it restates the
+# FinOps framework. It is `x-coverage: unmeasured`, and the FOCUS alignment it claimed has been removed.
+x-coverage: unmeasured
+method: generated
 name: FDX API FinOps Framework
 description: FOCUS-aligned FinOps reference for organizations implementing or consuming the FDX API standard. FDX itself is a royalty-free standard; direct costs arise from membership fees, implementation engineering, certification, infrastructure for hosting FDX-compliant endpoints, and third-party aggregation platform fees. Data recipients integrating with FDX-compliant financial institutions may incur costs through aggregator platform subscriptions rather than direct FDX charges.
 specificationVersion: '1.0'
