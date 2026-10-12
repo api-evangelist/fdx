@@ -1,0 +1,18 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/fdx/integrations
+- https://zapier.com/apps/financial-data-exchange-fdx/integrations
+- https://n8n.io/integrations/fdx/
+- https://composio.dev/toolkits/fdx
+- https://monid.ai/tools/fdx
+checked:
+- https://composio.dev/toolkits/fdx
+- https://monid.ai/tools/fdx
+- https://n8n.io/integrations/fdx/
+- https://zapier.com/apps/fdx/integrations
+- https://zapier.com/apps/financial-data-exchange-fdx/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
