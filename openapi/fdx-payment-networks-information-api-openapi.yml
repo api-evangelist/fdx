@@ -54,6 +54,38 @@ paths:
                   transferIn: true
                   transferOut: true
 components:
+  parameters:
+    AccountIdPath:
+      name: accountId
+      in: path
+      description: 'Account identifier, found in the `GET /accounts` endpoint response.
+
+        Plaid expects the ID to be a different value from the account number
+
+
+        **Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.
+
+        '
+      required: true
+      schema:
+        $ref: '#/components/schemas/Identifier'
+    LimitQuery:
+      name: limit
+      in: query
+      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+
+        '
+      schema:
+        type: integer
+    OffsetQuery:
+      name: offset
+      in: query
+      description: 'An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.
+
+        '
+      schema:
+        type: string
+        example: qwer123454q2f
   schemas:
     Identifier:
       title: Identifier
@@ -63,66 +95,15 @@ components:
       type: string
       maxLength: 256
       example: someLongTermUniqueIDString
-    AccountPaymentNetworkList:
-      title: Payment Networks entity
+    PaginatedArray:
+      title: Paginated Array
+      description: 'Base class for results that may be paginated
+
+        '
       type: object
-      description: 'Array of payment networks.
-
-        Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
-
-        '
-      allOf:
-      - $ref: '#/components/schemas/PaginatedArray'
-      - type: object
-        properties:
-          paymentNetworks:
-            type: array
-            description: 'Array of payment networks.
-
-              Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
-
-              '
-            items:
-              $ref: '#/components/schemas/PaymentNetwork'
-            minItems: 1
-            example:
-            - bankId: 010088889
-              identifier: '1111222233335820'
-              type: US_ACH
-              transferIn: true
-              transferOut: true
-        required:
-        - paymentNetworks
-    PaymentNetworkType:
-      title: Payment Network Type
-      description: 'Suggested values for Payment Network Type. `US&#95;` refers to the USA, and `CA&#95;` refers to Canada.
-
-        Possible values:
-
-
-        * CA&#95;ACSS: Automated Clearing House Settlement System
-
-        * CA&#95;LVTS: Large-Value Transfer System
-
-        * US&#95;ACH: Automated Clearing House, also called Fed ACH network (mostly small banks)
-
-        * US&#95;CHIPS: Clearinghouse Interbank Payments System. Also called Clearing House ACH network (primarily big banks)
-
-        * US&#95;FEDNOW: Federal Reserve Instant Payment System
-
-
-        **NOTE**: `US&#95;FEDWIRE` and `US&#95;RTP` are not supported payment network types.
-
-        '
-      type: string
-      enum:
-      - CA_ACSS
-      - CA_LVTS
-      - US_ACH
-      - US_CHIPS
-      - US_FEDNOW
-      - US_FEDWIRE
-      - US_RTP
+      properties:
+        page:
+          $ref: '#/components/schemas/PageMetadata'
     PaymentNetwork:
       title: Payment Network Supported by Account
       description: 'This provides details required to execute a transaction against the account within the payment network
@@ -174,6 +155,36 @@ components:
       - type
       - transferIn
       - transferOut
+    PaymentNetworkType:
+      title: Payment Network Type
+      description: 'Suggested values for Payment Network Type. `US&#95;` refers to the USA, and `CA&#95;` refers to Canada.
+
+        Possible values:
+
+
+        * CA&#95;ACSS: Automated Clearing House Settlement System
+
+        * CA&#95;LVTS: Large-Value Transfer System
+
+        * US&#95;ACH: Automated Clearing House, also called Fed ACH network (mostly small banks)
+
+        * US&#95;CHIPS: Clearinghouse Interbank Payments System. Also called Clearing House ACH network (primarily big banks)
+
+        * US&#95;FEDNOW: Federal Reserve Instant Payment System
+
+
+        **NOTE**: `US&#95;FEDWIRE` and `US&#95;RTP` are not supported payment network types.
+
+        '
+      type: string
+      enum:
+      - CA_ACSS
+      - CA_LVTS
+      - US_ACH
+      - US_CHIPS
+      - US_FEDNOW
+      - US_FEDWIRE
+      - US_RTP
     PageMetadata:
       title: Page Metadata
       description: 'Contains the opaque identifier, `nextOffset`, to indicate a paginated result set.
@@ -193,47 +204,36 @@ components:
           description: 'Total number of elements
 
             '
-    PaginatedArray:
-      title: Paginated Array
-      description: 'Base class for results that may be paginated
-
-        '
+    AccountPaymentNetworkList:
+      title: Payment Networks entity
       type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/PageMetadata'
-  parameters:
-    AccountIdPath:
-      name: accountId
-      in: path
-      description: 'Account identifier, found in the `GET /accounts` endpoint response.
+      description: 'Array of payment networks.
 
-        Plaid expects the ID to be a different value from the account number
-
-
-        **Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.
+        Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
 
         '
-      required: true
-      schema:
-        $ref: '#/components/schemas/Identifier'
-    OffsetQuery:
-      name: offset
-      in: query
-      description: 'An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.
+      allOf:
+      - $ref: '#/components/schemas/PaginatedArray'
+      - type: object
+        properties:
+          paymentNetworks:
+            type: array
+            description: 'Array of payment networks.
 
-        '
-      schema:
-        type: string
-        example: qwer123454q2f
-    LimitQuery:
-      name: limit
-      in: query
-      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+              Not all deposit accounts support ACH transfers. For example, a prepaid debit card account doesn''t support ACH
 
-        '
-      schema:
-        type: integer
+              '
+            items:
+              $ref: '#/components/schemas/PaymentNetwork'
+            minItems: 1
+            example:
+            - bankId: 010088889
+              identifier: '1111222233335820'
+              type: US_ACH
+              transferIn: true
+              transferOut: true
+        required:
+        - paymentNetworks
   securitySchemes:
     openIdConnect:
       type: openIdConnect

@@ -49,23 +49,6 @@ paths:
                   jointAccount: true
 components:
   schemas:
-    Identifier:
-      title: Identifier
-      description: 'Value for a unique identifier
-
-        '
-      type: string
-      maxLength: 256
-      example: someLongTermUniqueIDString
-    PaymentNetworkIdentifierType:
-      title: Payment Network Identifier Type
-      description: 'The type of identifier used to identify the account in the payment network
-
-        '
-      type: string
-      enum:
-      - ACCOUNT_NUMBER
-      - TOKENIZED_ACCOUNT_NUMBER
     AssetTransferNetworkList:
       title: Asset Transfer Networks
       description: 'A paginated array of asset transfer networks for the account
@@ -82,16 +65,6 @@ components:
             $ref: '#/components/schemas/AssetTransferNetwork'
       required:
       - assetTransferNetworks
-    AssetTransferType:
-      title: Asset Transfer Type
-      description: 'The type of asset transfer
-
-        '
-      type: string
-      enum:
-      - CA_ATON
-      - US_ACATS
-      - US_DTC
     AssetTransferNetwork:
       title: Asset Transfer Network
       description: 'Information required to facilitate asset transfer from this account
@@ -127,7 +100,51 @@ components:
       - identifier
       - institutionId
       - type
+    Identifier:
+      title: Identifier
+      description: 'Value for a unique identifier
+
+        '
+      type: string
+      maxLength: 256
+      example: someLongTermUniqueIDString
+    AssetTransferType:
+      title: Asset Transfer Type
+      description: 'The type of asset transfer
+
+        '
+      type: string
+      enum:
+      - CA_ATON
+      - US_ACATS
+      - US_DTC
+    PaymentNetworkIdentifierType:
+      title: Payment Network Identifier Type
+      description: 'The type of identifier used to identify the account in the payment network
+
+        '
+      type: string
+      enum:
+      - ACCOUNT_NUMBER
+      - TOKENIZED_ACCOUNT_NUMBER
   parameters:
+    LimitQuery:
+      name: limit
+      in: query
+      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
+
+        '
+      schema:
+        type: integer
+    OffsetQuery:
+      name: offset
+      in: query
+      description: 'An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.
+
+        '
+      schema:
+        type: string
+        example: qwer123454q2f
     AccountIdPath:
       name: accountId
       in: path
@@ -142,23 +159,6 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/Identifier'
-    OffsetQuery:
-      name: offset
-      in: query
-      description: 'An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.
-
-        '
-      schema:
-        type: string
-        example: qwer123454q2f
-    LimitQuery:
-      name: limit
-      in: query
-      description: 'The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.
-
-        '
-      schema:
-        type: integer
   securitySchemes:
     openIdConnect:
       type: openIdConnect
