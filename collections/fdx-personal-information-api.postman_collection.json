@@ -1,250 +1,280 @@
 {
+  "info": {
+    "_postman_id": "51836d88-7f9e-4fb4-9819-c1a898be4abb",
+    "name": "FDX V6.0.0 Personal Information API",
+    "description": "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/.\n\nContact Support:\n Name: Plaid support\n Email: dataconnectivity@plaid.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:55:16.000Z",
+    "updatedAt": "2026-10-22T02:55:16.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-51836d88-7f9e-4fb4-9819-c1a898be4abb"
+  },
   "item": [
     {
-      "id": "c4b893f8-dea4-497a-a8b3-88a01497fffb",
-      "name": "Personal Information",
-      "description": {
-        "content": "Search and view customer or customers",
-        "type": "text/plain"
-      },
+      "name": "accounts",
       "item": [
         {
-          "id": "ddc2eeb2-3c6d-4b49-807a-a2d64cab7143",
-          "name": "Get an account's contact information",
-          "request": {
-            "name": "Get an account's contact information",
-            "description": {
-              "content": "Get contact information on the account. Plaid links contact information to accounts, rather than to users. Plaid consumes multiple holders and their contact information for the account, but doesn't attempt to correlate holders to their respective contact information. For more information about Plaid's identity model, see [Plaid Identity API](https://plaid.com/docs/api/products/identity/).\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId",
-                "contact"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": [
-                {
-                  "key": "scope",
-                  "value": "Account Customer Transactions"
-                },
-                {
-                  "key": "accessTokenUrl",
-                  "value": "https://www.your-organization.com/token"
-                },
-                {
-                  "key": "authUrl",
-                  "value": "https://www.your-organization.com/authorize"
-                },
-                {
-                  "key": "grant_type",
-                  "value": "authorization_code"
-                }
-              ]
-            }
-          },
-          "response": [
+          "name": "{accountId}",
+          "item": [
             {
-              "id": "76dbca5d-87c7-4a8c-8ba7-09774a66b91d",
-              "name": "Details used to verify an account.\n",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "contact"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
+              "name": "contact",
+              "item": [
+                {
+                  "name": "Get an account's contact information",
+                  "id": "e0e0cff1-a5f2-4a28-aca4-82bc3760dc57",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "oauth2",
+                      "oauth2": [
+                        {
+                          "key": "scope",
+                          "value": "Account Customer Transactions",
+                          "type": "string"
+                        },
+                        {
+                          "key": "accessTokenUrl",
+                          "value": "https://www.your-organization.com/token",
+                          "type": "string"
+                        },
+                        {
+                          "key": "authUrl",
+                          "value": "https://www.your-organization.com/authorize",
+                          "type": "string"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "authorization_code",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:accountId/contact",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":accountId",
+                        "contact"
+                      ],
+                      "variable": [
+                        {
+                          "id": "b82dfa41-b018-4f37-8a8f-23d09c2e3b8a",
+                          "key": "accountId",
+                          "value": "<string>",
+                          "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+                        }
+                      ]
+                    },
+                    "description": "Get contact information on the account. Plaid links contact information to accounts, rather than to users. Plaid consumes multiple holders and their contact information for the account, but doesn't attempt to correlate holders to their respective contact information. For more information about Plaid's identity model, see Plaid Identity API."
+                  },
+                  "response": [
                     {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+                      "id": "1262ec8a-75fb-414e-a817-3a8e63614ac9",
+                      "name": "Details used to verify an account.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: oauth2",
+                            "key": "Authorization",
+                            "value": "<token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/contact",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "contact"
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"holders\": [\n    {\n      \"name\": {\n        \"first\": \"<string>\",\n        \"last\": \"<string>\",\n        \"middle\": \"<string>\",\n        \"suffix\": \"<string>\",\n        \"prefix\": \"<string>\"\n      },\n      \"relationship\": \"FOR_BENEFIT_OF_SECONDARY_JOINT_RESTRICTED\"\n    }\n  ],\n  \"emails\": [\n    \"<string>\"\n  ],\n  \"addresses\": [\n    {\n      \"line1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"country\": \"CN\",\n      \"line2\": \"<string>\",\n      \"line3\": \"<string>\",\n      \"region\": \"<string>\",\n      \"postalCode\": \"<string>\"\n    }\n  ],\n  \"telephones\": [\n    {\n      \"number\": \"170\",\n      \"type\": \"CELL\",\n      \"country\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-10-22T02:55:16.000Z",
+                      "updatedAt": "2026-10-22T02:55:16.000Z",
+                      "uid": "35240-1262ec8a-75fb-414e-a817-3a8e63614ac9"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:55:16.000Z",
+                  "updatedAt": "2026-10-22T02:55:16.000Z",
+                  "uid": "35240-e0e0cff1-a5f2-4a28-aca4-82bc3760dc57"
+                }
+              ],
+              "id": "85c3d27f-6dad-44a6-a707-f9f925ec23b3",
+              "createdAt": "2026-10-22T02:55:16.000Z",
+              "updatedAt": "2026-10-22T02:55:16.000Z",
+              "uid": "35240-85c3d27f-6dad-44a6-a707-f9f925ec23b3"
+            }
+          ],
+          "id": "e1cb6a07-d59c-4ca9-92a0-30b0b286679d",
+          "createdAt": "2026-10-22T02:55:16.000Z",
+          "updatedAt": "2026-10-22T02:55:16.000Z",
+          "uid": "35240-e1cb6a07-d59c-4ca9-92a0-30b0b286679d"
+        }
+      ],
+      "id": "45fed05f-84fc-4f01-a00f-09c00656e556",
+      "createdAt": "2026-10-22T02:55:16.000Z",
+      "updatedAt": "2026-10-22T02:55:16.000Z",
+      "uid": "35240-45fed05f-84fc-4f01-a00f-09c00656e556"
+    },
+    {
+      "name": "customers",
+      "item": [
+        {
+          "name": "current",
+          "item": [
+            {
+              "name": "Get current authenticated customer ID",
+              "id": "a05ca905-2db9-41a5-a789-0292c491af30",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "oauth2",
+                  "oauth2": [
+                    {
+                      "key": "scope",
+                      "value": "Account Customer Transactions",
+                      "type": "string"
+                    },
+                    {
+                      "key": "accessTokenUrl",
+                      "value": "https://www.your-organization.com/token",
+                      "type": "string"
+                    },
+                    {
+                      "key": "authUrl",
+                      "value": "https://www.your-organization.com/authorize",
+                      "type": "string"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "authorization_code",
+                      "type": "string"
                     }
                   ]
                 },
+                "method": "GET",
                 "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  },
                   {
                     "key": "Accept",
                     "value": "application/json"
                   }
                 ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"holders\": [\n    {\n      \"relationship\": \"SECONDARY\",\n      \"name\": {\n        \"first\": \"Ernest\",\n        \"middle\": \"Miller\",\n        \"last\": \"Hemingway\",\n        \"suffix\": \"IV\"\n      }\n    },\n    {\n      \"relationship\": \"PRIMARY_JOINT\",\n      \"name\": {\n        \"first\": \"Maya\",\n        \"last\": \"Angelou\",\n        \"middle\": \"Annie\"\n      }\n    }\n  ],\n  \"emails\": [\n    \"ernest.m.hemingway@domain.tld\",\n    \"m.angelou@domain.tld\"\n  ],\n  \"addresses\": [\n    {\n      \"line1\": \"1850 N Clark St\",\n      \"line2\": \"Apartment 103\",\n      \"city\": \"Chicago\",\n      \"region\": \"IL\",\n      \"postalCode\": \"60614\",\n      \"country\": \"US\"\n    },\n    {\n      \"line1\": \"2014 N Main St\",\n      \"city\": \"San Francisco\",\n      \"region\": \"CA\",\n      \"postalCode\": \"94105\",\n      \"country\": \"US\"\n    }\n  ],\n  \"telephones\": [\n    {\n      \"type\": \"HOME\",\n      \"country\": \"1\",\n      \"number\": \"3127771926\"\n    },\n    {\n      \"type\": \"CELL\",\n      \"country\": \"53\",\n      \"number\": \"45915607\"\n    },\n    {\n      \"type\": \"HOME\",\n      \"country\": \"1\",\n      \"number\": \"4157771926\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "719c3162-3a13-481f-9087-9e9af5d4a777",
-          "name": "Get current authenticated customer ID",
-          "request": {
-            "name": "Get current authenticated customer ID",
-            "description": {
-              "content": "Get the ID of the customer within the authorization scope. If you use [OIDC authentication](https://plaid.com/core-exchange/docs/authentication/oauth-server-setup) (recommended) you *do not* need to implement this endpoint. Plaid will identify the customer using the OIDC [ID token](https://openid.net/specs/openid-connect-core-1_0.html#IDToken). If you use OAuth2 authentication, Plaid will use this endpoint as an alternate method of customer identification.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "customers",
-                "current"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": {
-              "type": "oauth2",
-              "oauth2": [
-                {
-                  "key": "scope",
-                  "value": "Account Customer Transactions"
-                },
-                {
-                  "key": "accessTokenUrl",
-                  "value": "https://www.your-organization.com/token"
-                },
-                {
-                  "key": "authUrl",
-                  "value": "https://www.your-organization.com/authorize"
-                },
-                {
-                  "key": "grant_type",
-                  "value": "authorization_code"
-                }
-              ]
-            }
-          },
-          "response": [
-            {
-              "id": "7043debc-c472-4dbe-bc4b-274705e32fcd",
-              "name": "Data describing current authenticated customer.\n",
-              "originalRequest": {
                 "url": {
-                  "path": [
-                    "customers",
-                    "current"
-                  ],
+                  "raw": "{{baseUrl}}/customers/current",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "query": [],
-                  "variable": []
+                  "path": [
+                    "customers",
+                    "current"
+                  ]
                 },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: oauth2",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "<token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                "description": "Get the ID of the customer within the authorization scope. If you use OIDC authentication (recommended) you *do not* need to implement this endpoint. Plaid will identify the customer using the OIDC ID token. If you use OAuth2 authentication, Plaid will use this endpoint as an alternate method of customer identification."
               },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "response": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "id": "64d0e35f-62e4-4df3-b80b-94743837e92a",
+                  "name": "Data describing current authenticated customer.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: oauth2",
+                        "key": "Authorization",
+                        "value": "<token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/customers/current",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "customers",
+                        "current"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"customerId\": \"<string>\"\n}",
+                  "createdAt": "2026-10-22T02:55:16.000Z",
+                  "updatedAt": "2026-10-22T02:55:16.000Z",
+                  "uid": "35240-64d0e35f-62e4-4df3-b80b-94743837e92a"
                 }
               ],
-              "body": "{\n  \"customerId\": \"someLongTermUniqueIDString\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "createdAt": "2026-10-22T02:55:16.000Z",
+              "updatedAt": "2026-10-22T02:55:16.000Z",
+              "uid": "35240-a05ca905-2db9-41a5-a789-0292c491af30"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "40e08999-5ce6-4b08-94e8-4d1bb81235d8",
+          "createdAt": "2026-10-22T02:55:16.000Z",
+          "updatedAt": "2026-10-22T02:55:16.000Z",
+          "uid": "35240-40e08999-5ce6-4b08-94e8-4d1bb81235d8"
         }
       ],
-      "event": []
+      "id": "42556d46-e8aa-456d-8883-b95eca8c0d62",
+      "createdAt": "2026-10-22T02:55:16.000Z",
+      "updatedAt": "2026-10-22T02:55:16.000Z",
+      "uid": "35240-42556d46-e8aa-456d-8883-b95eca8c0d62"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.your-organization.com/fdx/v6",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.your-organization.com/fdx/v6"
     }
-  ],
-  "info": {
-    "_postman_id": "3f8da210-69b4-4d60-a315-42ee18bb4e27",
-    "name": "FDX V6.0.0 Account Information Personal Information API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/. The FDX API specification is distributed exclusively by FDX. Modifications to eliminate required or\nconditional elements prescribed in the FDX API Certification Use Cases will render any implementations using said modifications non-conformant with the FDX API Certification Use Cases.\nPlease note that building the FDX-compliant Core Exchange API and permitting Plaid to call your build constitutes acceptance of\nthe FDX end user license agreement, which can be found at https://financialdataexchange.org/.\nThe full FDX API standard specification is distributed exclusively by FDX.\n\n## Download the specification\n\nTo view this specification and documentation as an OpenAPI YAML file, see [the public Core Exchange Github repository](https://github.com/plaid/core-exchange/tree/main/versions).\n\n## Endpoints\n\nThis specification contains the following endpoints:\n\n  - `/customers/current`\n\n  - `/accounts`\n\n  - `/accounts/{accountId}`\n\n  - `/accounts/{accountId}/payment-networks`\n\n  - `/accounts/{accountId}/asset-transfer-networks`\n\n  - `/accounts/{accountId}/statements`\n\n  - `/accounts/{accountId}/statements/{statementId}`\n\n  - `/accounts/{accountId}/contact`\n\n  - `/accounts/{accountId}/transactions`\n\n## Error responses\n\nAn error entity which can be used at the API level for error responses or at the account level to indicate a problem specific to a particular account.\nError responses must contain a `code` and `message`, and may optionally include a `debugMessage`.\nSee the descriptions below:\n\n- `code`: The FDX error code: A long-term persistent identifier which can be used to trace error condition back to log information.\n  (**Note:** This code may differ from the HTTP status code.)\n- `message`: End user displayable information which might help the customer diagnose an error\n- `debugMessage`: Message used to debug the root cause of the error. Contents should not be used in consumer's business logic. Can change at any time and should only be used for consumer to communicate with the data provider about an issue. Provider can include an error GUID in message for their use\n\n### Example error\n\nThe following is an example response with an HTTP status code of 409.\n\n```\n{\n  \"code\": 705,\n  \"message\": \"Account is closed\",\n  \"debugMessage\": \"Operation is not supported by the closed account\"\n}\n```\n\nSee the Errors table in each endpoint description for more specific message and debug message examples.\n\n\nContact Support:\n Name: Plaid support\n Email: dataconnectivity@plaid.com",
-      "type": "text/plain"
-    }
-  }
+  ]
 }

@@ -1,270 +1,281 @@
 {
+  "info": {
+    "_postman_id": "5871a73e-d73c-4435-bc6f-0ed6e95105a9",
+    "name": "FDX V6.0.0 Account Statements API",
+    "description": "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/.\n\nContact Support:\n Name: Plaid support\n Email: dataconnectivity@plaid.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-22T02:54:48.000Z",
+    "updatedAt": "2026-10-22T02:54:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-5871a73e-d73c-4435-bc6f-0ed6e95105a9"
+  },
   "item": [
     {
-      "id": "ca89f3ae-3ba9-4ad2-9181-18680d2f4394",
-      "name": "Account Statements",
-      "description": {
-        "content": "Search and retrieve account statements",
-        "type": "text/plain"
-      },
+      "name": "accounts",
       "item": [
         {
-          "id": "c2cae40f-c5b4-4941-bb2d-4dcf39808db2",
-          "name": "Search for statements",
-          "request": {
-            "name": "Search for statements",
-            "description": {
-              "content": "Get account statements.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId",
-                "statements"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [
-                {
-                  "disabled": false,
-                  "key": "offset",
-                  "value": "<string>",
-                  "description": "An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.\n"
-                },
-                {
-                  "disabled": false,
-                  "key": "limit",
-                  "value": "<integer>",
-                  "description": "The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.\n"
-                },
-                {
-                  "disabled": false,
-                  "key": "startTime",
-                  "value": "<date>",
-                  "description": "Start time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n"
-                },
-                {
-                  "disabled": false,
-                  "key": "endTime",
-                  "value": "<date>",
-                  "description": "End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n"
-                }
-              ],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
+          "name": "{accountId}",
+          "item": [
             {
-              "id": "bd90ed47-2cc5-45b2-9f79-604e3a3a7f44",
-              "name": "Paginated list of available statements.\n",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "statements"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [
-                    {
-                      "key": "offset",
-                      "value": "qwer123454q2f"
-                    },
-                    {
-                      "key": "limit",
-                      "value": "<integer>"
-                    },
-                    {
-                      "key": "startTime",
-                      "value": "2021-07-15"
-                    },
-                    {
-                      "key": "endTime",
-                      "value": "2021-07-15"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
+              "name": "statements",
+              "item": [
                 {
-                  "key": "Content-Type",
-                  "value": "application/json"
+                  "name": "{statementId}",
+                  "item": [
+                    {
+                      "name": "Get account statement",
+                      "id": "f8561807-e971-49c3-8416-47dca15151ec",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/pdf"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/statements/:statementId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "statements",
+                            ":statementId"
+                          ],
+                          "variable": [
+                            {
+                              "id": "a731f800-e64c-47f5-9e6b-2be940f38149",
+                              "key": "accountId",
+                              "value": "<string>",
+                              "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+                            },
+                            {
+                              "id": "501f2881-cc52-460c-9be7-84bedf7b6705",
+                              "key": "statementId",
+                              "value": "<string>",
+                              "description": "(Required) Statement identifier, found in the `GET /accounts/{accountId}/statements` endpoint response\n"
+                            }
+                          ]
+                        },
+                        "description": "Get account statement PDF."
+                      },
+                      "response": [
+                        {
+                          "id": "56336b4b-dd49-4a20-bf9b-d79b4dcb1b5c",
+                          "name": "A pdf of an account statement.\n",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/pdf"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/accounts/:accountId/statements/:statementId",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "accounts",
+                                ":accountId",
+                                "statements",
+                                ":statementId"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "accountId"
+                                },
+                                {
+                                  "key": "statementId"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/pdf"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"title\": \"Statement PDF\",\n  \"description\": \"An account statement in PDF format\\n\",\n  \"format\": \"binary\"\n}",
+                          "createdAt": "2026-10-22T02:54:49.000Z",
+                          "updatedAt": "2026-10-22T02:54:49.000Z",
+                          "uid": "35240-56336b4b-dd49-4a20-bf9b-d79b4dcb1b5c"
+                        }
+                      ],
+                      "createdAt": "2026-10-22T02:54:49.000Z",
+                      "updatedAt": "2026-10-22T02:54:49.000Z",
+                      "uid": "35240-f8561807-e971-49c3-8416-47dca15151ec"
+                    }
+                  ],
+                  "id": "939b6622-de38-471d-b4aa-4a3f4443a014",
+                  "createdAt": "2026-10-22T02:54:49.000Z",
+                  "updatedAt": "2026-10-22T02:54:49.000Z",
+                  "uid": "35240-939b6622-de38-471d-b4aa-4a3f4443a014"
+                },
+                {
+                  "name": "Search for statements",
+                  "id": "00e42611-32f1-47d2-8813-58b73d0f199a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/accounts/:accountId/statements?offset=<string>&limit=<integer>&startTime=<date>&endTime=<date>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "accounts",
+                        ":accountId",
+                        "statements"
+                      ],
+                      "query": [
+                        {
+                          "description": "An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.\n",
+                          "key": "offset",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.\n",
+                          "key": "limit",
+                          "value": "<integer>"
+                        },
+                        {
+                          "description": "Start time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n",
+                          "key": "startTime",
+                          "value": "<date>"
+                        },
+                        {
+                          "description": "End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n",
+                          "key": "endTime",
+                          "value": "<date>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "8d2824d7-6025-43d0-abe4-9a5967ddccf8",
+                          "key": "accountId",
+                          "value": "<string>",
+                          "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
+                        }
+                      ]
+                    },
+                    "description": "Get account statements."
+                  },
+                  "response": [
+                    {
+                      "id": "4fbe0a6d-5d4c-49e0-983d-5fcf88e1cf80",
+                      "name": "Paginated list of available statements.\n",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/accounts/:accountId/statements?offset=<string>&limit=<integer>&startTime=<date>&endTime=<date>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "accounts",
+                            ":accountId",
+                            "statements"
+                          ],
+                          "query": [
+                            {
+                              "description": "An opaque ID that indicates there is at least one more page of data available. This value does not need to be numeric or have any specific pattern. If provided, Plaid will use this value to send a new request and retrieve the next page. Omitting this value indicates that there is no more data to retrieve.\n",
+                              "key": "offset",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "The number of elements that the API consumer wishes to receive. Plaid has a default limit of 100 elements. If your organization has a different limit, use the lower limit to determine how many items to send per page. To retrieve multiple pages, Plaid will use the opaque `nextOffset` field to send a subsequent request until the `nextOffset` is no longer included.\n",
+                              "key": "limit",
+                              "value": "<integer>"
+                            },
+                            {
+                              "description": "Start time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n",
+                              "key": "startTime",
+                              "value": "<date>"
+                            },
+                            {
+                              "description": "End time for use in retrieval of elements (ISO 8601). When used with the `/transactions` endpoint, Plaid filters by the `postedTimestamp`.\n",
+                              "key": "endTime",
+                              "value": "<date>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "accountId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"statements\": [\n    {\n      \"accountId\": \"<string>\",\n      \"statementId\": \"<string>\",\n      \"statementDate\": \"<date>\",\n      \"description\": \"<string>\",\n      \"links\": [\n        {\n          \"href\": \"<uri-reference>\",\n          \"action\": \"POST\",\n          \"rel\": \"<string>\",\n          \"types\": [\n            \"image/gif\",\n            \"application/pdf\"\n          ]\n        },\n        {\n          \"href\": \"<uri-reference>\",\n          \"action\": \"POST\",\n          \"rel\": \"<string>\",\n          \"types\": [\n            \"image/png\",\n            \"image/jpeg\"\n          ]\n        }\n      ],\n      \"status\": \"AVAILABLE\"\n    },\n    {\n      \"accountId\": \"<string>\",\n      \"statementId\": \"<string>\",\n      \"statementDate\": \"<date>\",\n      \"description\": \"<string>\",\n      \"links\": [\n        {\n          \"href\": \"<uri-reference>\",\n          \"action\": \"GET\",\n          \"rel\": \"<string>\",\n          \"types\": [\n            \"image/jpeg\",\n            \"application/pdf\"\n          ]\n        },\n        {\n          \"href\": \"<uri-reference>\",\n          \"action\": \"PUT\",\n          \"rel\": \"<string>\",\n          \"types\": [\n            \"image/tiff\",\n            \"image/gif\"\n          ]\n        }\n      ],\n      \"status\": \"PROCESSING\"\n    }\n  ],\n  \"page\": {\n    \"nextOffset\": \"<string>\",\n    \"totalElements\": \"<integer>\"\n  }\n}",
+                      "createdAt": "2026-10-22T02:54:49.000Z",
+                      "updatedAt": "2026-10-22T02:54:49.000Z",
+                      "uid": "35240-4fbe0a6d-5d4c-49e0-983d-5fcf88e1cf80"
+                    }
+                  ],
+                  "createdAt": "2026-10-22T02:54:49.000Z",
+                  "updatedAt": "2026-10-22T02:54:49.000Z",
+                  "uid": "35240-00e42611-32f1-47d2-8813-58b73d0f199a"
                 }
               ],
-              "body": "{\n  \"page\": {\n    \"nextOffset\": \"B47D80MVP23T\",\n    \"total\": 3\n  },\n  \"statements\": [\n    {\n      \"accountId\": \"10001\",\n      \"statementId\": \"20001\",\n      \"statementDate\": \"2024-01-15\",\n      \"description\": \"January 2024 Monthly Statement\",\n      \"links\": [\n        {\n          \"href\": \"/accounts/10001/statements/20001\",\n          \"rel\": \"self\",\n          \"action\": \"GET\",\n          \"types\": [\n            \"application/pdf\"\n          ]\n        },\n        {\n          \"href\": \"/accounts/10001/statements/20001/download\",\n          \"rel\": \"download\",\n          \"action\": \"GET\",\n          \"types\": [\n            \"application/pdf\"\n          ]\n        }\n      ],\n      \"status\": \"AVAILABLE\"\n    },\n    {\n      \"accountId\": \"10001\",\n      \"statementId\": \"20002\",\n      \"statementDate\": \"2024-02-15\",\n      \"description\": \"February 2024 Monthly Statement\",\n      \"links\": [\n        {\n          \"href\": \"/accounts/10001/statements/20002\",\n          \"rel\": \"self\",\n          \"action\": \"GET\",\n          \"types\": [\n            \"application/pdf\"\n          ]\n        }\n      ],\n      \"status\": \"PROCESSING\"\n    }\n  ]\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "id": "90120e2f-8835-43ee-b623-2bbb4ae65985",
+              "createdAt": "2026-10-22T02:54:49.000Z",
+              "updatedAt": "2026-10-22T02:54:49.000Z",
+              "uid": "35240-90120e2f-8835-43ee-b623-2bbb4ae65985"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "83de394e-550d-465c-af97-0f9a65b71382",
-          "name": "Get account statement",
-          "request": {
-            "name": "Get account statement",
-            "description": {
-              "content": "Get account statement PDF.\n",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "accounts",
-                ":accountId",
-                "statements",
-                ":statementId"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "accountId",
-                  "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
-                },
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "statementId",
-                  "description": "(Required) Statement identifier, found in the `GET /accounts/{accountId}/statements` endpoint response\n"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/pdf"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "b141b9fb-a06a-4629-84e6-af7f0318286a",
-              "name": "A pdf of an account statement.\n",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "accounts",
-                    ":accountId",
-                    "statements",
-                    ":statementId"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "accountId",
-                      "description": "(Required) Account identifier, found in the `GET /accounts` endpoint response.\nPlaid expects the ID to be a different value from the account number\n\n**Note:** If the status of the `accountId` provided is `RESTRICTED`, you can send a 200 response with an empty body to indicate that no payment networks are available at this time.\n"
-                    },
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "statementId",
-                      "description": "(Required) Statement identifier, found in the `GET /accounts/{accountId}/statements` endpoint response\n"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "key": "Accept",
-                    "value": "application/pdf"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/pdf"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "id": "58b55b64-380b-42d8-8589-7d7ea800d4cb",
+          "createdAt": "2026-10-22T02:54:49.000Z",
+          "updatedAt": "2026-10-22T02:54:49.000Z",
+          "uid": "35240-58b55b64-380b-42d8-8589-7d7ea800d4cb"
         }
       ],
-      "event": []
+      "id": "32e0b110-cf53-4305-964c-775923356283",
+      "createdAt": "2026-10-22T02:54:49.000Z",
+      "updatedAt": "2026-10-22T02:54:49.000Z",
+      "uid": "35240-32e0b110-cf53-4305-964c-775923356283"
     }
   ],
-  "event": [],
   "variable": [
     {
-      "type": "string",
-      "value": "https://api.your-organization.com/fdx/v6",
-      "key": "baseUrl"
+      "key": "baseUrl",
+      "value": "https://api.your-organization.com/fdx/v6"
     }
-  ],
-  "info": {
-    "_postman_id": "4a7c4e56-cd49-42aa-811c-29ac81279089",
-    "name": "FDX V6.0.0 Account Information Account Statements API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "## FDX compliance\n\nThe Core Exchange API specifications are a subset of the Financial Data Exchange (FDX) API specification, the usage thereof (or any part thereof) constitutes acceptance of the FDX API\nLicense Agreement, which can be found at https://financialdataexchange.org/. The FDX API specification is distributed exclusively by FDX. Modifications to eliminate required or\nconditional elements prescribed in the FDX API Certification Use Cases will render any implementations using said modifications non-conformant with the FDX API Certification Use Cases.\nPlease note that building the FDX-compliant Core Exchange API and permitting Plaid to call your build constitutes acceptance of\nthe FDX end user license agreement, which can be found at https://financialdataexchange.org/.\nThe full FDX API standard specification is distributed exclusively by FDX.\n\n## Download the specification\n\nTo view this specification and documentation as an OpenAPI YAML file, see [the public Core Exchange Github repository](https://github.com/plaid/core-exchange/tree/main/versions).\n\n## Endpoints\n\nThis specification contains the following endpoints:\n\n  - `/customers/current`\n\n  - `/accounts`\n\n  - `/accounts/{accountId}`\n\n  - `/accounts/{accountId}/payment-networks`\n\n  - `/accounts/{accountId}/asset-transfer-networks`\n\n  - `/accounts/{accountId}/statements`\n\n  - `/accounts/{accountId}/statements/{statementId}`\n\n  - `/accounts/{accountId}/contact`\n\n  - `/accounts/{accountId}/transactions`\n\n## Error responses\n\nAn error entity which can be used at the API level for error responses or at the account level to indicate a problem specific to a particular account.\nError responses must contain a `code` and `message`, and may optionally include a `debugMessage`.\nSee the descriptions below:\n\n- `code`: The FDX error code: A long-term persistent identifier which can be used to trace error condition back to log information.\n  (**Note:** This code may differ from the HTTP status code.)\n- `message`: End user displayable information which might help the customer diagnose an error\n- `debugMessage`: Message used to debug the root cause of the error. Contents should not be used in consumer's business logic. Can change at any time and should only be used for consumer to communicate with the data provider about an issue. Provider can include an error GUID in message for their use\n\n### Example error\n\nThe following is an example response with an HTTP status code of 409.\n\n```\n{\n  \"code\": 705,\n  \"message\": \"Account is closed\",\n  \"debugMessage\": \"Operation is not supported by the closed account\"\n}\n```\n\nSee the Errors table in each endpoint description for more specific message and debug message examples.\n\n\nContact Support:\n Name: Plaid support\n Email: dataconnectivity@plaid.com",
-      "type": "text/plain"
-    }
-  }
+  ]
 }
