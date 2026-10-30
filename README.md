@@ -1,4 +1,4 @@
-# Financial Data Exchange (FDX) (fdx)
+# Financial Data Exchange (FDX)
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,190 +66,187 @@
 
 Financial Data Exchange (FDX) is a non-profit industry standards body operating in the US and Canada that produces the FDX API, a royalty-free REST standard for consumer-permissioned financial data sharing. The FDX API defines interoperable endpoints covering deposit accounts, loan accounts, investment accounts, insurance policies, tax data, payroll data, reward programs, and consent management, enabling data providers (financial institutions), data access platforms (aggregators), and data recipients (fintechs) to exchange consumer financial data without exposing user credentials. As of early 2026 over 130 million consumer accounts are connected via the FDX API across 200+ member organizations including Bank of America, Chase, Citi, Wells Fargo, Plaid, and MX. FDX API v6.5 is the current stable release.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/fdx/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/fdx/refs/heads/main/apis.yml)
+**Areas:** Financial Data · Open Banking · Open Finance · Financial Data Exchange · Consumer-Permissioned · Account Data · Transaction · Investment · Insurance · Tax Data · Payroll · REST
 
-## Scope
+## Financial Data Exchange (FDX) on APIs.io
 
-- **Type:** Index
+Everything profiled for Financial Data Exchange (FDX) is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/fdx/](https://apis.io/providers/fdx/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (12)
 
-- Financial Data
-- Open Banking
-- Open Finance
-- Financial Data Exchange
-- Consumer Permissioned
-- Account Data
-- Transactions
-- Investments
-- Insurance
-- Tax Data
-- Payroll
-- REST
-- OAuth2
-- FAPI
-- CFPB 1033
+- [FDX Transactions API](https://apis.io/apis/fdx/fdx-transactions-api/) — RESTful endpoints for retrieving consumer transaction histories including pending and posted transactions, transaction categorization, merchant data, and…
+- [FDX Investment API](https://apis.io/apis/fdx/fdx-investment-api/) — RESTful endpoints for retrieving investment account data including holdings, positions, investment transactions, cost basis, and portfolio composition.…
+- [FDX Insurance API](https://apis.io/apis/fdx/fdx-insurance-api/) — RESTful endpoints for retrieving insurance policy information including policy coverage details, premium schedules, claims history, and beneficiary data…
+- [FDX Tax API](https://apis.io/apis/fdx/fdx-tax-api/) — RESTful endpoints for retrieving consumer tax data including tax document metadata and structured tax form data (1099s, W-2s, and related forms) as defined…
+- [FDX Payroll API](https://apis.io/apis/fdx/fdx-payroll-api/) — RESTful endpoints introduced in FDX API v6.0 for retrieving permissioned payroll data including employment records, pay stubs, income verification, and…
+- [FDX Consent API](https://apis.io/apis/fdx/fdx-consent-api/) — RESTful endpoints implementing the FDX Consent API Behavioral Specification for managing user permissions and consent events. Enables data recipients to…
+- [Financial Data Exchange (FDX) Account Information API](https://apis.io/apis/fdx/fdx-account-information-api/) — Search and view customer accounts
+- [Financial Data Exchange (FDX) Account Statements API](https://apis.io/apis/fdx/fdx-account-statements-api/) — Search and retrieve account statements
+- [Financial Data Exchange (FDX) Account Transactions API](https://apis.io/apis/fdx/fdx-account-transactions-api/) — Search and view account transactions
+- [Financial Data Exchange (FDX) Asset Transfer Networks Information API](https://apis.io/apis/fdx/fdx-asset-transfer-networks-information-api/) — Search and view asset transfer networks networks
+- [Financial Data Exchange (FDX) Payment Networks Information API](https://apis.io/apis/fdx/fdx-payment-networks-information-api/) — Search and view account payment networks
+- [Financial Data Exchange (FDX) Personal Information API](https://apis.io/apis/fdx/fdx-personal-information-api/) — Search and view customer or customers
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-06-13
-- **Modified:** 2026-06-13
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### GraphQL (1)
 
-### FDX Accounts API
+GraphQL schemas.
 
-RESTful endpoints for retrieving consumer deposit, loan, investment, and insurance account details including account numbers, balances, account holder identity, and account metadata. Supports the full FDX account data cluster across all account types recognized by the standard.
+- [Moved to /providers/fdx/](https://apis.io/graphqls/fdx/fdx-graphql/)
 
-- **Human URL:** [https://financialdataexchange.org](https://financialdataexchange.org)
-- **Base URL:** `https://api.financialdataexchange.org`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Accounts
-- Deposit Accounts
-- Loan Accounts
-- Account Balances
-- Account Holder
+- [Fdx Agentic Access](https://apis.io/agentic-access/fdx/fdx-agentic-access/)
 
-#### Properties
+#### JSON Schema (83)
 
-- [Documentation](https://financialdataexchange.org)
-- [OpenAPI](https://github.com/plaid/core-exchange) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Graph Q L](graphql/fdx-graphql.md)
+The data models the API reads and writes.
 
-### FDX Transactions API
+- [Account Category type](https://apis.io/schemas/fdx/fdx-accountcategory/)
+- [Account Contact entity](https://apis.io/schemas/fdx/fdx-accountcontact/)
+- [Account Descriptor entity](https://apis.io/schemas/fdx/fdx-accountdescriptor/)
+- [Account Holder entity](https://apis.io/schemas/fdx/fdx-accountholder/)
+- [Account Holder Relationship](https://apis.io/schemas/fdx/fdx-accountholderrelationship/)
+- [Payment Networks entity](https://apis.io/schemas/fdx/fdx-accountpaymentnetworklist/)
+- [Accounts entity](https://apis.io/schemas/fdx/fdx-accounts/)
+- [Account Status](https://apis.io/schemas/fdx/fdx-accountstatus/)
+- [Account entity](https://apis.io/schemas/fdx/fdx-accountwithdescriptor/)
+- [Account With Details entity](https://apis.io/schemas/fdx/fdx-accountwithdetails/)
+- [Address](https://apis.io/schemas/fdx/fdx-address/)
+- [AnnuityAccountDescriptor](https://apis.io/schemas/fdx/fdx-annuityaccountdescriptor/)
+- [AnnuityAccountType](https://apis.io/schemas/fdx/fdx-annuityaccounttype/)
+- [Asset Transfer Network](https://apis.io/schemas/fdx/fdx-assettransfernetwork/)
+- [Asset Transfer Networks](https://apis.io/schemas/fdx/fdx-assettransfernetworklist/)
+- [Asset Transfer Type](https://apis.io/schemas/fdx/fdx-assettransfertype/)
+- [CommercialAccountDescriptor](https://apis.io/schemas/fdx/fdx-commercialaccountdescriptor/)
+- [CommercialAccountType](https://apis.io/schemas/fdx/fdx-commercialaccounttype/)
+- [Content Types](https://apis.io/schemas/fdx/fdx-contenttypes/)
+- [Currency entity](https://apis.io/schemas/fdx/fdx-currency/)
+- [Customer entity.](https://apis.io/schemas/fdx/fdx-customer/)
+- [Customer Name entity](https://apis.io/schemas/fdx/fdx-customername/)
+- [Customer entity](https://apis.io/schemas/fdx/fdx-customerwithname/)
+- [Date String](https://apis.io/schemas/fdx/fdx-datestring/)
+- [DebitCreditMemo](https://apis.io/schemas/fdx/fdx-debitcreditmemo/)
+- …and 58 more published on APIs.io
 
-RESTful endpoints for retrieving consumer transaction histories including pending and posted transactions, transaction categorization, merchant data, and transaction amounts across deposit, loan, and investment accounts within the permissioned scope.
+#### JSON-LD (1)
 
-- **Human URL:** [https://financialdataexchange.org](https://financialdataexchange.org)
-- **Base URL:** `https://api.financialdataexchange.org`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Fdx Context](https://apis.io/jsonld/fdx/fdx-context/)
 
-- Transactions
-- Transaction History
-- Pending Transactions
-- Merchant Data
+#### Collections (6)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://financialdataexchange.org)
+- [FDX V6.0.0 Account Information API](https://apis.io/collections/fdx/open-fdx-account-information-api/)
+- [FDX V6.0.0 Account Information Account Statements API](https://apis.io/collections/fdx/open-fdx-account-statements-api/)
+- [FDX V6.0.0 Account Information Account Transactions API](https://apis.io/collections/fdx/open-fdx-account-transactions-api/)
+- [FDX V6.0.0 Account Information Asset Transfer Networks Information API](https://apis.io/collections/fdx/open-fdx-asset-transfer-networks-information-api/)
+- [FDX V6.0.0 Account Information Payment Networks Information API](https://apis.io/collections/fdx/open-fdx-payment-networks-information-api/)
+- [FDX V6.0.0 Account Information Personal Information API](https://apis.io/collections/fdx/open-fdx-personal-information-api/)
 
-### FDX Investment API
+#### Governance rules (1)
 
-RESTful endpoints for retrieving investment account data including holdings, positions, investment transactions, cost basis, and portfolio composition. Covers brokerage, retirement, and managed investment accounts under the FDX investment data cluster.
+Spectral rulesets for the provider's contracts.
 
-- **Human URL:** [https://financialdataexchange.org](https://financialdataexchange.org)
-- **Base URL:** `https://api.financialdataexchange.org`
+- [Financial Data Exchange (FDX) — jsonschema rules](https://apis.io/rules/fdx/fdx-jsonschema-spectral-rules/)
 
-#### Tags
+#### Security (2)
 
-- Investments
-- Holdings
-- Portfolio
-- Brokerage
-- Retirement
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Fdx Authentication](https://apis.io/security/fdx/fdx-authentication/)
+- [Fdx Domain Security](https://apis.io/security/fdx/fdx-domain-security/)
 
-- [Documentation](https://financialdataexchange.org)
+#### OAuth scopes (1)
 
-### FDX Insurance API
+The permissions the API asks for.
 
-RESTful endpoints for retrieving insurance policy information including policy coverage details, premium schedules, claims history, and beneficiary data under the FDX insurance data cluster.
+- [Fdx Scopes](https://apis.io/scopes/fdx/fdx-scopes/)
 
-- **Human URL:** [https://financialdataexchange.org](https://financialdataexchange.org)
-- **Base URL:** `https://api.financialdataexchange.org`
+#### Plans and pricing (1)
 
-#### Tags
+Published plans, tiers and prices.
 
-- Insurance
-- Policy
-- Coverage
-- Claims
+- [Fdx Plans Pricing](https://apis.io/plans/fdx/fdx-plans-pricing/)
 
-#### Properties
+#### Rate limits (1)
 
-- [Documentation](https://financialdataexchange.org)
+Published request limits.
 
-### FDX Tax API
+- [Fdx Rate Limits](https://apis.io/rate-limits/fdx/fdx-rate-limits/)
 
-RESTful endpoints for retrieving consumer tax data including tax document metadata and structured tax form data (1099s, W-2s, and related forms) as defined by the FDX US Tax Data specification and the CSDF Consensus Standard Data Format.
+#### FinOps (1)
 
-- **Human URL:** [https://financialdataexchange.org](https://financialdataexchange.org)
-- **Base URL:** `https://api.financialdataexchange.org`
+What the API costs to run, by operation.
 
-#### Tags
+- [Fdx Finops](https://apis.io/finops/fdx/fdx-finops/)
 
-- Tax Data
-- 1099
-- W-2
-- Tax Documents
+## Where to find this API
 
-#### Properties
-
-- [Documentation](https://financialdataexchange.org)
-
-### FDX Payroll API
-
-RESTful endpoints introduced in FDX API v6.0 for retrieving permissioned payroll data including employment records, pay stubs, income verification, and direct deposit details, supporting lending and personal financial management use cases.
-
-- **Human URL:** [https://financialdataexchange.org](https://financialdataexchange.org)
-- **Base URL:** `https://api.financialdataexchange.org`
-
-#### Tags
-
-- Payroll
-- Income Verification
-- Employment
-- Pay Stubs
-
-#### Properties
-
-- [Documentation](https://financialdataexchange.org)
-
-### FDX Consent API
-
-RESTful endpoints implementing the FDX Consent API Behavioral Specification for managing user permissions and consent events. Enables data recipients to initiate consent, query active consent grants, update scope, and handle consent revocation in compliance with CFPB Section 1033 requirements.
-
-- **Human URL:** [https://financialdataexchange.org](https://financialdataexchange.org)
-- **Base URL:** `https://api.financialdataexchange.org`
-
-#### Tags
-
-- Consent Management
-- Authorization
-- CFPB 1033
-- Data Access
-- Permissioning
-
-#### Properties
-
-- [Documentation](https://financialdataexchange.org)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://financialdataexchange.org)
 - [Documentation](https://financialdataexchange.org)
-- [Developer Portal](https://developer.financialdataexchange.org)
-- [Onboarding Portal](https://onboarding.financialdataexchange.org)
-- [Registry](https://registry.financialdataexchange.org)
 - [Blog](https://financialdataexchange.org/fdx-feed/)
-- [Membership](https://financialdataexchange.org/about-fdx/)
-- [Git Hub Org](https://github.com/plaid/core-exchange)
-- [LinkedIn](https://www.linkedin.com/company/financialdataexchange)
-- [X (Twitter)](https://x.com/fdxapi)
-- [YouTube](https://www.youtube.com/@financialdataexchange)
-- [Privacy Policy](https://financialdataexchange.org/privacy-policy/)
-- [Terms of Service](https://financialdataexchange.org/terms-of-use/)
-- [License Agreement](https://financialdataexchange.org/fdx-api-license-agreement/)
-- [Authentication](https://financialdataexchange.org)
-- [Plans](plans/fdx-plans-pricing.yml)
-- [Rate Limits](rate-limits/fdx-rate-limits.yml)
-- [Fin Ops](finops/fdx-finops.yml)
+- [Terms of service](https://financialdataexchange.org/terms-of-use/)
+- [Privacy policy](https://financialdataexchange.org/privacy-policy/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 30.6** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 53.2 |
+| Contract governance | 9.8 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 7.9 |
+
+**Agent readiness 32.4** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | na |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 26.8** — Banking & Open Finance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/fdx/](https://apis.io/providers/fdx/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Financial Data Exchange (FDX): the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/fdx/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
